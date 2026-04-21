@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Telos Validator Checker</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Telos Block Producer Checks</p>
+        <h1>Validator Checker</h1>
+      </div>
+      <p class="status-line" id="statusLine">Loading data...</p>
+    </header>
+
+    <main>
+      <section class="metrics" id="metrics" aria-label="Validation summary"></section>
+
+      <section class="workspace" aria-label="Validator dashboard">
+        <div class="tabs" role="tablist" aria-label="Dashboard sections">
+          <button class="tab is-active" id="tab-performance" type="button" role="tab" aria-selected="true" aria-controls="panel-performance" data-tab="performance">Performance</button>
+          <button class="tab" id="tab-producers" type="button" role="tab" aria-selected="false" aria-controls="panel-producers" data-tab="producers">Producer Table</button>
+        </div>
+
+        <section class="panel is-active" id="panel-performance" role="tabpanel" aria-labelledby="tab-performance">
+          <div class="toolbar">
+            <div>
+              <h2 id="chartHeading">CPU Time</h2>
+              <p class="subtle" id="chartSubhead">Waiting for history...</p>
+            </div>
+            <div class="toolbar-actions" aria-label="Chart controls">
+              <div class="segmented" role="group" aria-label="Chart mode">
+                <button type="button" class="mode-button is-active" data-mode="cpu" aria-pressed="true">CPU Time</button>
+                <button type="button" class="mode-button" data-mode="api" aria-pressed="false">API Latency</button>
+                <button type="button" class="mode-button" data-mode="missed" aria-pressed="false">Missed Blocks</button>
+              </div>
+              <button type="button" class="plain-button" id="showTableButton">View Table</button>
+            </div>
+          </div>
+
+          <div class="chart-shell">
+            <div class="chart-area" id="chartArea">
+              <svg id="historyChart" role="img" aria-labelledby="chartHeading chartSubhead"></svg>
+            </div>
+            <div class="empty-state" id="chartEmpty" hidden></div>
+            <div class="legend" id="chartLegend" aria-label="Producer series"></div>
+            <div class="legend-actions">
+              <button type="button" class="plain-button" id="selectAllSeries">Select All</button>
+              <button type="button" class="plain-button" id="deselectAllSeries">Deselect All</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-producers" role="tabpanel" aria-labelledby="tab-producers" hidden>
+          <div class="controls">
+            <label class="search-label" for="producerSearch">Search</label>
+            <input id="producerSearch" class="search-input" type="search" placeholder="Producer, country, error...">
+            <div class="filter-group" role="group" aria-label="Producer filters">
+              <button type="button" class="filter-button is-active" data-filter="all">All</button>
+              <button type="button" class="filter-button" data-filter="passing">Passing</button>
+              <button type="button" class="filter-button" data-filter="failing">Failing</button>
+              <button type="button" class="filter-button" data-filter="testnet">Testnet Passing</button>
+              <button type="button" class="filter-button" data-filter="active">Active</button>
+              <button type="button" class="filter-button" data-filter="standby">Standby</button>
+            </div>
+          </div>
+
+          <div class="table-summary" id="tableSummary"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="rank-col">#</th>
+                  <th><button type="button" class="sort-button" data-sort="scheduleType">Type</button></th>
+                  <th><button type="button" class="sort-button" data-sort="owner">Producer</button></th>
+                  <th><button type="button" class="sort-button" data-sort="sslVerified">SSL</button></th>
+                  <th><button type="button" class="sort-button" data-sort="apiVerified">API</button></th>
+                  <th><button type="button" class="sort-button" data-sort="apiResponseMs">Latency</button></th>
+                  <th><button type="button" class="sort-button" data-sort="sslVerifiedTestNet">Testnet SSL</button></th>
+                  <th><button type="button" class="sort-button" data-sort="apiVerifiedTestNet">Testnet API</button></th>
+                  <th><button type="button" class="sort-button" data-sort="apiResponseMsTestNet">Testnet ms</button></th>
+                  <th><button type="button" class="sort-button" data-sort="missedBlocksPerRotation">Missed</button></th>
+                  <th>Errors</th>
+                </tr>
+              </thead>
+              <tbody id="producerRows">
+                <tr>
+                  <td colspan="11" class="table-empty">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Snapshot data from the Infinity Bloc validation repository.</span>
+      <a href="https://infinitybloc.io/validation/latest.json">Latest JSON</a>
+      <a href="requirements.md">Requirements</a>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
