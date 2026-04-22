@@ -182,7 +182,7 @@ function renderLoadError(error) {
   els.chartArea.hidden = true;
   els.chartEmpty.hidden = false;
   els.chartEmpty.textContent = "Latest validation data could not be loaded.";
-  els.producerRows.innerHTML = `<tr><td colspan="13" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
+  els.producerRows.innerHTML = `<tr><td colspan="10" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
 }
 
@@ -444,7 +444,7 @@ function renderTable() {
   els.tableSummary.textContent = `${rows.length} of ${state.producers.length} producers shown`;
 
   if (!rows.length) {
-    els.producerRows.innerHTML = `<tr><td colspan="13" class="table-empty">No producers match the current view.</td></tr>`;
+    els.producerRows.innerHTML = `<tr><td colspan="10" class="table-empty">No producers match the current view.</td></tr>`;
     return;
   }
 
@@ -476,12 +476,9 @@ function renderProducerRow(producer, index) {
       </td>
       <td>${statusPill(Boolean(producer.sslVerified), true)}</td>
       <td>${statusPill(Boolean(producer.apiVerified), true)}</td>
-      <td>${latency(producer.apiResponseMs)}</td>
       <td>${timing(cpuUs, "us")}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.sslVerifiedTestNet), true) : statusPill(false, false)}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.apiVerifiedTestNet), true) : statusPill(false, false)}</td>
-      <td>${hasTestnet && producer.apiVerifiedTestNet ? latency(producer.apiResponseMsTestNet) : `<span class="latency none">-</span>`}</td>
-      <td>${timing(producer.cpuUsTestNet, "us")}</td>
       <td class="numeric">${Number.isFinite(missed) ? missed : 0}</td>
       <td class="error-list">${errorText}</td>
     </tr>

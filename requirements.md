@@ -167,12 +167,9 @@ The app must display a producer table with:
 - Website link from `org.website` or fallback `url`.
 - Mainnet SSL status.
 - Mainnet API status.
-- Mainnet API latency.
+- Mainnet CPU timing from the latest available `history.runs[].cpu` value for the producer.
 - Testnet SSL status or `None` when no testnet data appears available.
 - Testnet API status or `None` when no testnet data appears available.
-- Mainnet and testnet API latency.
-- Mainnet CPU timing from the latest available `history.runs[].cpu` value for the producer.
-- Testnet CPU timing when collected by future validation snapshots.
 - Missed blocks per rotation.
 - Validation errors.
 
@@ -188,7 +185,7 @@ The table must support:
   - Testnet passing
   - Active
   - Standby
-- Sortable columns for schedule type, producer, SSL, API, API latency, CPU timing, testnet SSL, testnet API, testnet API latency, testnet CPU timing, and missed blocks.
+- Sortable columns for schedule type, producer, SSL, API, CPU timing, testnet SSL, testnet API, and missed blocks.
 - Sort direction toggling when the active sort column is clicked again.
 
 ## Non-Functional Requirements
