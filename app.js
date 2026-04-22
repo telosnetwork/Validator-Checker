@@ -1,9 +1,11 @@
 const DATA_SOURCES = {
   latest: [
+    "validation/latest.json",
     "data/latest.json",
     "https://infinitybloc.io/validation/latest.json",
   ],
   history: [
+    "validation/history.json",
     "data/history.json",
     "https://infinitybloc.io/validation/history.json",
   ],

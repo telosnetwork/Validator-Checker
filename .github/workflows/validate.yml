@@ -1,0 +1,39 @@
+name: Validate Telos Block Producers
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install aiohttp pyntelope requests
+
+      - name: Run validation
+        env:
+          TLOSMECHANIC_KEY: ${{ secrets.TLOSMECHANIC_KEY }}
+        run: python scripts/validate_bps.py > validation/latest.json
+
+      - name: Commit results
+        run: |
+          git config user.name "Telos BP Validator"
+          git config user.email "validator@telos.net"
+          git add validation/latest.json validation/history.json
+          git diff --staged --quiet || git commit -m "chore: update BP validation results [skip ci]"
+          git push

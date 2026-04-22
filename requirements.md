@@ -103,6 +103,7 @@ The data generation process is external to the browser app. The source repositor
 - Keep producers where `is_active == 1`.
 - Tag producers as `active` if they appear in the current active schedule, otherwise `standby`.
 - Resolve each producer metadata file through `chains.json` and fallback to `/bp.json`.
+- Treat `chains.json` paths as relative to the registered producer URL, whether the registered URL and metadata path include trailing or leading slashes.
 - Select an SSL API endpoint by preferring query nodes, then producer nodes, then seed nodes.
 - Check mainnet SSL validity.
 - Check mainnet API health through `/v1/chain/get_info` and record response time.
