@@ -7,9 +7,13 @@ const DATA_SOURCES = {
   history: [
     "validation/history.json",
     "data/history.json",
+  ],
+  legacyCpuHistory: [
     "https://infinitybloc.io/validation/history.json",
   ],
 };
+
+const MAX_MERGED_HISTORY_RUNS = 112;
 
 const PALETTE = [
   "#1f6fb2",
@@ -149,12 +153,12 @@ async function loadData() {
     return;
   }
 
-  try {
-    const history = await fetchJsonFromSources(DATA_SOURCES.history, "history snapshot");
-    state.historyRuns = Array.isArray(history.runs) ? history.runs : [];
-  } catch (error) {
-    state.historyRuns = [];
-  }
+  const history = await fetchOptionalJsonFromSources(DATA_SOURCES.history);
+  const legacyCpuHistory = await fetchOptionalJsonFromSources(DATA_SOURCES.legacyCpuHistory);
+  state.historyRuns = mergeHistoryRuns(
+    Array.isArray(history && history.runs) ? history.runs : [],
+    Array.isArray(legacyCpuHistory && legacyCpuHistory.runs) ? legacyCpuHistory.runs : [],
+  );
 
   renderStatus();
   renderMetrics();
@@ -174,6 +178,34 @@ async function fetchJsonFromSources(urls, label) {
     }
   }
   throw new Error(`${label} could not be loaded (${errors.join("; ")})`);
+}
+
+async function fetchOptionalJsonFromSources(urls) {
+  try {
+    return await fetchJsonFromSources(urls, "optional history snapshot");
+  } catch (error) {
+    return null;
+  }
+}
+
+function mergeHistoryRuns(primaryRuns, legacyCpuRuns) {
+  const byTime = new Map();
+
+  primaryRuns.forEach((run) => {
+    if (!run || !run.t) return;
+    byTime.set(run.t, { ...run });
+  });
+
+  legacyCpuRuns.forEach((run) => {
+    if (!run || !run.t || !run.cpu) return;
+    const existing = byTime.get(run.t) || { t: run.t };
+    existing.cpu = { ...run.cpu, ...(existing.cpu || {}) };
+    byTime.set(run.t, existing);
+  });
+
+  return Array.from(byTime.values())
+    .sort((a, b) => new Date(a.t) - new Date(b.t))
+    .slice(-MAX_MERGED_HISTORY_RUNS);
 }
 
 function renderLoadError(error) {

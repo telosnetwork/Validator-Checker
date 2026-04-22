@@ -7,7 +7,8 @@ Standalone static rebuild of the validator dashboard shown at https://infinitybl
 - `requirements.md` documents the behavior and data contract derived from the live page and source repository.
 - `index.html`, `styles.css`, and `app.js` implement the standalone app.
 - `scripts/validate_bps.py` generates `validation/latest.json` and `validation/history.json`.
-- The app tries local `validation/*.json` first, then local `data/*.json`, then falls back to the live public snapshots at `https://infinitybloc.io/validation/`.
+- The app tries local `validation/*.json` first, then local `data/*.json`.
+- CPU timing history is also merged from `https://infinitybloc.io/validation/history.json` so benchmark data can continue coming from the original repo while its GitHub secret remains there.
 - `.github/workflows/validate.yml` refreshes validation snapshots every six hours and can also be run manually from GitHub Actions.
 
 ## Run

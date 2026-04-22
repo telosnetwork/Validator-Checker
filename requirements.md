@@ -62,7 +62,7 @@ Required producer fields:
 
 ### History Snapshot
 
-The app must optionally load historical validation data. It should support `data/history.json` for local snapshots and may fall back to `https://infinitybloc.io/validation/history.json` for live public data.
+The app must optionally load historical validation data. It should support `validation/history.json` and `data/history.json` for local snapshots. It should also merge CPU timing data from `https://infinitybloc.io/validation/history.json` so benchmark data can continue coming from the original validation repo.
 
 Required shape:
 
@@ -121,6 +121,7 @@ The data generation process is external to the browser app. The source repositor
 
 - The app must load latest validation data before rendering summary metrics or the table.
 - The app should load history data when available.
+- When both local history and legacy Infinity Bloc history are available, local API latency and missed-block data take precedence, while legacy CPU data fills or extends `runs[].cpu`.
 - If latest data cannot load, show a clear error state.
 - If history cannot load, keep the table and summary usable while showing an empty chart state.
 - If there are no producers, show an empty data state.
