@@ -18,7 +18,8 @@ from typing import Optional, Tuple
 from urllib.parse import urlparse
 
 # ── Chain constants ──────────────────────────────────────────────────────────
-TELOS_API        = "https://mainnet.telos.net"
+TELOS_API         = "https://mainnet.telos.net"
+TELOS_TESTNET_API = "https://testnet.telos.net"
 MAINNET_CHAIN_ID = "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
 TESTNET_CHAIN_ID = "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
 
@@ -33,11 +34,14 @@ MAX_HISTORY  = 56   # ~14 days at 6-hour intervals
 
 # ────────────────────────────────────────────────────────────────────────────
 
-async def get_active_schedule(session: aiohttp.ClientSession) -> set:
+async def get_active_schedule(
+    session: aiohttp.ClientSession,
+    api_url: str = TELOS_API,
+) -> set:
     """Return the set of account names currently producing blocks."""
     try:
         async with session.get(
-            f"{TELOS_API}/v1/chain/get_producer_schedule",
+            f"{api_url}/v1/chain/get_producer_schedule",
             timeout=FETCH_TIMEOUT, ssl=NO_SSL,
         ) as resp:
             data = await resp.json(content_type=None)
@@ -48,13 +52,16 @@ async def get_active_schedule(session: aiohttp.ClientSession) -> set:
         return set()
 
 
-async def get_all_producers(session: aiohttp.ClientSession) -> list:
+async def get_all_producers(
+    session: aiohttp.ClientSession,
+    api_url: str = TELOS_API,
+) -> list:
     """Fetch all registered BPs, return only is_active=1 ones."""
     producers, lower_bound = [], ""
     while True:
         try:
             async with session.post(
-                f"{TELOS_API}/v1/chain/get_producers",
+                f"{api_url}/v1/chain/get_producers",
                 json={"json": True, "limit": 100, "lower_bound": lower_bound},
                 timeout=FETCH_TIMEOUT, ssl=NO_SSL,
             ) as resp:
@@ -93,14 +100,19 @@ async def check_ssl(session: aiohttp.ClientSession, endpoint: str) -> bool:
         return False
 
 
-async def check_api(session: aiohttp.ClientSession, endpoint: str) -> Tuple[bool, int]:
+async def check_api(
+    session: aiohttp.ClientSession,
+    endpoint: str,
+    expected_chain_id: Optional[str] = None,
+) -> Tuple[bool, int]:
     url = endpoint.rstrip("/") + "/v1/chain/get_info"
     t0  = time.monotonic()
     try:
         async with session.get(url, timeout=CHECK_TIMEOUT, ssl=NO_SSL) as resp:
             if resp.status == 200:
                 data = await resp.json(content_type=None)
-                if data.get("chain_id"):
+                chain_id = data.get("chain_id")
+                if chain_id and (not expected_chain_id or chain_id == expected_chain_id):
                     return True, int((time.monotonic() - t0) * 1000)
     except Exception:
         pass
@@ -128,6 +140,13 @@ def metadata_url(base_url: str, path: str) -> str:
     if parsed.scheme in {"http", "https"}:
         return clean_path
     return f"{base_url.rstrip('/')}/{clean_path.lstrip('/')}"
+
+
+def normalize_producer_url(url: str) -> str:
+    base_url = (url or "").strip().rstrip("/")
+    if base_url and not base_url.startswith(("http://", "https://")):
+        base_url = "https://" + base_url
+    return base_url
 
 
 async def resolve_bp_json(
@@ -159,13 +178,46 @@ async def resolve_bp_json(
     return None, errors, None
 
 
+async def resolve_testnet_bp_json(
+    session: aiohttp.ClientSession, base_url: str
+) -> Tuple[Optional[dict], list]:
+    errors = []
+
+    chains_data = await fetch_json(session, f"{base_url}/chains.json")
+    if chains_data:
+        chains = chains_data.get("chains", {})
+        bp_path = chains.get(TESTNET_CHAIN_ID)
+        if bp_path:
+            bp_url = metadata_url(base_url, bp_path)
+            bp_json = await fetch_json(session, bp_url)
+            if bp_json:
+                return bp_json, errors
+            errors.append(f"Testnet bp.json at {bp_url} unreachable — trying /bp.json")
+        else:
+            errors.append("Testnet chain ID missing from chains.json — trying /bp.json")
+    else:
+        errors.append("Testnet chains.json missing — trying /bp.json")
+
+    bp_json = await fetch_json(session, f"{base_url}/bp.json")
+    if bp_json:
+        return bp_json, errors
+
+    errors.append("Testnet /bp.json also unreachable")
+    return None, errors
+
+
 async def validate_producer(
     session: aiohttp.ClientSession,
     producer: dict,
     active_names: set,
+    testnet_producers: Optional[dict] = None,
 ) -> dict:
     owner    = producer["owner"]
-    base_url = producer.get("url", "").strip().rstrip("/")
+    base_url = normalize_producer_url(producer.get("url", ""))
+    testnet_producer = (testnet_producers or {}).get(owner)
+    testnet_base_url = normalize_producer_url(
+        testnet_producer.get("url", "") if testnet_producer else ""
+    )
 
     result = {
         "owner":                owner,
@@ -179,6 +231,7 @@ async def validate_producer(
         "sslVerifiedTestNet":   False,
         "apiVerifiedTestNet":   False,
         "apiResponseMsTestNet": -1,
+        "testnetUrl":           testnet_base_url or None,
         "missedBlocksPerRotation": producer.get("missed_blocks_per_rotation", 0),
         "lifetimeMissedBlocks":    producer.get("lifetime_missed_blocks", 0),
         "lifetimeProducedBlocks":  producer.get("lifetime_produced_blocks", 0),
@@ -192,9 +245,6 @@ async def validate_producer(
     if not base_url:
         result["validationErrors"] = ["No URL registered on chain"]
         return result
-
-    if not base_url.startswith(("http://", "https://")):
-        base_url = "https://" + base_url
 
     bp_json, errors, testnet_path = await resolve_bp_json(session, base_url)
 
@@ -216,7 +266,7 @@ async def validate_producer(
     if ssl_ep:
         ssl_ok, (api_ok, api_ms) = await asyncio.gather(
             check_ssl(session, ssl_ep),
-            check_api(session, ssl_ep),
+            check_api(session, ssl_ep, MAINNET_CHAIN_ID),
         )
         result["sslVerified"]   = ssl_ok
         result["apiVerified"]   = api_ok
@@ -228,14 +278,17 @@ async def validate_producer(
     else:
         errors.append("No ssl_endpoint found in bp.json nodes")
 
-    if testnet_path:
+    if testnet_base_url:
+        testnet_json, testnet_errors = await resolve_testnet_bp_json(session, testnet_base_url)
+        errors.extend(testnet_errors)
+    elif testnet_path:
         testnet_json = await fetch_json(session, metadata_url(base_url, testnet_path))
         if testnet_json:
             testnet_ep = best_endpoint(testnet_json.get("nodes", []))
             if testnet_ep:
                 ssl_ok, (api_ok, api_ms) = await asyncio.gather(
                     check_ssl(session, testnet_ep),
-                    check_api(session, testnet_ep),
+                    check_api(session, testnet_ep, TESTNET_CHAIN_ID),
                 )
                 result["sslVerifiedTestNet"]    = ssl_ok
                 result["apiVerifiedTestNet"]    = api_ok
@@ -246,6 +299,25 @@ async def validate_producer(
                     errors.append(f"Testnet API failed: {testnet_ep}")
         else:
             errors.append("Testnet bp.json missing or unreachable")
+    else:
+        testnet_json = None
+
+    if testnet_base_url and testnet_json:
+        testnet_ep = best_endpoint(testnet_json.get("nodes", []))
+        if testnet_ep:
+            ssl_ok, (api_ok, api_ms) = await asyncio.gather(
+                check_ssl(session, testnet_ep),
+                check_api(session, testnet_ep, TESTNET_CHAIN_ID),
+            )
+            result["sslVerifiedTestNet"]    = ssl_ok
+            result["apiVerifiedTestNet"]    = api_ok
+            result["apiResponseMsTestNet"]  = api_ms
+            if not ssl_ok:
+                errors.append(f"Testnet SSL failed: {testnet_ep}")
+            if not api_ok:
+                errors.append(f"Testnet API failed: {testnet_ep}")
+        else:
+            errors.append("No testnet ssl_endpoint found in bp.json nodes")
 
     result["validationErrors"] = errors
     return result
@@ -361,18 +433,25 @@ def update_history(
 async def main():
     connector = aiohttp.TCPConnector(limit=30, ssl=False)
     async with aiohttp.ClientSession(connector=connector) as session:
-        print("Fetching active schedule and producer list…", file=sys.stderr)
-        schedule_task  = asyncio.create_task(get_active_schedule(session))
-        producers_task = asyncio.create_task(get_all_producers(session))
-        active_names, all_active = await asyncio.gather(schedule_task, producers_task)
+        print("Fetching active schedule and producer lists…", file=sys.stderr)
+        schedule_task          = asyncio.create_task(get_active_schedule(session, TELOS_API))
+        producers_task         = asyncio.create_task(get_all_producers(session, TELOS_API))
+        testnet_producers_task = asyncio.create_task(get_all_producers(session, TELOS_TESTNET_API))
+        active_names, all_active, testnet_active = await asyncio.gather(
+            schedule_task,
+            producers_task,
+            testnet_producers_task,
+        )
+        testnet_by_owner = {p["owner"]: p for p in testnet_active}
 
     print(f"Active schedule: {len(active_names)} | Total is_active=1: {len(all_active)}",
           file=sys.stderr)
+    print(f"Testnet is_active=1: {len(testnet_active)}", file=sys.stderr)
 
     connector = aiohttp.TCPConnector(limit=30, ssl=False)
     async with aiohttp.ClientSession(connector=connector) as session:
         results = await asyncio.gather(
-            *[validate_producer(session, p, active_names) for p in all_active]
+            *[validate_producer(session, p, active_names, testnet_by_owner) for p in all_active]
         )
 
     passing = sum(1 for r in results if r["sslVerified"] and r["apiVerified"])

@@ -107,7 +107,9 @@ The data generation process is external to the browser app. The source repositor
 - Select an SSL API endpoint by preferring query nodes, then producer nodes, then seed nodes.
 - Check mainnet SSL validity.
 - Check mainnet API health through `/v1/chain/get_info` and record response time.
-- If a testnet path exists in `chains.json`, repeat SSL and API checks for testnet.
+- Fetch active testnet producer registrations from `https://testnet.telos.net/v1/chain/get_producers`.
+- For testnet checks, prefer the producer's matching testnet registration URL when present.
+- If no matching testnet registration exists, use the testnet path from mainnet `chains.json` when present.
 - Record seed P2P endpoint when available.
 - Preserve validation errors for missing files, failed SSL, failed API, and missing endpoints.
 - Optionally push benchmark transactions to measure CPU execution time by block producer.
