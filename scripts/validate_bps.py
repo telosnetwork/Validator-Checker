@@ -27,6 +27,10 @@ FETCH_TIMEOUT = aiohttp.ClientTimeout(total=10)
 CHECK_TIMEOUT = aiohttp.ClientTimeout(total=8)
 STRICT_SSL    = ssl.create_default_context()
 NO_SSL        = False
+REQUEST_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; TelosValidatorChecker/1.0; +https://validators.telos.net)",
+    "Accept": "application/json,text/plain,*/*",
+}
 
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
 HISTORY_PATH = os.path.join(SCRIPT_DIR, "..", "validation", "history.json")
@@ -432,7 +436,7 @@ def update_history(
 
 async def main():
     connector = aiohttp.TCPConnector(limit=30, ssl=False)
-    async with aiohttp.ClientSession(connector=connector) as session:
+    async with aiohttp.ClientSession(connector=connector, headers=REQUEST_HEADERS) as session:
         print("Fetching active schedule and producer lists…", file=sys.stderr)
         schedule_task          = asyncio.create_task(get_active_schedule(session, TELOS_API))
         producers_task         = asyncio.create_task(get_all_producers(session, TELOS_API))
@@ -449,7 +453,7 @@ async def main():
     print(f"Testnet is_active=1: {len(testnet_active)}", file=sys.stderr)
 
     connector = aiohttp.TCPConnector(limit=30, ssl=False)
-    async with aiohttp.ClientSession(connector=connector) as session:
+    async with aiohttp.ClientSession(connector=connector, headers=REQUEST_HEADERS) as session:
         results = await asyncio.gather(
             *[validate_producer(session, p, active_names, testnet_by_owner) for p in all_active]
         )
