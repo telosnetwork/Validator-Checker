@@ -182,7 +182,7 @@ function renderLoadError(error) {
   els.chartArea.hidden = true;
   els.chartEmpty.hidden = false;
   els.chartEmpty.textContent = "Latest validation data could not be loaded.";
-  els.producerRows.innerHTML = `<tr><td colspan="11" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
+  els.producerRows.innerHTML = `<tr><td colspan="13" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
 }
 
@@ -437,15 +437,14 @@ function renderTable() {
   let rows = state.producers.filter(matchesQuery).filter(matchesFilter);
 
   if (state.sortKey) {
-    rows = [...rows].sort((a, b) => compareProducerValues(a, b, state.sortKey));
-    if (!state.sortAsc) rows.reverse();
+    rows = [...rows].sort((a, b) => compareProducerValues(a, b, state.sortKey, state.sortAsc));
   }
 
   updateSortButtons();
   els.tableSummary.textContent = `${rows.length} of ${state.producers.length} producers shown`;
 
   if (!rows.length) {
-    els.producerRows.innerHTML = `<tr><td colspan="11" class="table-empty">No producers match the current view.</td></tr>`;
+    els.producerRows.innerHTML = `<tr><td colspan="13" class="table-empty">No producers match the current view.</td></tr>`;
     return;
   }
 
@@ -463,6 +462,7 @@ function renderProducerRow(producer, index) {
   const errors = Array.isArray(producer.validationErrors) ? producer.validationErrors : [];
   const errorText = errors.length ? escapeHtml(errors.join(" | ")) : "";
   const missed = Number(producer.missedBlocksPerRotation);
+  const cpuUs = latestHistoryValue(producer.owner, "cpu");
 
   return `
     <tr>
@@ -477,9 +477,11 @@ function renderProducerRow(producer, index) {
       <td>${statusPill(Boolean(producer.sslVerified), true)}</td>
       <td>${statusPill(Boolean(producer.apiVerified), true)}</td>
       <td>${latency(producer.apiResponseMs)}</td>
+      <td>${timing(cpuUs, "us")}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.sslVerifiedTestNet), true) : statusPill(false, false)}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.apiVerifiedTestNet), true) : statusPill(false, false)}</td>
       <td>${hasTestnet && producer.apiVerifiedTestNet ? latency(producer.apiResponseMsTestNet) : `<span class="latency none">-</span>`}</td>
+      <td>${timing(producer.cpuUsTestNet, "us")}</td>
       <td class="numeric">${Number.isFinite(missed) ? missed : 0}</td>
       <td class="error-list">${errorText}</td>
     </tr>
@@ -509,21 +511,41 @@ function matchesFilter(producer) {
   return true;
 }
 
-function compareProducerValues(a, b, key) {
-  const aValue = a[key];
-  const bValue = b[key];
+function compareProducerValues(a, b, key, ascending) {
+  const direction = ascending ? 1 : -1;
+  const aValue = producerSortValue(a, key);
+  const bValue = producerSortValue(b, key);
 
   if (typeof aValue === "boolean" || typeof bValue === "boolean") {
-    return Number(Boolean(bValue)) - Number(Boolean(aValue));
+    return (Number(Boolean(aValue)) - Number(Boolean(bValue))) * direction;
   }
 
   const aNumber = Number(aValue);
   const bNumber = Number(bValue);
-  if (Number.isFinite(aNumber) && Number.isFinite(bNumber)) {
-    return aNumber - bNumber;
+  const aHasNumber = Number.isFinite(aNumber);
+  const bHasNumber = Number.isFinite(bNumber);
+  if (aHasNumber || bHasNumber) {
+    if (aHasNumber && bHasNumber) return (aNumber - bNumber) * direction;
+    return aHasNumber ? -1 : 1;
   }
 
-  return String(aValue || "").localeCompare(String(bValue || ""));
+  return String(aValue || "").localeCompare(String(bValue || "")) * direction;
+}
+
+function producerSortValue(producer, key) {
+  if (key === "cpuUs") return latestHistoryValue(producer.owner, "cpu");
+  return producer[key];
+}
+
+function latestHistoryValue(producerName, field) {
+  for (let index = state.historyRuns.length - 1; index >= 0; index -= 1) {
+    const value = state.historyRuns[index] && state.historyRuns[index][field]
+      ? state.historyRuns[index][field][producerName]
+      : null;
+    const number = Number(value);
+    if (Number.isFinite(number) && number >= 0) return number;
+  }
+  return null;
 }
 
 function updateSortButtons() {
@@ -551,6 +573,12 @@ function latency(value) {
   if (!Number.isFinite(ms) || ms < 0) return `<span class="latency none">-</span>`;
   const className = ms < 300 ? "fast" : ms >= 800 ? "slow" : "";
   return `<span class="latency ${className}">${ms} ms</span>`;
+}
+
+function timing(value, unit) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number < 0) return `<span class="timing none">-</span>`;
+  return `<span class="timing">${number} ${escapeHtml(unit)}</span>`;
 }
 
 function hasTestnetData(producer) {
