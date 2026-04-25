@@ -300,9 +300,66 @@ main {
   stroke-linecap: round;
 }
 
+.chart-series.is-hovered .chart-line {
+  stroke-width: 3;
+}
+
 .chart-point {
   stroke: #ffffff;
   stroke-width: 1.5;
+}
+
+.chart-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 14;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: stroke;
+  cursor: crosshair;
+}
+
+.chart-point-hit {
+  fill: transparent;
+  stroke: none;
+  pointer-events: all;
+  cursor: crosshair;
+}
+
+.chart-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  min-width: 164px;
+  max-width: min(280px, calc(100% - 24px));
+  padding: 10px 12px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(185, 194, 204, 0.96);
+  border-radius: 8px;
+  box-shadow: 0 12px 26px rgba(28, 36, 45, 0.18);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 120ms ease;
+}
+
+.chart-tooltip:not([hidden]) {
+  opacity: 1;
+}
+
+.chart-tooltip-name {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.chart-tooltip-meta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
 }
 
 .empty-state {

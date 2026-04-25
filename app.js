@@ -72,6 +72,7 @@ function cacheElements() {
   els.chartArea = document.getElementById("chartArea");
   els.chartEmpty = document.getElementById("chartEmpty");
   els.historyChart = document.getElementById("historyChart");
+  els.chartTooltip = document.getElementById("chartTooltip");
   els.chartLegend = document.getElementById("chartLegend");
   els.producerSearch = document.getElementById("producerSearch");
   els.tableSummary = document.getElementById("tableSummary");
@@ -209,6 +210,7 @@ function mergeHistoryRuns(primaryRuns, legacyCpuRuns) {
 }
 
 function renderLoadError(error) {
+  hideChartTooltip();
   els.statusLine.textContent = `Unable to load validator data: ${error.message}`;
   els.metrics.innerHTML = "";
   els.chartArea.hidden = true;
@@ -279,6 +281,7 @@ function renderChart() {
   const seriesNames = getCurrentSeriesNames();
   const visibleNames = seriesNames.filter((name) => !state.hiddenSeries.has(name));
 
+  hideChartTooltip();
   els.chartHeading.textContent = config.heading;
   els.chartSubhead.textContent = `${runs.length} history runs - ${seriesNames.length} producers tracked`;
   els.chartLegend.innerHTML = renderLegend(seriesNames);
@@ -360,7 +363,9 @@ function drawChart(runs, visibleNames, config) {
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   const values = [];
+  const hoverTargets = new Map();
   const nameIndex = new Map(getCurrentSeriesNames().map((name, index) => [name, index]));
+  let hoverId = 0;
 
   visibleNames.forEach((name) => {
     runs.forEach((run) => {
@@ -402,19 +407,35 @@ function drawChart(runs, visibleNames, config) {
         const value = getRunValue(run, name, config.field);
         return value === null ? null : { x: xFor(runIndex), y: yFor(value), value, run };
       });
-      const paths = makePaths(points, config.spanGaps);
-      const pathMarkup = paths
-        .map((path) => `<path class="chart-line" d="${path}" stroke="${color}"></path>`)
+      const segments = makePaths(points, config.spanGaps);
+      const pathMarkup = segments
+        .map((segment) => {
+          const key = `hover-${hoverId++}`;
+          hoverTargets.set(key, { name, points: segment });
+          const path = pathFromPoints(segment);
+          return `
+            <path class="chart-line" d="${path}" stroke="${color}"></path>
+            ${segment.length > 1 ? `<path class="chart-hit" d="${path}" data-hover-key="${key}"></path>` : ""}
+          `;
+        })
         .join("");
       const pointMarkup = points
         .filter(Boolean)
-        .map((point) => `
-          <circle class="chart-point" cx="${point.x}" cy="${point.y}" r="${config.pointRadius}" fill="${color}">
-            <title>${escapeHtml(`${name}: ${point.value} ${config.unit} - ${formatDateTime(point.run.t)}`)}</title>
-          </circle>
-        `)
+        .map((point) => {
+          const key = `hover-${hoverId++}`;
+          hoverTargets.set(key, { name, points: [point] });
+          return `
+            <circle class="chart-point" cx="${point.x}" cy="${point.y}" r="${config.pointRadius}" fill="${color}"></circle>
+            <circle class="chart-point-hit" cx="${point.x}" cy="${point.y}" r="${Math.max(config.pointRadius + 4, 7)}" data-hover-key="${key}"></circle>
+          `;
+        })
         .join("");
-      return pathMarkup + pointMarkup;
+      return `
+        <g class="chart-series" data-series="${escapeAttribute(name)}">
+          ${pathMarkup}
+          ${pointMarkup}
+        </g>
+      `;
     })
     .join("");
 
@@ -428,6 +449,7 @@ function drawChart(runs, visibleNames, config) {
     ${xLabels}
     ${lines}
   `;
+  bindChartInteractions(hoverTargets, width, config);
 }
 
 function getRunValue(run, producerName, field) {
@@ -447,22 +469,108 @@ function makePaths(points, spanGaps) {
     }
 
     if (!spanGaps && current.length) {
-      paths.push(pathFromPoints(current));
+      paths.push(current);
       current = [];
     }
   });
 
   if (current.length) {
-    paths.push(pathFromPoints(current));
+    paths.push(current);
   }
 
-  return paths.filter(Boolean);
+  return paths.filter((path) => path.length);
 }
 
 function pathFromPoints(points) {
   if (!points.length) return "";
   if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
   return points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`).join(" ");
+}
+
+function bindChartInteractions(hoverTargets, viewBoxWidth, config) {
+  const hoverables = els.historyChart.querySelectorAll("[data-hover-key]");
+  hoverables.forEach((element) => {
+    const hoverData = hoverTargets.get(element.dataset.hoverKey);
+    if (!hoverData) return;
+
+    element.addEventListener("pointermove", (event) => {
+      const point = getNearestPoint(hoverData.points, getSvgPointerX(event, viewBoxWidth));
+      if (!point) return;
+      setHoveredSeries(hoverData.name);
+      showChartTooltip(
+        `
+          <div class="chart-tooltip-name">${escapeHtml(hoverData.name)}</div>
+          <div class="chart-tooltip-meta">${escapeHtml(`${formatNumber(point.value)} ${config.unit}`)}<br>${escapeHtml(formatDateTime(point.run.t))}</div>
+        `,
+        event.clientX,
+        event.clientY,
+      );
+    });
+  });
+
+  els.historyChart.onpointermove = (event) => {
+    if (!event.target.closest("[data-hover-key]")) {
+      clearHoveredSeries();
+      hideChartTooltip();
+    }
+  };
+
+  els.chartArea.onpointerleave = () => {
+    clearHoveredSeries();
+    hideChartTooltip();
+  };
+}
+
+function getSvgPointerX(event, viewBoxWidth) {
+  const rect = els.historyChart.getBoundingClientRect();
+  if (!rect.width) return 0;
+  const percent = (event.clientX - rect.left) / rect.width;
+  return percent * viewBoxWidth;
+}
+
+function getNearestPoint(points, x) {
+  if (!points.length) return null;
+  return points.reduce((closest, point) => {
+    if (!closest) return point;
+    return Math.abs(point.x - x) < Math.abs(closest.x - x) ? point : closest;
+  }, null);
+}
+
+function setHoveredSeries(name) {
+  els.historyChart.querySelectorAll(".chart-series").forEach((group) => {
+    group.classList.toggle("is-hovered", group.dataset.series === name);
+  });
+}
+
+function clearHoveredSeries() {
+  els.historyChart.querySelectorAll(".chart-series.is-hovered").forEach((group) => {
+    group.classList.remove("is-hovered");
+  });
+}
+
+function showChartTooltip(content, clientX, clientY) {
+  els.chartTooltip.innerHTML = content;
+  els.chartTooltip.hidden = false;
+
+  const bounds = els.chartArea.getBoundingClientRect();
+  const tooltipBounds = els.chartTooltip.getBoundingClientRect();
+  const gap = 14;
+  let left = clientX - bounds.left + gap;
+  let top = clientY - bounds.top + gap;
+
+  if (left + tooltipBounds.width > bounds.width - 8) {
+    left = Math.max(8, clientX - bounds.left - tooltipBounds.width - gap);
+  }
+  if (top + tooltipBounds.height > bounds.height - 8) {
+    top = Math.max(8, clientY - bounds.top - tooltipBounds.height - gap);
+  }
+
+  els.chartTooltip.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
+}
+
+function hideChartTooltip() {
+  if (!els.chartTooltip) return;
+  els.chartTooltip.hidden = true;
 }
 
 function renderTable() {
