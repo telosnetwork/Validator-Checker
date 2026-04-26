@@ -454,7 +454,7 @@ main {
 
 table {
   width: 100%;
-  min-width: 1080px;
+  min-width: 1160px;
   border-collapse: collapse;
 }
 
@@ -558,10 +558,16 @@ tbody tr:hover td {
 }
 
 .latency,
-.timing {
+.timing,
+.version-text {
   color: var(--yellow);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.version-text {
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .latency.fast {
@@ -573,7 +579,8 @@ tbody tr:hover td {
 }
 
 .latency.none,
-.timing.none {
+.timing.none,
+.version-text.none {
   color: var(--muted);
 }
 

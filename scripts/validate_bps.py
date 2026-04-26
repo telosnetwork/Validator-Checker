@@ -108,7 +108,7 @@ async def check_api(
     session: aiohttp.ClientSession,
     endpoint: str,
     expected_chain_id: Optional[str] = None,
-) -> Tuple[bool, int]:
+) -> Tuple[bool, int, Optional[str]]:
     url = endpoint.rstrip("/") + "/v1/chain/get_info"
     t0  = time.monotonic()
     try:
@@ -116,11 +116,16 @@ async def check_api(
             if resp.status == 200:
                 data = await resp.json(content_type=None)
                 chain_id = data.get("chain_id")
+                version = (
+                    data.get("server_version_string")
+                    or data.get("server_full_version_string")
+                    or data.get("server_version")
+                )
                 if chain_id and (not expected_chain_id or chain_id == expected_chain_id):
-                    return True, int((time.monotonic() - t0) * 1000)
+                    return True, int((time.monotonic() - t0) * 1000), version
     except Exception:
         pass
-    return False, -1
+    return False, -1, None
 
 
 def best_endpoint(nodes: list) -> Optional[str]:
@@ -232,9 +237,11 @@ async def validate_producer(
         "sslVerified":          False,
         "apiVerified":          False,
         "apiResponseMs":        -1,
+        "nodeosVersion":        None,
         "sslVerifiedTestNet":   False,
         "apiVerifiedTestNet":   False,
         "apiResponseMsTestNet": -1,
+        "nodeosVersionTestNet": None,
         "testnetUrl":           testnet_base_url or None,
         "missedBlocksPerRotation": producer.get("missed_blocks_per_rotation", 0),
         "lifetimeMissedBlocks":    producer.get("lifetime_missed_blocks", 0),
@@ -268,13 +275,14 @@ async def validate_producer(
 
     ssl_ep = best_endpoint(nodes)
     if ssl_ep:
-        ssl_ok, (api_ok, api_ms) = await asyncio.gather(
+        ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
             check_ssl(session, ssl_ep),
             check_api(session, ssl_ep, MAINNET_CHAIN_ID),
         )
         result["sslVerified"]   = ssl_ok
         result["apiVerified"]   = api_ok
         result["apiResponseMs"] = api_ms
+        result["nodeosVersion"] = api_version
         if not ssl_ok:
             errors.append(f"SSL failed: {ssl_ep}")
         if not api_ok:
@@ -290,13 +298,14 @@ async def validate_producer(
         if testnet_json:
             testnet_ep = best_endpoint(testnet_json.get("nodes", []))
             if testnet_ep:
-                ssl_ok, (api_ok, api_ms) = await asyncio.gather(
+                ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
                     check_ssl(session, testnet_ep),
                     check_api(session, testnet_ep, TESTNET_CHAIN_ID),
                 )
                 result["sslVerifiedTestNet"]    = ssl_ok
                 result["apiVerifiedTestNet"]    = api_ok
                 result["apiResponseMsTestNet"]  = api_ms
+                result["nodeosVersionTestNet"]  = api_version
                 if not ssl_ok:
                     errors.append(f"Testnet SSL failed: {testnet_ep}")
                 if not api_ok:
@@ -309,13 +318,14 @@ async def validate_producer(
     if testnet_base_url and testnet_json:
         testnet_ep = best_endpoint(testnet_json.get("nodes", []))
         if testnet_ep:
-            ssl_ok, (api_ok, api_ms) = await asyncio.gather(
+            ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
                 check_ssl(session, testnet_ep),
                 check_api(session, testnet_ep, TESTNET_CHAIN_ID),
             )
             result["sslVerifiedTestNet"]    = ssl_ok
             result["apiVerifiedTestNet"]    = api_ok
             result["apiResponseMsTestNet"]  = api_ms
+            result["nodeosVersionTestNet"]  = api_version
             if not ssl_ok:
                 errors.append(f"Testnet SSL failed: {testnet_ep}")
             if not api_ok:

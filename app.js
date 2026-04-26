@@ -216,7 +216,7 @@ function renderLoadError(error) {
   els.chartArea.hidden = true;
   els.chartEmpty.hidden = false;
   els.chartEmpty.textContent = "Latest validation data could not be loaded.";
-  els.producerRows.innerHTML = `<tr><td colspan="10" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
+  els.producerRows.innerHTML = `<tr><td colspan="11" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
 }
 
@@ -584,7 +584,7 @@ function renderTable() {
   els.tableSummary.textContent = `${rows.length} of ${state.producers.length} producers shown`;
 
   if (!rows.length) {
-    els.producerRows.innerHTML = `<tr><td colspan="10" class="table-empty">No producers match the current view.</td></tr>`;
+    els.producerRows.innerHTML = `<tr><td colspan="11" class="table-empty">No producers match the current view.</td></tr>`;
     return;
   }
 
@@ -616,6 +616,7 @@ function renderProducerRow(producer, index) {
       </td>
       <td>${statusPill(Boolean(producer.sslVerified), true)}</td>
       <td>${statusPill(Boolean(producer.apiVerified), true)}</td>
+      <td>${versionText(producer.nodeosVersion)}</td>
       <td>${timing(cpuUs, "us")}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.sslVerifiedTestNet), true) : statusPill(false, false)}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.apiVerifiedTestNet), true) : statusPill(false, false)}</td>
@@ -716,6 +717,12 @@ function timing(value, unit) {
   const number = Number(value);
   if (!Number.isFinite(number) || number < 0) return `<span class="timing none">-</span>`;
   return `<span class="timing">${number} ${escapeHtml(unit)}</span>`;
+}
+
+function versionText(value) {
+  const version = String(value || "").trim();
+  if (!version) return `<span class="version-text none">-</span>`;
+  return `<span class="version-text">${escapeHtml(version)}</span>`;
 }
 
 function hasTestnetData(producer) {
