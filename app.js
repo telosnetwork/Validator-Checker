@@ -216,7 +216,7 @@ function renderLoadError(error) {
   els.chartArea.hidden = true;
   els.chartEmpty.hidden = false;
   els.chartEmpty.textContent = "Latest validation data could not be loaded.";
-  els.producerRows.innerHTML = `<tr><td colspan="12" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
+  els.producerRows.innerHTML = `<tr><td colspan="14" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
 }
 
@@ -584,7 +584,7 @@ function renderTable() {
   els.tableSummary.textContent = `${rows.length} of ${state.producers.length} producers shown`;
 
   if (!rows.length) {
-    els.producerRows.innerHTML = `<tr><td colspan="12" class="table-empty">No producers match the current view.</td></tr>`;
+    els.producerRows.innerHTML = `<tr><td colspan="14" class="table-empty">No producers match the current view.</td></tr>`;
     return;
   }
 
@@ -616,10 +616,20 @@ function renderProducerRow(producer, index) {
       </td>
       <td>${statusPill(Boolean(producer.sslVerified), true)}</td>
       <td>${statusPill(Boolean(producer.apiVerified), true)}</td>
+      <td>${finalizerPill(
+        Boolean(producer.hasActiveFinalizerKey),
+        producer.scheduleType === "active",
+        producer.activeFinalizerKeys
+      )}</td>
       <td>${versionText(producer.nodeosVersion)}</td>
       <td>${timing(cpuUs, "us")}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.sslVerifiedTestNet), true) : statusPill(false, false)}</td>
       <td>${hasTestnet ? statusPill(Boolean(producer.apiVerifiedTestNet), true) : statusPill(false, false)}</td>
+      <td>${finalizerPill(
+        Boolean(producer.hasActiveFinalizerKeyTestNet),
+        producer.scheduleTypeTestNet === "active",
+        producer.activeFinalizerKeysTestNet
+      )}</td>
       <td>${hasTestnet ? versionText(producer.nodeosVersionTestNet) : versionText(null)}</td>
       <td class="numeric">${Number.isFinite(missed) ? missed : 0}</td>
       <td class="error-list">${errorText}</td>
@@ -724,6 +734,16 @@ function versionText(value) {
   const version = String(value || "").trim();
   if (!version) return `<span class="version-text none">-</span>`;
   return `<span class="version-text">${escapeHtml(version)}</span>`;
+}
+
+function finalizerPill(value, available, keys) {
+  if (!available) return `<span class="status-pill none">None</span>`;
+  const title = Array.isArray(keys) && keys.length
+    ? ` title="${escapeAttribute(keys.join("\n"))}"`
+    : "";
+  return value
+    ? `<span class="status-pill pass"${title}>Pass</span>`
+    : `<span class="status-pill fail">Fail</span>`;
 }
 
 function hasTestnetData(producer) {

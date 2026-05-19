@@ -41,8 +41,8 @@ MAX_HISTORY  = 56   # ~14 days at 6-hour intervals
 async def get_active_schedule(
     session: aiohttp.ClientSession,
     api_url: str = TELOS_API,
-) -> set:
-    """Return the set of account names currently producing blocks."""
+) -> dict:
+    """Return active schedule authorities keyed by producer name."""
     try:
         async with session.get(
             f"{api_url}/v1/chain/get_producer_schedule",
@@ -50,10 +50,17 @@ async def get_active_schedule(
         ) as resp:
             data = await resp.json(content_type=None)
         producers = (data.get("active") or {}).get("producers", [])
-        return {p["producer_name"] for p in producers}
+        return {
+            p["producer_name"]: extract_authority_keys(
+                p.get("authority"),
+                fallback_key=p.get("producer_key") or p.get("block_signing_key"),
+            )
+            for p in producers
+            if p.get("producer_name")
+        }
     except Exception as e:
         print(f"[ERROR] get_producer_schedule: {e}", file=sys.stderr)
-        return set()
+        return {}
 
 
 async def get_all_producers(
@@ -158,6 +165,27 @@ def normalize_producer_url(url: str) -> str:
     return base_url
 
 
+def extract_authority_keys(authority: object, fallback_key: Optional[str] = None) -> list:
+    """Extract active block-signing/finalizer public keys from authority variants."""
+    if isinstance(authority, list) and len(authority) == 2 and isinstance(authority[1], dict):
+        authority = authority[1]
+
+    if isinstance(authority, dict):
+        keys = authority.get("keys", [])
+        extracted = [
+            item.get("key")
+            for item in keys
+            if isinstance(item, dict) and item.get("key")
+        ]
+        if extracted:
+            return extracted
+
+    if fallback_key:
+        return [fallback_key]
+
+    return []
+
+
 async def resolve_bp_json(
     session: aiohttp.ClientSession, base_url: str
 ) -> Tuple[Optional[dict], list, Optional[str]]:
@@ -218,8 +246,9 @@ async def resolve_testnet_bp_json(
 async def validate_producer(
     session: aiohttp.ClientSession,
     producer: dict,
-    active_names: set,
+    active_schedule: dict,
     testnet_producers: Optional[dict] = None,
+    testnet_active_schedule: Optional[dict] = None,
 ) -> dict:
     owner    = producer["owner"]
     base_url = normalize_producer_url(producer.get("url", ""))
@@ -227,20 +256,31 @@ async def validate_producer(
     testnet_base_url = normalize_producer_url(
         testnet_producer.get("url", "") if testnet_producer else ""
     )
+    mainnet_finalizer_keys = active_schedule.get(owner, [])
+    testnet_finalizer_keys = (testnet_active_schedule or {}).get(owner, [])
 
     result = {
         "owner":                owner,
-        "scheduleType":         "active" if owner in active_names else "standby",
+        "scheduleType":         "active" if owner in active_schedule else "standby",
+        "scheduleTypeTestNet":  (
+            "active"
+            if owner in (testnet_active_schedule or {})
+            else "standby" if testnet_producer else None
+        ),
         "total_votes":          producer.get("total_votes", "0"),
         "url":                  base_url,
         "is_active":            producer.get("is_active", 0),
         "sslVerified":          False,
         "apiVerified":          False,
         "apiResponseMs":        -1,
+        "hasActiveFinalizerKey": bool(mainnet_finalizer_keys),
+        "activeFinalizerKeys":  mainnet_finalizer_keys,
         "nodeosVersion":        None,
         "sslVerifiedTestNet":   False,
         "apiVerifiedTestNet":   False,
         "apiResponseMsTestNet": -1,
+        "hasActiveFinalizerKeyTestNet": bool(testnet_finalizer_keys),
+        "activeFinalizerKeysTestNet": testnet_finalizer_keys,
         "nodeosVersionTestNet": None,
         "testnetUrl":           testnet_base_url or None,
         "missedBlocksPerRotation": producer.get("missed_blocks_per_rotation", 0),
@@ -450,22 +490,28 @@ async def main():
         print("Fetching active schedule and producer lists…", file=sys.stderr)
         schedule_task          = asyncio.create_task(get_active_schedule(session, TELOS_API))
         producers_task         = asyncio.create_task(get_all_producers(session, TELOS_API))
+        testnet_schedule_task  = asyncio.create_task(get_active_schedule(session, TELOS_TESTNET_API))
         testnet_producers_task = asyncio.create_task(get_all_producers(session, TELOS_TESTNET_API))
-        active_names, all_active, testnet_active = await asyncio.gather(
+        active_schedule, all_active, testnet_active_schedule, testnet_active = await asyncio.gather(
             schedule_task,
             producers_task,
+            testnet_schedule_task,
             testnet_producers_task,
         )
         testnet_by_owner = {p["owner"]: p for p in testnet_active}
 
-    print(f"Active schedule: {len(active_names)} | Total is_active=1: {len(all_active)}",
+    print(f"Active schedule: {len(active_schedule)} | Total is_active=1: {len(all_active)}",
           file=sys.stderr)
-    print(f"Testnet is_active=1: {len(testnet_active)}", file=sys.stderr)
+    print(f"Testnet active schedule: {len(testnet_active_schedule)} | Testnet is_active=1: {len(testnet_active)}",
+          file=sys.stderr)
 
     connector = aiohttp.TCPConnector(limit=30, ssl=False)
     async with aiohttp.ClientSession(connector=connector, headers=REQUEST_HEADERS) as session:
         results = await asyncio.gather(
-            *[validate_producer(session, p, active_names, testnet_by_owner) for p in all_active]
+            *[
+                validate_producer(session, p, active_schedule, testnet_by_owner, testnet_active_schedule)
+                for p in all_active
+            ]
         )
 
     passing = sum(1 for r in results if r["sslVerified"] and r["apiVerified"])
