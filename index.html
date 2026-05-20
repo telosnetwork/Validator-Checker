@@ -21,41 +21,11 @@
 
       <section class="workspace" aria-label="Validator dashboard">
         <div class="tabs" role="tablist" aria-label="Dashboard sections">
-          <button class="tab is-active" id="tab-performance" type="button" role="tab" aria-selected="true" aria-controls="panel-performance" data-tab="performance">Performance</button>
-          <button class="tab" id="tab-producers" type="button" role="tab" aria-selected="false" aria-controls="panel-producers" data-tab="producers">Producer Table</button>
+          <button class="tab is-active" id="tab-producers" type="button" role="tab" aria-selected="true" aria-controls="panel-producers" data-tab="producers">Producer Table</button>
+          <button class="tab" id="tab-performance" type="button" role="tab" aria-selected="false" aria-controls="panel-performance" data-tab="performance">Performance</button>
         </div>
 
-        <section class="panel is-active" id="panel-performance" role="tabpanel" aria-labelledby="tab-performance">
-          <div class="toolbar">
-            <div>
-              <h2 id="chartHeading">CPU Time</h2>
-              <p class="subtle" id="chartSubhead">Waiting for history...</p>
-            </div>
-            <div class="toolbar-actions" aria-label="Chart controls">
-              <div class="segmented" role="group" aria-label="Chart mode">
-                <button type="button" class="mode-button is-active" data-mode="cpu" aria-pressed="true">CPU Time</button>
-                <button type="button" class="mode-button" data-mode="api" aria-pressed="false">API Latency</button>
-                <button type="button" class="mode-button" data-mode="missed" aria-pressed="false">Missed Blocks</button>
-              </div>
-              <button type="button" class="plain-button" id="showTableButton">View Table</button>
-            </div>
-          </div>
-
-          <div class="chart-shell">
-            <div class="chart-area" id="chartArea">
-              <svg id="historyChart" role="img" aria-labelledby="chartHeading chartSubhead"></svg>
-              <div class="chart-tooltip" id="chartTooltip" hidden></div>
-            </div>
-            <div class="empty-state" id="chartEmpty" hidden></div>
-            <div class="legend" id="chartLegend" aria-label="Producer series"></div>
-            <div class="legend-actions">
-              <button type="button" class="plain-button" id="selectAllSeries">Select All</button>
-              <button type="button" class="plain-button" id="deselectAllSeries">Deselect All</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="panel" id="panel-producers" role="tabpanel" aria-labelledby="tab-producers" hidden>
+        <section class="panel is-active" id="panel-producers" role="tabpanel" aria-labelledby="tab-producers">
           <div class="controls">
             <label class="search-label" for="producerSearch">Search</label>
             <input id="producerSearch" class="search-input" type="search" placeholder="Producer, country, error...">
@@ -97,6 +67,36 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-performance" role="tabpanel" aria-labelledby="tab-performance" hidden>
+          <div class="toolbar">
+            <div>
+              <h2 id="chartHeading">CPU Time</h2>
+              <p class="subtle" id="chartSubhead">Waiting for history...</p>
+            </div>
+            <div class="toolbar-actions" aria-label="Chart controls">
+              <div class="segmented" role="group" aria-label="Chart mode">
+                <button type="button" class="mode-button is-active" data-mode="cpu" aria-pressed="true">CPU Time</button>
+                <button type="button" class="mode-button" data-mode="api" aria-pressed="false">API Latency</button>
+                <button type="button" class="mode-button" data-mode="missed" aria-pressed="false">Missed Blocks</button>
+              </div>
+              <button type="button" class="plain-button" id="showTableButton">View Table</button>
+            </div>
+          </div>
+
+          <div class="chart-shell">
+            <div class="chart-area" id="chartArea">
+              <svg id="historyChart" role="img" aria-labelledby="chartHeading chartSubhead"></svg>
+              <div class="chart-tooltip" id="chartTooltip" hidden></div>
+            </div>
+            <div class="empty-state" id="chartEmpty" hidden></div>
+            <div class="legend" id="chartLegend" aria-label="Producer series"></div>
+            <div class="legend-actions">
+              <button type="button" class="plain-button" id="selectAllSeries">Select All</button>
+              <button type="button" class="plain-button" id="deselectAllSeries">Deselect All</button>
+            </div>
           </div>
         </section>
       </section>
