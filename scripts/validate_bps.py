@@ -10,7 +10,9 @@ import asyncio
 import aiohttp
 import json
 import os
+import secrets
 import ssl
+import struct
 import sys
 import time
 from datetime import datetime, timezone
@@ -25,8 +27,13 @@ TESTNET_CHAIN_ID = "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f3
 
 FETCH_TIMEOUT = aiohttp.ClientTimeout(total=10)
 CHECK_TIMEOUT = aiohttp.ClientTimeout(total=8)
+P2P_TIMEOUT_SEC = 5
 STRICT_SSL    = ssl.create_default_context()
 NO_SSL        = False
+NET_VERSION_BASE = 0x04B5
+NET_VERSION_MAX = 12
+HANDSHAKE_MESSAGE_TYPE = 0
+GO_AWAY_MESSAGE_TYPE = 2
 REQUEST_HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; TelosValidatorChecker/1.0; +https://validators.telos.net)",
     "Accept": "application/json,text/plain,*/*",
@@ -135,6 +142,139 @@ async def check_api(
     return False, -1, None
 
 
+def normalize_p2p_endpoint(endpoint: str) -> str:
+    return (endpoint or "").strip().rstrip("/")
+
+
+def parse_p2p_endpoint(endpoint: str) -> Tuple[Optional[str], Optional[int]]:
+    parsed = urlparse(endpoint if "://" in endpoint else f"tcp://{endpoint}")
+    return parsed.hostname, parsed.port
+
+
+def pack_varuint(value: int) -> bytes:
+    if value < 0:
+        raise ValueError("varuint must be non-negative")
+
+    output = bytearray()
+    while True:
+        byte = value & 0x7F
+        value >>= 7
+        if value:
+            byte |= 0x80
+        output.append(byte)
+        if not value:
+            return bytes(output)
+
+
+def unpack_varuint(data: bytes, offset: int = 0) -> Tuple[int, int]:
+    value = 0
+    shift = 0
+    while True:
+        if offset >= len(data):
+            raise ValueError("Unexpected end of payload while reading varuint")
+        byte = data[offset]
+        offset += 1
+        value |= (byte & 0x7F) << shift
+        if not (byte & 0x80):
+            return value, offset
+        shift += 7
+        if shift > 35:
+            raise ValueError("varuint too large")
+
+
+def pack_string(value: str) -> bytes:
+    encoded = value.encode("utf-8")
+    return pack_varuint(len(encoded)) + encoded
+
+
+def empty_public_key_bytes() -> bytes:
+    return pack_varuint(0) + (b"\x00" * 33)
+
+
+def empty_signature_bytes() -> bytes:
+    return pack_varuint(0) + (b"\x00" * 65)
+
+
+def make_handshake_payload(expected_chain_id: str) -> bytes:
+    node_id = secrets.token_bytes(32)
+    now_ns = int(time.time_ns())
+    node_id_prefix = node_id.hex()[:7]
+    payload = bytearray()
+    payload += pack_varuint(HANDSHAKE_MESSAGE_TYPE)
+    payload += struct.pack("<H", NET_VERSION_BASE + NET_VERSION_MAX)
+    payload += bytes.fromhex(expected_chain_id)
+    payload += node_id
+    payload += empty_public_key_bytes()
+    payload += struct.pack("<q", now_ns)
+    payload += b"\x00" * 32
+    payload += empty_signature_bytes()
+    payload += pack_string(f"127.0.0.1:0 - {node_id_prefix}")
+    payload += struct.pack("<I", 0)
+    payload += b"\x00" * 32
+    payload += struct.pack("<I", 0)
+    payload += b"\x00" * 32
+    payload += pack_string("osx")
+    payload += pack_string("Telos Validator Checker")
+    payload += struct.pack("<h", 1)
+    return bytes(payload)
+
+
+def parse_message_type(payload: bytes) -> int:
+    msg_type, _ = unpack_varuint(payload, 0)
+    return msg_type
+
+
+def handshake_matches_chain(payload: bytes, expected_chain_id: str) -> bool:
+    _, offset = unpack_varuint(payload, 0)
+    offset += 2  # network_version
+    if offset + 32 > len(payload):
+        return False
+    return payload[offset:offset + 32] == bytes.fromhex(expected_chain_id)
+
+
+async def check_p2p(endpoint: str, expected_chain_id: str) -> bool:
+    host, port = parse_p2p_endpoint(endpoint)
+    if not host or not port:
+        return False
+
+    reader = None
+    writer = None
+    try:
+        reader, writer = await asyncio.wait_for(
+            asyncio.open_connection(host, port),
+            timeout=P2P_TIMEOUT_SEC,
+        )
+
+        payload = make_handshake_payload(expected_chain_id)
+        writer.write(struct.pack("<I", len(payload)) + payload)
+        await asyncio.wait_for(writer.drain(), timeout=P2P_TIMEOUT_SEC)
+
+        deadline = time.monotonic() + P2P_TIMEOUT_SEC
+        while time.monotonic() < deadline:
+            remaining = max(deadline - time.monotonic(), 0.1)
+            header = await asyncio.wait_for(reader.readexactly(4), timeout=remaining)
+            message_size = struct.unpack("<I", header)[0]
+            if message_size <= 0:
+                return False
+            payload = await asyncio.wait_for(reader.readexactly(message_size), timeout=remaining)
+            msg_type = parse_message_type(payload)
+            if msg_type == HANDSHAKE_MESSAGE_TYPE:
+                return handshake_matches_chain(payload, expected_chain_id)
+            if msg_type == GO_AWAY_MESSAGE_TYPE:
+                return False
+
+        return False
+    except Exception:
+        return False
+    finally:
+        if writer is not None:
+            writer.close()
+            try:
+                await writer.wait_closed()
+            except Exception:
+                pass
+
+
 def best_endpoint(nodes: list) -> Optional[str]:
     for preferred in (["query"], ["producer"], ["seed"]):
         for node in nodes:
@@ -144,6 +284,24 @@ def best_endpoint(nodes: list) -> Optional[str]:
                 ep = node.get("ssl_endpoint", "").strip().rstrip("/")
                 if ep:
                     return ep
+    return None
+
+
+def best_p2p_endpoint(nodes: list) -> Optional[str]:
+    for preferred in (["seed"], ["producer"], ["query"]):
+        for node in nodes:
+            nt    = node.get("node_type", "")
+            types = nt if isinstance(nt, list) else [nt]
+            if any(t in types for t in preferred):
+                ep = normalize_p2p_endpoint(node.get("p2p_endpoint", ""))
+                if ep:
+                    return ep
+
+    for node in nodes:
+        ep = normalize_p2p_endpoint(node.get("p2p_endpoint", ""))
+        if ep:
+            return ep
+
     return None
 
 
@@ -273,12 +431,14 @@ async def validate_producer(
         "sslVerified":          False,
         "apiVerified":          False,
         "apiResponseMs":        -1,
+        "p2pVerified":          False,
         "hasActiveFinalizerKey": bool(mainnet_finalizer_keys),
         "activeFinalizerKeys":  mainnet_finalizer_keys,
         "nodeosVersion":        None,
         "sslVerifiedTestNet":   False,
         "apiVerifiedTestNet":   False,
         "apiResponseMsTestNet": -1,
+        "p2pVerifiedTestNet":   False,
         "hasActiveFinalizerKeyTestNet": bool(testnet_finalizer_keys),
         "activeFinalizerKeysTestNet": testnet_finalizer_keys,
         "nodeosVersionTestNet": None,
@@ -288,6 +448,7 @@ async def validate_producer(
         "lifetimeProducedBlocks":  producer.get("lifetime_produced_blocks", 0),
         "timesKicked":             producer.get("times_kicked", 0),
         "p2pEndpoint":          None,
+        "p2pEndpointTestNet":   None,
         "org":                  {},
         "validationErrors":     [],
         "checkedAt":            datetime.now(timezone.utc).isoformat(),
@@ -306,12 +467,14 @@ async def validate_producer(
     result["org"] = bp_json.get("org", {})
     nodes         = bp_json.get("nodes", [])
 
-    for node in nodes:
-        nt    = node.get("node_type", "")
-        types = nt if isinstance(nt, list) else [nt]
-        if "seed" in types and node.get("p2p_endpoint"):
-            result["p2pEndpoint"] = node["p2p_endpoint"]
-            break
+    p2p_ep = best_p2p_endpoint(nodes)
+    if p2p_ep:
+        result["p2pEndpoint"] = p2p_ep
+        result["p2pVerified"] = await check_p2p(p2p_ep, MAINNET_CHAIN_ID)
+        if not result["p2pVerified"]:
+            errors.append(f"P2P handshake failed: {p2p_ep}")
+    else:
+        errors.append("No p2p_endpoint found in bp.json nodes")
 
     ssl_ep = best_endpoint(nodes)
     if ssl_ep:
@@ -336,6 +499,15 @@ async def validate_producer(
     elif testnet_path:
         testnet_json = await fetch_json(session, metadata_url(base_url, testnet_path))
         if testnet_json:
+            testnet_p2p_ep = best_p2p_endpoint(testnet_json.get("nodes", []))
+            if testnet_p2p_ep:
+                result["p2pEndpointTestNet"] = testnet_p2p_ep
+                result["p2pVerifiedTestNet"] = await check_p2p(testnet_p2p_ep, TESTNET_CHAIN_ID)
+                if not result["p2pVerifiedTestNet"]:
+                    errors.append(f"Testnet P2P handshake failed: {testnet_p2p_ep}")
+            else:
+                errors.append("No testnet p2p_endpoint found in bp.json nodes")
+
             testnet_ep = best_endpoint(testnet_json.get("nodes", []))
             if testnet_ep:
                 ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
@@ -356,6 +528,15 @@ async def validate_producer(
         testnet_json = None
 
     if testnet_base_url and testnet_json:
+        testnet_p2p_ep = best_p2p_endpoint(testnet_json.get("nodes", []))
+        if testnet_p2p_ep:
+            result["p2pEndpointTestNet"] = testnet_p2p_ep
+            result["p2pVerifiedTestNet"] = await check_p2p(testnet_p2p_ep, TESTNET_CHAIN_ID)
+            if not result["p2pVerifiedTestNet"]:
+                errors.append(f"Testnet P2P handshake failed: {testnet_p2p_ep}")
+        else:
+            errors.append("No testnet p2p_endpoint found in bp.json nodes")
+
         testnet_ep = best_endpoint(testnet_json.get("nodes", []))
         if testnet_ep:
             ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(

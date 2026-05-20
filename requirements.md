@@ -48,14 +48,17 @@ Required producer fields:
 - `sslVerified`: mainnet SSL check result.
 - `apiVerified`: mainnet API check result.
 - `apiResponseMs`: mainnet API response time in milliseconds, or `-1` when unavailable.
+- `p2pVerified`: whether the selected mainnet P2P endpoint completed an Antelope handshake for the expected chain.
 - `sslVerifiedTestNet`: testnet SSL check result.
 - `apiVerifiedTestNet`: testnet API check result.
 - `apiResponseMsTestNet`: testnet API response time in milliseconds, or `-1` when unavailable.
+- `p2pVerifiedTestNet`: whether the selected testnet P2P endpoint completed an Antelope handshake for the expected chain.
 - `missedBlocksPerRotation`: current missed block count per rotation.
 - `lifetimeMissedBlocks`: lifetime missed blocks.
 - `lifetimeProducedBlocks`: lifetime produced blocks.
 - `timesKicked`: chain kick count.
-- `p2pEndpoint`: seed endpoint when available.
+- `p2pEndpoint`: preferred mainnet P2P endpoint when available.
+- `p2pEndpointTestNet`: preferred testnet P2P endpoint when available.
 - `org`: parsed BP metadata from `bp.json`.
 - `validationErrors`: array of human-readable validation errors.
 - `checkedAt`: ISO timestamp for the producer check.
@@ -105,12 +108,14 @@ The data generation process is external to the browser app. The source repositor
 - Resolve each producer metadata file through `chains.json` and fallback to `/bp.json`.
 - Treat `chains.json` paths as relative to the registered producer URL, whether the registered URL and metadata path include trailing or leading slashes.
 - Select an SSL API endpoint by preferring query nodes, then producer nodes, then seed nodes.
+- Select a P2P endpoint by preferring seed nodes, then producer nodes, then query nodes.
 - Check mainnet SSL validity.
 - Check mainnet API health through `/v1/chain/get_info` and record response time.
+- Check whether the selected mainnet P2P endpoint completes an Antelope handshake for the expected chain.
 - Fetch active testnet producer registrations from `https://testnet.telos.net/v1/chain/get_producers`.
 - For testnet checks, prefer the producer's matching testnet registration URL when present.
 - If no matching testnet registration exists, use the testnet path from mainnet `chains.json` when present.
-- Record seed P2P endpoint when available.
+- Check whether the selected testnet P2P endpoint completes an Antelope handshake for the expected chain.
 - Preserve validation errors for missing files, failed SSL, failed API, and missing endpoints.
 - Optionally push benchmark transactions to measure CPU execution time by block producer.
 - Append history entries containing API latency, missed blocks, and optional CPU timing.
@@ -168,9 +173,11 @@ The app must display a producer table with:
 - Website link from `org.website` or fallback `url`.
 - Mainnet SSL status.
 - Mainnet API status.
+- Mainnet P2P status.
 - Mainnet CPU timing from the latest available `history.runs[].cpu` value for the producer.
 - Testnet SSL status or `None` when no testnet data appears available.
 - Testnet API status or `None` when no testnet data appears available.
+- Testnet P2P status or `None` when no testnet P2P endpoint appears available.
 - Missed blocks per rotation.
 - Validation errors.
 
@@ -186,7 +193,7 @@ The table must support:
   - Testnet passing
   - Active
   - Standby
-- Sortable columns for schedule type, producer, SSL, API, CPU timing, testnet SSL, testnet API, and missed blocks.
+- Sortable columns for schedule type, producer, SSL, API, P2P, CPU timing, testnet SSL, testnet API, testnet P2P, and missed blocks.
 - Sort direction toggling when the active sort column is clicked again.
 
 ## Non-Functional Requirements
