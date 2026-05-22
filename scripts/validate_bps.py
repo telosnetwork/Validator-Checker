@@ -401,6 +401,8 @@ async def resolve_bp_json(
     session: aiohttp.ClientSession, base_url: str
 ) -> Tuple[Optional[dict], list, Optional[str]]:
     errors = []
+    fallback_errors = []
+    testnet_path = None
 
     chains_data = await fetch_json(session, f"{base_url}/chains.json")
     if chains_data:
@@ -412,16 +414,17 @@ async def resolve_bp_json(
             bp_json = await fetch_json(session, bp_url)
             if bp_json:
                 return bp_json, errors, testnet_path
-            errors.append(f"bp.json at {bp_url} unreachable — trying /bp.json")
+            fallback_errors.append(f"bp.json at {bp_url} unreachable — trying /bp.json")
         else:
-            errors.append("Mainnet chain ID missing from chains.json — trying /bp.json")
+            fallback_errors.append("Mainnet chain ID missing from chains.json — trying /bp.json")
     else:
-        errors.append("chains.json missing — trying /bp.json")
+        fallback_errors.append("chains.json missing — trying /bp.json")
 
     bp_json = await fetch_json(session, f"{base_url}/bp.json")
     if bp_json:
-        return bp_json, errors, None
+        return bp_json, errors, testnet_path
 
+    errors.extend(fallback_errors)
     errors.append("/bp.json also unreachable")
     return None, errors, None
 
@@ -430,6 +433,7 @@ async def resolve_testnet_bp_json(
     session: aiohttp.ClientSession, base_url: str
 ) -> Tuple[Optional[dict], list]:
     errors = []
+    fallback_errors = []
 
     chains_data = await fetch_json(session, f"{base_url}/chains.json")
     if chains_data:
@@ -440,16 +444,17 @@ async def resolve_testnet_bp_json(
             bp_json = await fetch_json(session, bp_url)
             if bp_json:
                 return bp_json, errors
-            errors.append(f"Testnet bp.json at {bp_url} unreachable — trying /bp.json")
+            fallback_errors.append(f"Testnet bp.json at {bp_url} unreachable — trying /bp.json")
         else:
-            errors.append("Testnet chain ID missing from chains.json — trying /bp.json")
+            fallback_errors.append("Testnet chain ID missing from chains.json — trying /bp.json")
     else:
-        errors.append("Testnet chains.json missing — trying /bp.json")
+        fallback_errors.append("Testnet chains.json missing — trying /bp.json")
 
     bp_json = await fetch_json(session, f"{base_url}/bp.json")
     if bp_json:
         return bp_json, errors
 
+    errors.extend(fallback_errors)
     errors.append("Testnet /bp.json also unreachable")
     return None, errors
 
