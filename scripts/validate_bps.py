@@ -11,6 +11,7 @@ import aiohttp
 import json
 import os
 import secrets
+import shutil
 import ssl
 import struct
 import sys
@@ -25,7 +26,8 @@ TELOS_TESTNET_API = "https://testnet.telos.net"
 MAINNET_CHAIN_ID = "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
 TESTNET_CHAIN_ID = "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
 
-FETCH_TIMEOUT = aiohttp.ClientTimeout(total=10)
+FETCH_TIMEOUT_SECONDS = 10
+FETCH_TIMEOUT = aiohttp.ClientTimeout(total=FETCH_TIMEOUT_SECONDS)
 CHECK_TIMEOUT = aiohttp.ClientTimeout(total=8)
 P2P_TIMEOUT_SEC = 5
 STRICT_SSL    = ssl.create_default_context()
@@ -38,6 +40,7 @@ REQUEST_HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; TelosValidatorChecker/1.0; +https://validators.telos.net)",
     "Accept": "application/json,text/plain,*/*",
 }
+CURL_PATH = shutil.which("curl")
 
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
 HISTORY_PATH = os.path.join(SCRIPT_DIR, "..", "validation", "history.json")
@@ -105,6 +108,49 @@ async def fetch_json(session: aiohttp.ClientSession, url: str) -> Optional[dict]
                 return await resp.json(content_type=None)
     except Exception:
         pass
+    return await fetch_json_with_curl(url)
+
+
+async def fetch_json_with_curl(url: str) -> Optional[dict]:
+    """Fallback for public metadata hosts that reject Python's TLS stack."""
+    if not CURL_PATH or not url.startswith(("http://", "https://")):
+        return None
+
+    args = [
+        CURL_PATH,
+        "--silent",
+        "--show-error",
+        "--location",
+        "--fail",
+        "--compressed",
+        "--max-time",
+        str(FETCH_TIMEOUT_SECONDS),
+        "--header",
+        f"User-Agent: {REQUEST_HEADERS['User-Agent']}",
+        "--header",
+        f"Accept: {REQUEST_HEADERS['Accept']}",
+        url,
+    ]
+
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *args,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.DEVNULL,
+        )
+        stdout, _ = await asyncio.wait_for(
+            proc.communicate(),
+            timeout=FETCH_TIMEOUT_SECONDS + 2,
+        )
+        if proc.returncode != 0:
+            return None
+
+        data = json.loads(stdout.decode("utf-8-sig"))
+        if isinstance(data, dict):
+            return data
+    except Exception:
+        pass
+
     return None
 
 
