@@ -453,7 +453,9 @@ function drawChart(runs, visibleNames, config) {
 }
 
 function getRunValue(run, producerName, field) {
-  const raw = run[field] ? run[field][producerName] : null;
+  const series = run && run[field];
+  if (!series || !Object.prototype.hasOwnProperty.call(series, producerName)) return null;
+  const raw = series[producerName];
   const value = Number(raw);
   return Number.isFinite(value) ? value : null;
 }
@@ -680,9 +682,9 @@ function producerSortValue(producer, key) {
 
 function latestHistoryValue(producerName, field) {
   for (let index = state.historyRuns.length - 1; index >= 0; index -= 1) {
-    const value = state.historyRuns[index] && state.historyRuns[index][field]
-      ? state.historyRuns[index][field][producerName]
-      : null;
+    const series = state.historyRuns[index] && state.historyRuns[index][field];
+    if (!series || !Object.prototype.hasOwnProperty.call(series, producerName)) continue;
+    const value = series[producerName];
     const number = Number(value);
     if (Number.isFinite(number) && number >= 0) return number;
   }
@@ -718,6 +720,7 @@ function latency(value) {
 }
 
 function timing(value, unit) {
+  if (value === null || value === undefined || value === "") return `<span class="timing none">-</span>`;
   const number = Number(value);
   if (!Number.isFinite(number) || number < 0) return `<span class="timing none">-</span>`;
   return `<span class="timing">${number} ${escapeHtml(unit)}</span>`;
