@@ -112,7 +112,8 @@ async def check_ssl(session: aiohttp.ClientSession, endpoint: str) -> bool:
     try:
         if not endpoint.startswith("https://"):
             return False
-        async with session.get(endpoint.rstrip("/"), timeout=CHECK_TIMEOUT, ssl=STRICT_SSL) as resp:
+        url = endpoint.rstrip("/") + "/v1/chain/get_info"
+        async with session.get(url, timeout=CHECK_TIMEOUT, ssl=STRICT_SSL) as resp:
             return resp.status < 500
     except Exception:
         return False
