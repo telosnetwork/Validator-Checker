@@ -414,18 +414,26 @@ async def resolve_bp_json(
             bp_json = await fetch_json(session, bp_url)
             if bp_json:
                 return bp_json, errors, testnet_path
-            fallback_errors.append(f"bp.json at {bp_url} unreachable — trying /bp.json")
+            fallback_errors.append(
+                f"bp.json at {bp_url} unreachable — trying /bp.json and /telos.json"
+            )
         else:
-            fallback_errors.append("Mainnet chain ID missing from chains.json — trying /bp.json")
+            fallback_errors.append(
+                "Mainnet chain ID missing from chains.json — trying /bp.json and /telos.json"
+            )
     else:
-        fallback_errors.append("chains.json missing — trying /bp.json")
+        fallback_errors.append("chains.json missing — trying /bp.json and /telos.json")
 
     bp_json = await fetch_json(session, f"{base_url}/bp.json")
     if bp_json:
         return bp_json, errors, testnet_path
 
+    telos_json = await fetch_json(session, f"{base_url}/telos.json")
+    if telos_json:
+        return telos_json, errors, testnet_path
+
     errors.extend(fallback_errors)
-    errors.append("/bp.json also unreachable")
+    errors.append("/bp.json and /telos.json also unreachable")
     return None, errors, None
 
 
