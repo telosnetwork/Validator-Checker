@@ -331,6 +331,12 @@ def best_endpoint(nodes: list) -> Optional[str]:
                 ep = node.get("ssl_endpoint", "").strip().rstrip("/")
                 if ep:
                     return ep
+
+    for node in nodes:
+        ep = node.get("ssl_endpoint", "").strip().rstrip("/")
+        if ep:
+            return ep
+
     return None
 
 
