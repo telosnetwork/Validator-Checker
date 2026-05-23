@@ -164,14 +164,21 @@ main {
 
 .tabs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 2px;
   padding: 8px 8px 0;
   background: var(--surface-muted);
   border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab {
+  flex: 0 0 auto;
   min-height: 42px;
   padding: 0 16px;
   color: var(--muted);
@@ -479,10 +486,7 @@ main {
 
 .endpoint-panel {
   min-width: 0;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  overflow: hidden;
+  background: transparent;
 }
 
 .endpoint-panel-header {
@@ -491,9 +495,8 @@ main {
   justify-content: space-between;
   gap: 12px;
   min-height: 58px;
-  padding: 12px 14px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border);
-  background: #fbfcfd;
 }
 
 .endpoint-panel-header h3 {
@@ -540,7 +543,7 @@ main {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -573,7 +576,7 @@ a.endpoint-value {
 }
 
 .endpoint-empty {
-  padding: 28px 14px;
+  padding: 28px 0;
   color: var(--muted);
   text-align: center;
 }
@@ -809,27 +812,52 @@ tbody tr:hover td {
   .segmented {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
   }
 
   .mode-button {
     width: 100%;
   }
 
-  .toggle-control {
-    width: 100%;
+  .endpoint-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .endpoint-network {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .endpoint-toggle {
+    width: fit-content;
+    max-width: 100%;
   }
 
   .endpoint-panel-header,
-  .endpoint-actions,
-  .format-control,
-  .format-control select {
+  .endpoint-actions {
     width: 100%;
   }
 
   .endpoint-panel-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .endpoint-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .format-control {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .format-control select {
+    width: 100%;
   }
 
   .chart-area,

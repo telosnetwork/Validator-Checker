@@ -14,6 +14,12 @@ const DATA_SOURCES = {
 };
 
 const MAX_MERGED_HISTORY_RUNS = 112;
+const UI_STATE_STORAGE_KEY = "telos-validator-checker-ui";
+const VALID_TABS = ["producers", "endpoints", "performance"];
+const VALID_CHART_MODES = ["cpu", "api", "missed"];
+const VALID_ENDPOINT_NETWORKS = ["mainnet", "testnet"];
+const VALID_ENDPOINT_KINDS = ["peers", "api"];
+const VALID_PRODUCER_FILTERS = ["all", "passing", "failing", "testnet", "active", "standby"];
 
 const PALETTE = [
   "#1f6fb2",
@@ -66,6 +72,7 @@ const state = {
   query: "",
   sortKey: null,
   sortAsc: true,
+  activeTab: "producers",
   endpointNetwork: "mainnet",
   endpointKind: "peers",
   endpointCopyFormats: {
@@ -81,8 +88,9 @@ document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
   cacheElements();
+  restoreUiState();
   bindEvents();
-  updateCopyFormatOptions();
+  syncControlsFromState();
   await loadData();
 }
 
@@ -113,61 +121,32 @@ function bindEvents() {
   });
 
   document.querySelectorAll("[data-mode]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.chartMode = button.dataset.mode;
-      document.querySelectorAll("[data-mode]").forEach((modeButton) => {
-        const active = modeButton.dataset.mode === state.chartMode;
-        modeButton.classList.toggle("is-active", active);
-        modeButton.setAttribute("aria-pressed", String(active));
-      });
-      renderChart();
-    });
+    button.addEventListener("click", () => setChartMode(button.dataset.mode));
   });
 
   document.querySelectorAll("[data-endpoint-network]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.endpointNetwork = button.dataset.endpointNetwork;
-      document.querySelectorAll("[data-endpoint-network]").forEach((networkButton) => {
-        const active = networkButton.dataset.endpointNetwork === state.endpointNetwork;
-        networkButton.classList.toggle("is-active", active);
-        networkButton.setAttribute("aria-pressed", String(active));
-      });
-      renderEndpoints();
-    });
+    button.addEventListener("click", () => setEndpointNetwork(button.dataset.endpointNetwork));
   });
 
   document.querySelectorAll("[data-endpoint-kind]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.endpointKind = button.dataset.endpointKind;
-      document.querySelectorAll("[data-endpoint-kind]").forEach((kindButton) => {
-        const active = kindButton.dataset.endpointKind === state.endpointKind;
-        kindButton.classList.toggle("is-active", active);
-        kindButton.setAttribute("aria-selected", String(active));
-      });
-      updateCopyFormatOptions();
-      renderEndpoints();
-    });
+    button.addEventListener("click", () => setEndpointKind(button.dataset.endpointKind));
   });
 
   els.copyEndpointListButton.addEventListener("click", () => copyEndpointList());
 
   els.endpointCopyFormat.addEventListener("change", () => {
     state.endpointCopyFormats[state.endpointKind] = els.endpointCopyFormat.value;
+    saveUiState();
   });
 
   els.endpointPassingOnly.addEventListener("change", () => {
     state.endpointPassingOnly = els.endpointPassingOnly.checked;
+    saveUiState();
     renderEndpoints();
   });
 
   document.querySelectorAll("[data-filter]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.filter = button.dataset.filter;
-      document.querySelectorAll("[data-filter]").forEach((filterButton) => {
-        filterButton.classList.toggle("is-active", filterButton.dataset.filter === state.filter);
-      });
-      renderTable();
-    });
+    button.addEventListener("click", () => setProducerFilter(button.dataset.filter));
   });
 
   document.querySelectorAll("[data-sort]").forEach((button) => {
@@ -175,12 +154,14 @@ function bindEvents() {
       const nextKey = button.dataset.sort;
       state.sortAsc = state.sortKey === nextKey ? !state.sortAsc : true;
       state.sortKey = nextKey;
+      saveUiState();
       renderTable();
     });
   });
 
   els.producerSearch.addEventListener("input", () => {
     state.query = els.producerSearch.value.trim().toLowerCase();
+    saveUiState();
     renderTable();
   });
 
@@ -207,6 +188,67 @@ function bindEvents() {
     }
     renderChart();
   });
+}
+
+function restoreUiState() {
+  const saved = readUiState();
+  if (!saved) return;
+
+  if (VALID_TABS.includes(saved.activeTab)) state.activeTab = saved.activeTab;
+  if (VALID_CHART_MODES.includes(saved.chartMode)) state.chartMode = saved.chartMode;
+  if (VALID_ENDPOINT_NETWORKS.includes(saved.endpointNetwork)) state.endpointNetwork = saved.endpointNetwork;
+  if (VALID_ENDPOINT_KINDS.includes(saved.endpointKind)) state.endpointKind = saved.endpointKind;
+  if (VALID_PRODUCER_FILTERS.includes(saved.filter)) state.filter = saved.filter;
+  if (typeof saved.query === "string") state.query = saved.query.slice(0, 160).toLowerCase();
+  if (typeof saved.sortKey === "string" || saved.sortKey === null) state.sortKey = saved.sortKey;
+  if (typeof saved.sortAsc === "boolean") state.sortAsc = saved.sortAsc;
+  if (typeof saved.endpointPassingOnly === "boolean") state.endpointPassingOnly = saved.endpointPassingOnly;
+  if (saved.endpointCopyFormats && typeof saved.endpointCopyFormats === "object") {
+    Object.entries(saved.endpointCopyFormats).forEach(([kind, format]) => {
+      const formats = ENDPOINT_COPY_FORMATS[kind] || [];
+      if (formats.some((item) => item.value === format)) {
+        state.endpointCopyFormats[kind] = format;
+      }
+    });
+  }
+}
+
+function syncControlsFromState() {
+  setTab(state.activeTab, { persist: false });
+  setChartMode(state.chartMode, { persist: false, render: false });
+  setEndpointNetwork(state.endpointNetwork, { persist: false, render: false });
+  setEndpointKind(state.endpointKind, { persist: false, render: false });
+  setProducerFilter(state.filter, { persist: false, render: false });
+  els.producerSearch.value = state.query;
+  els.endpointPassingOnly.checked = state.endpointPassingOnly;
+  updateCopyFormatOptions();
+}
+
+function readUiState() {
+  try {
+    return JSON.parse(localStorage.getItem(UI_STATE_STORAGE_KEY) || "null");
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveUiState() {
+  try {
+    localStorage.setItem(UI_STATE_STORAGE_KEY, JSON.stringify({
+      activeTab: state.activeTab,
+      chartMode: state.chartMode,
+      endpointNetwork: state.endpointNetwork,
+      endpointKind: state.endpointKind,
+      endpointCopyFormats: state.endpointCopyFormats,
+      endpointPassingOnly: state.endpointPassingOnly,
+      filter: state.filter,
+      query: state.query,
+      sortKey: state.sortKey,
+      sortAsc: state.sortAsc,
+    }));
+  } catch (error) {
+    // Ignore storage failures; the app should still work in private or locked-down browsers.
+  }
 }
 
 async function loadData() {
@@ -328,7 +370,10 @@ function renderMetrics() {
     .join("");
 }
 
-function setTab(tabName) {
+function setTab(tabName, options = {}) {
+  if (!VALID_TABS.includes(tabName)) return;
+  const { persist = true } = options;
+  state.activeTab = tabName;
   document.querySelectorAll("[data-tab]").forEach((button) => {
     const active = button.dataset.tab === tabName;
     button.classList.toggle("is-active", active);
@@ -340,6 +385,59 @@ function setTab(tabName) {
     panel.classList.toggle("is-active", active);
     panel.hidden = !active;
   });
+
+  if (persist) saveUiState();
+}
+
+function setChartMode(mode, options = {}) {
+  if (!VALID_CHART_MODES.includes(mode)) return;
+  const { persist = true, render = true } = options;
+  state.chartMode = mode;
+  document.querySelectorAll("[data-mode]").forEach((modeButton) => {
+    const active = modeButton.dataset.mode === state.chartMode;
+    modeButton.classList.toggle("is-active", active);
+    modeButton.setAttribute("aria-pressed", String(active));
+  });
+  if (persist) saveUiState();
+  if (render) renderChart();
+}
+
+function setEndpointNetwork(network, options = {}) {
+  if (!VALID_ENDPOINT_NETWORKS.includes(network)) return;
+  const { persist = true, render = true } = options;
+  state.endpointNetwork = network;
+  document.querySelectorAll("[data-endpoint-network]").forEach((networkButton) => {
+    const active = networkButton.dataset.endpointNetwork === state.endpointNetwork;
+    networkButton.classList.toggle("is-active", active);
+    networkButton.setAttribute("aria-pressed", String(active));
+  });
+  if (persist) saveUiState();
+  if (render) renderEndpoints();
+}
+
+function setEndpointKind(kind, options = {}) {
+  if (!VALID_ENDPOINT_KINDS.includes(kind)) return;
+  const { persist = true, render = true } = options;
+  state.endpointKind = kind;
+  document.querySelectorAll("[data-endpoint-kind]").forEach((kindButton) => {
+    const active = kindButton.dataset.endpointKind === state.endpointKind;
+    kindButton.classList.toggle("is-active", active);
+    kindButton.setAttribute("aria-selected", String(active));
+  });
+  updateCopyFormatOptions();
+  if (persist) saveUiState();
+  if (render) renderEndpoints();
+}
+
+function setProducerFilter(filter, options = {}) {
+  if (!VALID_PRODUCER_FILTERS.includes(filter)) return;
+  const { persist = true, render = true } = options;
+  state.filter = filter;
+  document.querySelectorAll("[data-filter]").forEach((filterButton) => {
+    filterButton.classList.toggle("is-active", filterButton.dataset.filter === state.filter);
+  });
+  if (persist) saveUiState();
+  if (render) renderTable();
 }
 
 function renderChart() {
