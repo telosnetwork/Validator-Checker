@@ -42,6 +42,20 @@ const PALETTE = [
   "#588157",
 ];
 
+const ENDPOINT_COPY_FORMATS = {
+  api: [
+    { value: "plain", label: "Plain list" },
+    { value: "comma", label: "Comma-separated" },
+    { value: "json", label: "JSON array" },
+  ],
+  peers: [
+    { value: "nodeos", label: "nodeos config" },
+    { value: "plain", label: "Plain list" },
+    { value: "comma", label: "Comma-separated" },
+    { value: "json", label: "JSON array" },
+  ],
+};
+
 const state = {
   latest: null,
   producers: [],
@@ -54,7 +68,10 @@ const state = {
   sortAsc: true,
   endpointNetwork: "mainnet",
   endpointKind: "api",
-  endpointCopyFormat: "plain",
+  endpointCopyFormats: {
+    api: "plain",
+    peers: "nodeos",
+  },
   endpointPassingOnly: true,
 };
 
@@ -135,7 +152,7 @@ function bindEvents() {
   els.copyEndpointListButton.addEventListener("click", () => copyEndpointList());
 
   els.endpointCopyFormat.addEventListener("change", () => {
-    state.endpointCopyFormat = els.endpointCopyFormat.value;
+    state.endpointCopyFormats[state.endpointKind] = els.endpointCopyFormat.value;
   });
 
   els.endpointPassingOnly.addEventListener("change", () => {
@@ -763,15 +780,18 @@ function renderEndpointRow(row) {
 }
 
 function updateCopyFormatOptions() {
-  const nodeosOption = Array.from(els.endpointCopyFormat.options).find((option) => option.value === "nodeos");
-  if (nodeosOption) {
-    nodeosOption.disabled = state.endpointKind !== "peers";
-  }
+  const formats = ENDPOINT_COPY_FORMATS[state.endpointKind] || ENDPOINT_COPY_FORMATS.api;
+  const validValues = new Set(formats.map((format) => format.value));
+  const defaultValue = formats[0].value;
+  const selectedValue = validValues.has(state.endpointCopyFormats[state.endpointKind])
+    ? state.endpointCopyFormats[state.endpointKind]
+    : defaultValue;
 
-  if (state.endpointKind !== "peers" && state.endpointCopyFormat === "nodeos") {
-    state.endpointCopyFormat = "plain";
-    els.endpointCopyFormat.value = state.endpointCopyFormat;
-  }
+  state.endpointCopyFormats[state.endpointKind] = selectedValue;
+  els.endpointCopyFormat.innerHTML = formats
+    .map((format) => `<option value="${escapeAttribute(format.value)}">${escapeHtml(format.label)}</option>`)
+    .join("");
+  els.endpointCopyFormat.value = selectedValue;
 }
 
 function formatEndpointCopy(rows, kind, format) {
@@ -791,7 +811,7 @@ function formatEndpointCopy(rows, kind, format) {
 async function copyEndpointList() {
   const kind = state.endpointKind;
   const rows = filterEndpointRows(getEndpointRows(kind, state.endpointNetwork));
-  const text = formatEndpointCopy(rows, kind, state.endpointCopyFormat);
+  const text = formatEndpointCopy(rows, kind, state.endpointCopyFormats[kind]);
   if (!text) return;
 
   try {
