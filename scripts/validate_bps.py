@@ -189,6 +189,34 @@ async def check_api(
     return False, -1, None
 
 
+async def check_api_endpoint(
+    session: aiohttp.ClientSession,
+    endpoint: str,
+    expected_chain_id: str,
+) -> dict:
+    ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
+        check_ssl(session, endpoint),
+        check_api(session, endpoint, expected_chain_id),
+    )
+    return {
+        "endpoint": endpoint,
+        "sslVerified": ssl_ok,
+        "apiVerified": api_ok,
+        "apiResponseMs": api_ms,
+        "nodeosVersion": api_version,
+    }
+
+
+async def check_api_endpoints(
+    session: aiohttp.ClientSession,
+    endpoints: list,
+    expected_chain_id: str,
+) -> list:
+    return list(await asyncio.gather(
+        *[check_api_endpoint(session, endpoint, expected_chain_id) for endpoint in endpoints]
+    ))
+
+
 def normalize_p2p_endpoint(endpoint: str) -> str:
     return (endpoint or "").strip().rstrip("/")
 
@@ -322,6 +350,19 @@ async def check_p2p(endpoint: str, expected_chain_id: str) -> bool:
                 pass
 
 
+async def check_p2p_endpoint(endpoint: str, expected_chain_id: str) -> dict:
+    return {
+        "endpoint": endpoint,
+        "verified": await check_p2p(endpoint, expected_chain_id),
+    }
+
+
+async def check_p2p_endpoints(endpoints: list, expected_chain_id: str) -> list:
+    return list(await asyncio.gather(
+        *[check_p2p_endpoint(endpoint, expected_chain_id) for endpoint in endpoints]
+    ))
+
+
 def best_endpoint(nodes: list) -> Optional[str]:
     for preferred in (["query"], ["producer"], ["seed"]):
         for node in nodes:
@@ -346,6 +387,27 @@ def all_ssl_endpoints(nodes: list) -> list:
         ep = node.get("ssl_endpoint", "").strip().rstrip("/")
         if ep and ep not in endpoints:
             endpoints.append(ep)
+    return endpoints
+
+
+def ordered_ssl_endpoints(nodes: list) -> list:
+    endpoints = []
+
+    def add(endpoint: str) -> None:
+        ep = (endpoint or "").strip().rstrip("/")
+        if ep and ep not in endpoints:
+            endpoints.append(ep)
+
+    for preferred in (["query"], ["producer"], ["seed"]):
+        for node in nodes:
+            nt = node.get("node_type", "")
+            types = nt if isinstance(nt, list) else [nt]
+            if any(t in types for t in preferred):
+                add(node.get("ssl_endpoint", ""))
+
+    for node in nodes:
+        add(node.get("ssl_endpoint", ""))
+
     return endpoints
 
 
@@ -374,6 +436,59 @@ def all_p2p_endpoints(nodes: list) -> list:
         if ep and ep not in endpoints:
             endpoints.append(ep)
     return endpoints
+
+
+def ordered_p2p_endpoints(nodes: list) -> list:
+    endpoints = []
+
+    def add(endpoint: str) -> None:
+        ep = normalize_p2p_endpoint(endpoint)
+        if ep and ep not in endpoints:
+            endpoints.append(ep)
+
+    for preferred in (["seed"], ["producer"], ["query"]):
+        for node in nodes:
+            nt = node.get("node_type", "")
+            types = nt if isinstance(nt, list) else [nt]
+            if any(t in types for t in preferred):
+                add(node.get("p2p_endpoint", ""))
+
+    for node in nodes:
+        add(node.get("p2p_endpoint", ""))
+
+    return endpoints
+
+
+def select_api_endpoint_check(nodes: list, checks: list) -> Optional[dict]:
+    by_endpoint = {check.get("endpoint"): check for check in checks}
+    ordered = ordered_ssl_endpoints(nodes)
+    for endpoint in ordered:
+        check = by_endpoint.get(endpoint)
+        if check and check.get("sslVerified") and check.get("apiVerified"):
+            return check
+
+    for endpoint in ordered:
+        check = by_endpoint.get(endpoint)
+        if check:
+            return check
+
+    return checks[0] if checks else None
+
+
+def select_p2p_endpoint_check(nodes: list, checks: list) -> Optional[dict]:
+    by_endpoint = {check.get("endpoint"): check for check in checks}
+    ordered = ordered_p2p_endpoints(nodes)
+    for endpoint in ordered:
+        check = by_endpoint.get(endpoint)
+        if check and check.get("verified"):
+            return check
+
+    for endpoint in ordered:
+        check = by_endpoint.get(endpoint)
+        if check:
+            return check
+
+    return checks[0] if checks else None
 
 
 def metadata_url(base_url: str, path: str) -> str:
@@ -517,6 +632,7 @@ async def validate_producer(
         "apiResponseMs":        -1,
         "apiEndpoint":          None,
         "apiEndpoints":         [],
+        "apiEndpointChecks":    [],
         "p2pVerified":          False,
         "hasActiveFinalizerKey": bool(mainnet_finalizer_keys),
         "activeFinalizerKeys":  mainnet_finalizer_keys,
@@ -526,6 +642,7 @@ async def validate_producer(
         "apiResponseMsTestNet": -1,
         "apiEndpointTestNet":   None,
         "apiEndpointsTestNet":  [],
+        "apiEndpointChecksTestNet": [],
         "p2pVerifiedTestNet":   False,
         "hasActiveFinalizerKeyTestNet": bool(testnet_finalizer_keys),
         "activeFinalizerKeysTestNet": testnet_finalizer_keys,
@@ -537,8 +654,10 @@ async def validate_producer(
         "timesKicked":             producer.get("times_kicked", 0),
         "p2pEndpoint":          None,
         "p2pEndpoints":         [],
+        "p2pEndpointChecks":    [],
         "p2pEndpointTestNet":   None,
         "p2pEndpointsTestNet":  [],
+        "p2pEndpointChecksTestNet": [],
         "org":                  {},
         "validationErrors":     [],
         "checkedAt":            datetime.now(timezone.utc).isoformat(),
@@ -558,31 +677,31 @@ async def validate_producer(
     nodes         = bp_json.get("nodes", [])
     result["apiEndpoints"] = all_ssl_endpoints(nodes)
     result["p2pEndpoints"] = all_p2p_endpoints(nodes)
+    result["apiEndpointChecks"], result["p2pEndpointChecks"] = await asyncio.gather(
+        check_api_endpoints(session, result["apiEndpoints"], MAINNET_CHAIN_ID),
+        check_p2p_endpoints(result["p2pEndpoints"], MAINNET_CHAIN_ID),
+    )
 
-    p2p_ep = best_p2p_endpoint(nodes)
-    if p2p_ep:
-        result["p2pEndpoint"] = p2p_ep
-        result["p2pVerified"] = await check_p2p(p2p_ep, MAINNET_CHAIN_ID)
+    p2p_check = select_p2p_endpoint_check(nodes, result["p2pEndpointChecks"])
+    if p2p_check:
+        result["p2pEndpoint"] = p2p_check["endpoint"]
+        result["p2pVerified"] = bool(p2p_check["verified"])
         if not result["p2pVerified"]:
-            errors.append(f"P2P handshake failed: {p2p_ep}")
+            errors.append(f"P2P handshake failed: {result['p2pEndpoint']}")
     else:
         errors.append("No p2p_endpoint found in bp.json nodes")
 
-    ssl_ep = best_endpoint(nodes)
-    if ssl_ep:
-        result["apiEndpoint"] = ssl_ep
-        ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
-            check_ssl(session, ssl_ep),
-            check_api(session, ssl_ep, MAINNET_CHAIN_ID),
-        )
-        result["sslVerified"]   = ssl_ok
-        result["apiVerified"]   = api_ok
-        result["apiResponseMs"] = api_ms
-        result["nodeosVersion"] = api_version
-        if not ssl_ok:
-            errors.append(f"SSL failed: {ssl_ep}")
-        if not api_ok:
-            errors.append(f"API failed: {ssl_ep}/v1/chain/get_info")
+    api_check = select_api_endpoint_check(nodes, result["apiEndpointChecks"])
+    if api_check:
+        result["apiEndpoint"] = api_check["endpoint"]
+        result["sslVerified"]   = bool(api_check["sslVerified"])
+        result["apiVerified"]   = bool(api_check["apiVerified"])
+        result["apiResponseMs"] = api_check["apiResponseMs"]
+        result["nodeosVersion"] = api_check["nodeosVersion"]
+        if not result["sslVerified"]:
+            errors.append(f"SSL failed: {result['apiEndpoint']}")
+        if not result["apiVerified"]:
+            errors.append(f"API failed: {result['apiEndpoint']}/v1/chain/get_info")
     else:
         errors.append("No ssl_endpoint found in bp.json nodes")
 
@@ -595,31 +714,31 @@ async def validate_producer(
             testnet_nodes = testnet_json.get("nodes", [])
             result["apiEndpointsTestNet"] = all_ssl_endpoints(testnet_nodes)
             result["p2pEndpointsTestNet"] = all_p2p_endpoints(testnet_nodes)
+            result["apiEndpointChecksTestNet"], result["p2pEndpointChecksTestNet"] = await asyncio.gather(
+                check_api_endpoints(session, result["apiEndpointsTestNet"], TESTNET_CHAIN_ID),
+                check_p2p_endpoints(result["p2pEndpointsTestNet"], TESTNET_CHAIN_ID),
+            )
 
-            testnet_p2p_ep = best_p2p_endpoint(testnet_nodes)
-            if testnet_p2p_ep:
-                result["p2pEndpointTestNet"] = testnet_p2p_ep
-                result["p2pVerifiedTestNet"] = await check_p2p(testnet_p2p_ep, TESTNET_CHAIN_ID)
+            testnet_p2p_check = select_p2p_endpoint_check(testnet_nodes, result["p2pEndpointChecksTestNet"])
+            if testnet_p2p_check:
+                result["p2pEndpointTestNet"] = testnet_p2p_check["endpoint"]
+                result["p2pVerifiedTestNet"] = bool(testnet_p2p_check["verified"])
                 if not result["p2pVerifiedTestNet"]:
-                    errors.append(f"Testnet P2P handshake failed: {testnet_p2p_ep}")
+                    errors.append(f"Testnet P2P handshake failed: {result['p2pEndpointTestNet']}")
             else:
                 errors.append("No testnet p2p_endpoint found in bp.json nodes")
 
-            testnet_ep = best_endpoint(testnet_nodes)
-            if testnet_ep:
-                result["apiEndpointTestNet"] = testnet_ep
-                ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
-                    check_ssl(session, testnet_ep),
-                    check_api(session, testnet_ep, TESTNET_CHAIN_ID),
-                )
-                result["sslVerifiedTestNet"]    = ssl_ok
-                result["apiVerifiedTestNet"]    = api_ok
-                result["apiResponseMsTestNet"]  = api_ms
-                result["nodeosVersionTestNet"]  = api_version
-                if not ssl_ok:
-                    errors.append(f"Testnet SSL failed: {testnet_ep}")
-                if not api_ok:
-                    errors.append(f"Testnet API failed: {testnet_ep}")
+            testnet_api_check = select_api_endpoint_check(testnet_nodes, result["apiEndpointChecksTestNet"])
+            if testnet_api_check:
+                result["apiEndpointTestNet"] = testnet_api_check["endpoint"]
+                result["sslVerifiedTestNet"]    = bool(testnet_api_check["sslVerified"])
+                result["apiVerifiedTestNet"]    = bool(testnet_api_check["apiVerified"])
+                result["apiResponseMsTestNet"]  = testnet_api_check["apiResponseMs"]
+                result["nodeosVersionTestNet"]  = testnet_api_check["nodeosVersion"]
+                if not result["sslVerifiedTestNet"]:
+                    errors.append(f"Testnet SSL failed: {result['apiEndpointTestNet']}")
+                if not result["apiVerifiedTestNet"]:
+                    errors.append(f"Testnet API failed: {result['apiEndpointTestNet']}")
         else:
             errors.append("Testnet bp.json missing or unreachable")
     else:
@@ -629,31 +748,31 @@ async def validate_producer(
         testnet_nodes = testnet_json.get("nodes", [])
         result["apiEndpointsTestNet"] = all_ssl_endpoints(testnet_nodes)
         result["p2pEndpointsTestNet"] = all_p2p_endpoints(testnet_nodes)
+        result["apiEndpointChecksTestNet"], result["p2pEndpointChecksTestNet"] = await asyncio.gather(
+            check_api_endpoints(session, result["apiEndpointsTestNet"], TESTNET_CHAIN_ID),
+            check_p2p_endpoints(result["p2pEndpointsTestNet"], TESTNET_CHAIN_ID),
+        )
 
-        testnet_p2p_ep = best_p2p_endpoint(testnet_nodes)
-        if testnet_p2p_ep:
-            result["p2pEndpointTestNet"] = testnet_p2p_ep
-            result["p2pVerifiedTestNet"] = await check_p2p(testnet_p2p_ep, TESTNET_CHAIN_ID)
+        testnet_p2p_check = select_p2p_endpoint_check(testnet_nodes, result["p2pEndpointChecksTestNet"])
+        if testnet_p2p_check:
+            result["p2pEndpointTestNet"] = testnet_p2p_check["endpoint"]
+            result["p2pVerifiedTestNet"] = bool(testnet_p2p_check["verified"])
             if not result["p2pVerifiedTestNet"]:
-                errors.append(f"Testnet P2P handshake failed: {testnet_p2p_ep}")
+                errors.append(f"Testnet P2P handshake failed: {result['p2pEndpointTestNet']}")
         else:
             errors.append("No testnet p2p_endpoint found in bp.json nodes")
 
-        testnet_ep = best_endpoint(testnet_nodes)
-        if testnet_ep:
-            result["apiEndpointTestNet"] = testnet_ep
-            ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
-                check_ssl(session, testnet_ep),
-                check_api(session, testnet_ep, TESTNET_CHAIN_ID),
-            )
-            result["sslVerifiedTestNet"]    = ssl_ok
-            result["apiVerifiedTestNet"]    = api_ok
-            result["apiResponseMsTestNet"]  = api_ms
-            result["nodeosVersionTestNet"]  = api_version
-            if not ssl_ok:
-                errors.append(f"Testnet SSL failed: {testnet_ep}")
-            if not api_ok:
-                errors.append(f"Testnet API failed: {testnet_ep}")
+        testnet_api_check = select_api_endpoint_check(testnet_nodes, result["apiEndpointChecksTestNet"])
+        if testnet_api_check:
+            result["apiEndpointTestNet"] = testnet_api_check["endpoint"]
+            result["sslVerifiedTestNet"]    = bool(testnet_api_check["sslVerified"])
+            result["apiVerifiedTestNet"]    = bool(testnet_api_check["apiVerified"])
+            result["apiResponseMsTestNet"]  = testnet_api_check["apiResponseMs"]
+            result["nodeosVersionTestNet"]  = testnet_api_check["nodeosVersion"]
+            if not result["sslVerifiedTestNet"]:
+                errors.append(f"Testnet SSL failed: {result['apiEndpointTestNet']}")
+            if not result["apiVerifiedTestNet"]:
+                errors.append(f"Testnet API failed: {result['apiEndpointTestNet']}")
         else:
             errors.append("No testnet ssl_endpoint found in bp.json nodes")
 

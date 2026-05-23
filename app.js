@@ -53,6 +53,7 @@ const state = {
   sortKey: null,
   sortAsc: true,
   endpointNetwork: "mainnet",
+  endpointPassingOnly: true,
 };
 
 const els = {};
@@ -81,6 +82,7 @@ function cacheElements() {
   els.endpointSummary = document.getElementById("endpointSummary");
   els.apiEndpointList = document.getElementById("apiEndpointList");
   els.peerEndpointList = document.getElementById("peerEndpointList");
+  els.endpointPassingOnly = document.getElementById("endpointPassingOnly");
 }
 
 function bindEvents() {
@@ -114,6 +116,11 @@ function bindEvents() {
 
   document.querySelectorAll("[data-copy-list]").forEach((button) => {
     button.addEventListener("click", () => copyEndpointList(button));
+  });
+
+  els.endpointPassingOnly.addEventListener("change", () => {
+    state.endpointPassingOnly = els.endpointPassingOnly.checked;
+    renderEndpoints();
   });
 
   document.querySelectorAll("[data-filter]").forEach((button) => {
@@ -620,29 +627,66 @@ function renderTable() {
 function renderEndpoints() {
   const network = state.endpointNetwork;
   const networkLabel = network === "testnet" ? "Testnet" : "Mainnet";
-  const apiRows = getEndpointRows("api", network);
-  const peerRows = getEndpointRows("peers", network);
+  const allApiRows = getEndpointRows("api", network);
+  const allPeerRows = getEndpointRows("peers", network);
+  const apiRows = filterEndpointRows(allApiRows);
+  const peerRows = filterEndpointRows(allPeerRows);
 
-  els.endpointSummary.textContent = `${networkLabel} - ${apiRows.length} API endpoints - ${peerRows.length} peering addresses`;
+  els.endpointSummary.textContent = `${networkLabel} - ${formatEndpointCount(apiRows.length, allApiRows.length, "API endpoints")} - ${formatEndpointCount(peerRows.length, allPeerRows.length, "peering addresses")}`;
   els.apiEndpointList.innerHTML = apiRows.length
     ? apiRows.map((row) => renderEndpointRow(row)).join("")
-    : `<div class="endpoint-empty">No API endpoints available.</div>`;
+    : `<div class="endpoint-empty">No API endpoints match the current filter.</div>`;
   els.peerEndpointList.innerHTML = peerRows.length
     ? peerRows.map((row) => renderEndpointRow(row)).join("")
-    : `<div class="endpoint-empty">No peering addresses available.</div>`;
+    : `<div class="endpoint-empty">No peering addresses match the current filter.</div>`;
 }
 
 function getEndpointRows(kind, network) {
   return state.producers
-    .flatMap((producer) => getProducerEndpointValues(producer, kind, network)
-      .map((endpoint) => ({
-        endpoint,
+    .flatMap((producer) => getProducerEndpointRows(producer, kind, network))
+    .sort((a, b) => a.endpoint.localeCompare(b.endpoint) || a.producer.owner.localeCompare(b.producer.owner));
+}
+
+function filterEndpointRows(rows) {
+  return state.endpointPassingOnly ? rows.filter((row) => row.passing) : rows;
+}
+
+function formatEndpointCount(visible, total, label) {
+  if (!state.endpointPassingOnly) return `${total} ${label}`;
+  return `${visible} passing of ${total} ${label}`;
+}
+
+function getProducerEndpointRows(producer, kind, network) {
+  const checks = getProducerEndpointChecks(producer, kind, network);
+  if (checks.length) {
+    return checks
+      .filter((check) => check.endpoint)
+      .map((check) => ({
+        endpoint: String(check.endpoint).trim(),
         kind,
         network,
         producer,
-        passing: getEndpointStatus(producer, kind, network),
-      })))
-    .sort((a, b) => a.endpoint.localeCompare(b.endpoint) || a.producer.owner.localeCompare(b.producer.owner));
+        passing: getEndpointCheckStatus(check, kind),
+      }))
+      .filter((row) => row.endpoint);
+  }
+
+  return getProducerEndpointValues(producer, kind, network)
+    .map((endpoint) => ({
+      endpoint,
+      kind,
+      network,
+      producer,
+      passing: getEndpointStatus(producer, kind, network, endpoint),
+    }));
+}
+
+function getProducerEndpointChecks(producer, kind, network) {
+  const isTestnet = network === "testnet";
+  const key = kind === "api"
+    ? (isTestnet ? "apiEndpointChecksTestNet" : "apiEndpointChecks")
+    : (isTestnet ? "p2pEndpointChecksTestNet" : "p2pEndpointChecks");
+  return Array.isArray(producer[key]) ? producer[key] : [];
 }
 
 function getProducerEndpointValues(producer, kind, network) {
@@ -658,11 +702,24 @@ function getProducerEndpointValues(producer, kind, network) {
   return Array.from(new Set([...endpoints, ...fallback].filter(Boolean).map((endpoint) => String(endpoint).trim()).filter(Boolean)));
 }
 
-function getEndpointStatus(producer, kind, network) {
+function getEndpointCheckStatus(check, kind) {
   if (kind === "api") {
-    return network === "testnet" ? Boolean(producer.apiVerifiedTestNet) : Boolean(producer.apiVerified);
+    return Boolean(check.sslVerified && check.apiVerified);
   }
-  return network === "testnet" ? Boolean(producer.p2pVerifiedTestNet) : Boolean(producer.p2pVerified);
+  return Boolean(check.verified);
+}
+
+function getEndpointStatus(producer, kind, network, endpoint) {
+  const isTestnet = network === "testnet";
+  if (kind === "api") {
+    const selected = isTestnet ? producer.apiEndpointTestNet : producer.apiEndpoint;
+    const verified = isTestnet ? producer.apiVerifiedTestNet : producer.apiVerified;
+    const sslVerified = isTestnet ? producer.sslVerifiedTestNet : producer.sslVerified;
+    return Boolean(verified && sslVerified && (!selected || selected === endpoint));
+  }
+  const selected = isTestnet ? producer.p2pEndpointTestNet : producer.p2pEndpoint;
+  const verified = isTestnet ? producer.p2pVerifiedTestNet : producer.p2pVerified;
+  return Boolean(verified && (!selected || selected === endpoint));
 }
 
 function renderEndpointRow(row) {
@@ -688,7 +745,7 @@ function renderEndpointRow(row) {
 
 async function copyEndpointList(button) {
   const kind = button.dataset.copyList;
-  const rows = getEndpointRows(kind, state.endpointNetwork);
+  const rows = filterEndpointRows(getEndpointRows(kind, state.endpointNetwork));
   const text = rows.map((row) => row.endpoint).join("\n");
   if (!text) return;
 
