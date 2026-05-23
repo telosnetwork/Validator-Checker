@@ -53,6 +53,8 @@ const state = {
   sortKey: null,
   sortAsc: true,
   endpointNetwork: "mainnet",
+  endpointKind: "api",
+  endpointCopyFormat: "plain",
   endpointPassingOnly: true,
 };
 
@@ -63,6 +65,7 @@ document.addEventListener("DOMContentLoaded", init);
 async function init() {
   cacheElements();
   bindEvents();
+  updateCopyFormatOptions();
   await loadData();
 }
 
@@ -80,9 +83,11 @@ function cacheElements() {
   els.tableSummary = document.getElementById("tableSummary");
   els.producerRows = document.getElementById("producerRows");
   els.endpointSummary = document.getElementById("endpointSummary");
-  els.apiEndpointList = document.getElementById("apiEndpointList");
-  els.peerEndpointList = document.getElementById("peerEndpointList");
+  els.endpointListHeading = document.getElementById("endpointListHeading");
+  els.endpointList = document.getElementById("endpointList");
   els.endpointPassingOnly = document.getElementById("endpointPassingOnly");
+  els.endpointCopyFormat = document.getElementById("endpointCopyFormat");
+  els.copyEndpointListButton = document.getElementById("copyEndpointListButton");
 }
 
 function bindEvents() {
@@ -114,8 +119,23 @@ function bindEvents() {
     });
   });
 
-  document.querySelectorAll("[data-copy-list]").forEach((button) => {
-    button.addEventListener("click", () => copyEndpointList(button));
+  document.querySelectorAll("[data-endpoint-kind]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.endpointKind = button.dataset.endpointKind;
+      document.querySelectorAll("[data-endpoint-kind]").forEach((kindButton) => {
+        const active = kindButton.dataset.endpointKind === state.endpointKind;
+        kindButton.classList.toggle("is-active", active);
+        kindButton.setAttribute("aria-selected", String(active));
+      });
+      updateCopyFormatOptions();
+      renderEndpoints();
+    });
+  });
+
+  els.copyEndpointListButton.addEventListener("click", () => copyEndpointList());
+
+  els.endpointCopyFormat.addEventListener("change", () => {
+    state.endpointCopyFormat = els.endpointCopyFormat.value;
   });
 
   els.endpointPassingOnly.addEventListener("change", () => {
@@ -247,8 +267,7 @@ function renderLoadError(error) {
   els.producerRows.innerHTML = `<tr><td colspan="14" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
   els.endpointSummary.textContent = "No endpoint data available.";
-  els.apiEndpointList.innerHTML = `<div class="endpoint-empty">No API endpoints available.</div>`;
-  els.peerEndpointList.innerHTML = `<div class="endpoint-empty">No peering addresses available.</div>`;
+  els.endpointList.innerHTML = `<div class="endpoint-empty">No endpoints available.</div>`;
 }
 
 function renderStatus() {
@@ -627,18 +646,18 @@ function renderTable() {
 function renderEndpoints() {
   const network = state.endpointNetwork;
   const networkLabel = network === "testnet" ? "Testnet" : "Mainnet";
+  const kindLabel = state.endpointKind === "peers" ? "Peering addresses" : "API endpoints";
   const allApiRows = getEndpointRows("api", network);
   const allPeerRows = getEndpointRows("peers", network);
   const apiRows = filterEndpointRows(allApiRows);
   const peerRows = filterEndpointRows(allPeerRows);
+  const activeRows = state.endpointKind === "peers" ? peerRows : apiRows;
 
   els.endpointSummary.textContent = `${networkLabel} - ${formatEndpointCount(apiRows.length, allApiRows.length, "API endpoints")} - ${formatEndpointCount(peerRows.length, allPeerRows.length, "peering addresses")}`;
-  els.apiEndpointList.innerHTML = apiRows.length
-    ? apiRows.map((row) => renderEndpointRow(row)).join("")
-    : `<div class="endpoint-empty">No API endpoints match the current filter.</div>`;
-  els.peerEndpointList.innerHTML = peerRows.length
-    ? peerRows.map((row) => renderEndpointRow(row)).join("")
-    : `<div class="endpoint-empty">No peering addresses match the current filter.</div>`;
+  els.endpointListHeading.textContent = kindLabel;
+  els.endpointList.innerHTML = activeRows.length
+    ? activeRows.map((row) => renderEndpointRow(row)).join("")
+    : `<div class="endpoint-empty">No ${kindLabel.toLowerCase()} match the current filter.</div>`;
 }
 
 function getEndpointRows(kind, network) {
@@ -743,20 +762,48 @@ function renderEndpointRow(row) {
   `;
 }
 
-async function copyEndpointList(button) {
-  const kind = button.dataset.copyList;
+function updateCopyFormatOptions() {
+  const nodeosOption = Array.from(els.endpointCopyFormat.options).find((option) => option.value === "nodeos");
+  if (nodeosOption) {
+    nodeosOption.disabled = state.endpointKind !== "peers";
+  }
+
+  if (state.endpointKind !== "peers" && state.endpointCopyFormat === "nodeos") {
+    state.endpointCopyFormat = "plain";
+    els.endpointCopyFormat.value = state.endpointCopyFormat;
+  }
+}
+
+function formatEndpointCopy(rows, kind, format) {
+  const endpoints = rows.map((row) => row.endpoint);
+  if (format === "json") {
+    return JSON.stringify(endpoints, null, 2);
+  }
+  if (format === "comma") {
+    return endpoints.join(", ");
+  }
+  if (format === "nodeos" && kind === "peers") {
+    return endpoints.map((endpoint) => `p2p-peer-address = ${endpoint}`).join("\n");
+  }
+  return endpoints.join("\n");
+}
+
+async function copyEndpointList() {
+  const kind = state.endpointKind;
   const rows = filterEndpointRows(getEndpointRows(kind, state.endpointNetwork));
-  const text = rows.map((row) => row.endpoint).join("\n");
+  const text = formatEndpointCopy(rows, kind, state.endpointCopyFormat);
   if (!text) return;
 
   try {
     await copyText(text);
+    const button = els.copyEndpointListButton;
     const original = button.textContent;
     button.textContent = "Copied";
     setTimeout(() => {
       button.textContent = original;
     }, 1400);
   } catch (error) {
+    const button = els.copyEndpointListButton;
     button.textContent = "Copy failed";
     setTimeout(() => {
       button.textContent = "Copy";

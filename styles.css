@@ -435,9 +435,12 @@ main {
 
 .endpoint-shell {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: 12px;
   padding: 18px;
+}
+
+.endpoint-kind-tabs {
+  justify-self: start;
 }
 
 .endpoint-panel {
@@ -463,6 +466,35 @@ main {
   margin: 0;
   font-size: 14px;
   letter-spacing: 0;
+}
+
+.endpoint-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.format-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.format-control select {
+  min-height: 34px;
+  padding: 0 34px 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .endpoint-list {
@@ -740,10 +772,6 @@ tbody tr:hover td {
     width: 100%;
   }
 
-  .endpoint-shell {
-    grid-template-columns: 1fr;
-  }
-
   .segmented {
     width: 100%;
     display: grid;
@@ -756,6 +784,18 @@ tbody tr:hover td {
 
   .toggle-control {
     width: 100%;
+  }
+
+  .endpoint-panel-header,
+  .endpoint-actions,
+  .format-control,
+  .format-control select {
+    width: 100%;
+  }
+
+  .endpoint-panel-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .chart-area,
