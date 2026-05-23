@@ -67,7 +67,7 @@ const state = {
   sortKey: null,
   sortAsc: true,
   endpointNetwork: "mainnet",
-  endpointKind: "api",
+  endpointKind: "peers",
   endpointCopyFormats: {
     api: "plain",
     peers: "nodeos",
