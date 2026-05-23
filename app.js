@@ -678,9 +678,45 @@ function renderEndpoints() {
 }
 
 function getEndpointRows(kind, network) {
-  return state.producers
-    .flatMap((producer) => getProducerEndpointRows(producer, kind, network))
+  const rows = state.producers
+    .flatMap((producer) => getProducerEndpointRows(producer, kind, network));
+  return dedupeEndpointRows(rows)
     .sort((a, b) => a.endpoint.localeCompare(b.endpoint) || a.producer.owner.localeCompare(b.producer.owner));
+}
+
+function dedupeEndpointRows(rows) {
+  const byEndpoint = new Map();
+  rows.forEach((row) => {
+    const key = getEndpointIdentity(row);
+    if (!key) return;
+
+    const existing = byEndpoint.get(key);
+    if (!existing || (!existing.passing && row.passing)) {
+      byEndpoint.set(key, row);
+    }
+  });
+  return Array.from(byEndpoint.values());
+}
+
+function getEndpointIdentity(row) {
+  const value = String(row.endpoint || "").trim().replace(/\/+$/, "");
+  if (!value) return "";
+
+  if (row.kind === "api") {
+    try {
+      const url = new URL(value);
+      url.hash = "";
+      url.search = "";
+      url.protocol = url.protocol.toLowerCase();
+      url.hostname = url.hostname.toLowerCase();
+      url.pathname = url.pathname.replace(/\/+$/, "");
+      return url.toString().replace(/\/+$/, "");
+    } catch (error) {
+      return value.toLowerCase();
+    }
+  }
+
+  return value.replace(/^p2p:\/\//i, "").toLowerCase();
 }
 
 function filterEndpointRows(rows) {
