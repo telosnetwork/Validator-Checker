@@ -52,6 +52,7 @@ const state = {
   query: "",
   sortKey: null,
   sortAsc: true,
+  endpointNetwork: "mainnet",
 };
 
 const els = {};
@@ -77,6 +78,9 @@ function cacheElements() {
   els.producerSearch = document.getElementById("producerSearch");
   els.tableSummary = document.getElementById("tableSummary");
   els.producerRows = document.getElementById("producerRows");
+  els.endpointSummary = document.getElementById("endpointSummary");
+  els.apiEndpointList = document.getElementById("apiEndpointList");
+  els.peerEndpointList = document.getElementById("peerEndpointList");
 }
 
 function bindEvents() {
@@ -94,6 +98,22 @@ function bindEvents() {
       });
       renderChart();
     });
+  });
+
+  document.querySelectorAll("[data-endpoint-network]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.endpointNetwork = button.dataset.endpointNetwork;
+      document.querySelectorAll("[data-endpoint-network]").forEach((networkButton) => {
+        const active = networkButton.dataset.endpointNetwork === state.endpointNetwork;
+        networkButton.classList.toggle("is-active", active);
+        networkButton.setAttribute("aria-pressed", String(active));
+      });
+      renderEndpoints();
+    });
+  });
+
+  document.querySelectorAll("[data-copy-list]").forEach((button) => {
+    button.addEventListener("click", () => copyEndpointList(button));
   });
 
   document.querySelectorAll("[data-filter]").forEach((button) => {
@@ -165,6 +185,7 @@ async function loadData() {
   renderMetrics();
   renderChart();
   renderTable();
+  renderEndpoints();
 }
 
 async function fetchJsonFromSources(urls, label) {
@@ -218,6 +239,9 @@ function renderLoadError(error) {
   els.chartEmpty.textContent = "Latest validation data could not be loaded.";
   els.producerRows.innerHTML = `<tr><td colspan="14" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
+  els.endpointSummary.textContent = "No endpoint data available.";
+  els.apiEndpointList.innerHTML = `<div class="endpoint-empty">No API endpoints available.</div>`;
+  els.peerEndpointList.innerHTML = `<div class="endpoint-empty">No peering addresses available.</div>`;
 }
 
 function renderStatus() {
@@ -591,6 +615,113 @@ function renderTable() {
   }
 
   els.producerRows.innerHTML = rows.map(renderProducerRow).join("");
+}
+
+function renderEndpoints() {
+  const network = state.endpointNetwork;
+  const networkLabel = network === "testnet" ? "Testnet" : "Mainnet";
+  const apiRows = getEndpointRows("api", network);
+  const peerRows = getEndpointRows("peers", network);
+
+  els.endpointSummary.textContent = `${networkLabel} - ${apiRows.length} API endpoints - ${peerRows.length} peering addresses`;
+  els.apiEndpointList.innerHTML = apiRows.length
+    ? apiRows.map((row) => renderEndpointRow(row)).join("")
+    : `<div class="endpoint-empty">No API endpoints available.</div>`;
+  els.peerEndpointList.innerHTML = peerRows.length
+    ? peerRows.map((row) => renderEndpointRow(row)).join("")
+    : `<div class="endpoint-empty">No peering addresses available.</div>`;
+}
+
+function getEndpointRows(kind, network) {
+  return state.producers
+    .flatMap((producer) => getProducerEndpointValues(producer, kind, network)
+      .map((endpoint) => ({
+        endpoint,
+        kind,
+        network,
+        producer,
+        passing: getEndpointStatus(producer, kind, network),
+      })))
+    .sort((a, b) => a.endpoint.localeCompare(b.endpoint) || a.producer.owner.localeCompare(b.producer.owner));
+}
+
+function getProducerEndpointValues(producer, kind, network) {
+  const isTestnet = network === "testnet";
+  const arrayKey = kind === "api"
+    ? (isTestnet ? "apiEndpointsTestNet" : "apiEndpoints")
+    : (isTestnet ? "p2pEndpointsTestNet" : "p2pEndpoints");
+  const singleKey = kind === "api"
+    ? (isTestnet ? "apiEndpointTestNet" : "apiEndpoint")
+    : (isTestnet ? "p2pEndpointTestNet" : "p2pEndpoint");
+  const endpoints = Array.isArray(producer[arrayKey]) ? producer[arrayKey] : [];
+  const fallback = producer[singleKey] ? [producer[singleKey]] : [];
+  return Array.from(new Set([...endpoints, ...fallback].filter(Boolean).map((endpoint) => String(endpoint).trim()).filter(Boolean)));
+}
+
+function getEndpointStatus(producer, kind, network) {
+  if (kind === "api") {
+    return network === "testnet" ? Boolean(producer.apiVerifiedTestNet) : Boolean(producer.apiVerified);
+  }
+  return network === "testnet" ? Boolean(producer.p2pVerifiedTestNet) : Boolean(producer.p2pVerified);
+}
+
+function renderEndpointRow(row) {
+  const org = row.producer.org || {};
+  const candidate = org.candidate_name && org.candidate_name !== row.producer.owner
+    ? ` - ${org.candidate_name}`
+    : "";
+  const href = row.kind === "api" ? getSafeUrl(row.endpoint) : "";
+  const endpoint = href
+    ? `<a class="endpoint-value" href="${escapeAttribute(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.endpoint)}</a>`
+    : `<span class="endpoint-value">${escapeHtml(row.endpoint)}</span>`;
+
+  return `
+    <article class="endpoint-row">
+      <div class="endpoint-main">
+        ${endpoint}
+        <span class="endpoint-owner">${escapeHtml(`${row.producer.owner}${candidate}`)}</span>
+      </div>
+      ${statusPill(row.passing, true)}
+    </article>
+  `;
+}
+
+async function copyEndpointList(button) {
+  const kind = button.dataset.copyList;
+  const rows = getEndpointRows(kind, state.endpointNetwork);
+  const text = rows.map((row) => row.endpoint).join("\n");
+  if (!text) return;
+
+  try {
+    await copyText(text);
+    const original = button.textContent;
+    button.textContent = "Copied";
+    setTimeout(() => {
+      button.textContent = original;
+    }, 1400);
+  } catch (error) {
+    button.textContent = "Copy failed";
+    setTimeout(() => {
+      button.textContent = "Copy";
+    }, 1400);
+  }
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
 }
 
 function renderProducerRow(producer, index) {

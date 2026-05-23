@@ -340,6 +340,15 @@ def best_endpoint(nodes: list) -> Optional[str]:
     return None
 
 
+def all_ssl_endpoints(nodes: list) -> list:
+    endpoints = []
+    for node in nodes:
+        ep = node.get("ssl_endpoint", "").strip().rstrip("/")
+        if ep and ep not in endpoints:
+            endpoints.append(ep)
+    return endpoints
+
+
 def best_p2p_endpoint(nodes: list) -> Optional[str]:
     for preferred in (["seed"], ["producer"], ["query"]):
         for node in nodes:
@@ -356,6 +365,15 @@ def best_p2p_endpoint(nodes: list) -> Optional[str]:
             return ep
 
     return None
+
+
+def all_p2p_endpoints(nodes: list) -> list:
+    endpoints = []
+    for node in nodes:
+        ep = normalize_p2p_endpoint(node.get("p2p_endpoint", ""))
+        if ep and ep not in endpoints:
+            endpoints.append(ep)
+    return endpoints
 
 
 def metadata_url(base_url: str, path: str) -> str:
@@ -497,6 +515,8 @@ async def validate_producer(
         "sslVerified":          False,
         "apiVerified":          False,
         "apiResponseMs":        -1,
+        "apiEndpoint":          None,
+        "apiEndpoints":         [],
         "p2pVerified":          False,
         "hasActiveFinalizerKey": bool(mainnet_finalizer_keys),
         "activeFinalizerKeys":  mainnet_finalizer_keys,
@@ -504,6 +524,8 @@ async def validate_producer(
         "sslVerifiedTestNet":   False,
         "apiVerifiedTestNet":   False,
         "apiResponseMsTestNet": -1,
+        "apiEndpointTestNet":   None,
+        "apiEndpointsTestNet":  [],
         "p2pVerifiedTestNet":   False,
         "hasActiveFinalizerKeyTestNet": bool(testnet_finalizer_keys),
         "activeFinalizerKeysTestNet": testnet_finalizer_keys,
@@ -514,7 +536,9 @@ async def validate_producer(
         "lifetimeProducedBlocks":  producer.get("lifetime_produced_blocks", 0),
         "timesKicked":             producer.get("times_kicked", 0),
         "p2pEndpoint":          None,
+        "p2pEndpoints":         [],
         "p2pEndpointTestNet":   None,
+        "p2pEndpointsTestNet":  [],
         "org":                  {},
         "validationErrors":     [],
         "checkedAt":            datetime.now(timezone.utc).isoformat(),
@@ -532,6 +556,8 @@ async def validate_producer(
 
     result["org"] = bp_json.get("org", {})
     nodes         = bp_json.get("nodes", [])
+    result["apiEndpoints"] = all_ssl_endpoints(nodes)
+    result["p2pEndpoints"] = all_p2p_endpoints(nodes)
 
     p2p_ep = best_p2p_endpoint(nodes)
     if p2p_ep:
@@ -544,6 +570,7 @@ async def validate_producer(
 
     ssl_ep = best_endpoint(nodes)
     if ssl_ep:
+        result["apiEndpoint"] = ssl_ep
         ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
             check_ssl(session, ssl_ep),
             check_api(session, ssl_ep, MAINNET_CHAIN_ID),
@@ -565,7 +592,11 @@ async def validate_producer(
     elif testnet_path:
         testnet_json = await fetch_json(session, metadata_url(base_url, testnet_path))
         if testnet_json:
-            testnet_p2p_ep = best_p2p_endpoint(testnet_json.get("nodes", []))
+            testnet_nodes = testnet_json.get("nodes", [])
+            result["apiEndpointsTestNet"] = all_ssl_endpoints(testnet_nodes)
+            result["p2pEndpointsTestNet"] = all_p2p_endpoints(testnet_nodes)
+
+            testnet_p2p_ep = best_p2p_endpoint(testnet_nodes)
             if testnet_p2p_ep:
                 result["p2pEndpointTestNet"] = testnet_p2p_ep
                 result["p2pVerifiedTestNet"] = await check_p2p(testnet_p2p_ep, TESTNET_CHAIN_ID)
@@ -574,8 +605,9 @@ async def validate_producer(
             else:
                 errors.append("No testnet p2p_endpoint found in bp.json nodes")
 
-            testnet_ep = best_endpoint(testnet_json.get("nodes", []))
+            testnet_ep = best_endpoint(testnet_nodes)
             if testnet_ep:
+                result["apiEndpointTestNet"] = testnet_ep
                 ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
                     check_ssl(session, testnet_ep),
                     check_api(session, testnet_ep, TESTNET_CHAIN_ID),
@@ -594,7 +626,11 @@ async def validate_producer(
         testnet_json = None
 
     if testnet_base_url and testnet_json:
-        testnet_p2p_ep = best_p2p_endpoint(testnet_json.get("nodes", []))
+        testnet_nodes = testnet_json.get("nodes", [])
+        result["apiEndpointsTestNet"] = all_ssl_endpoints(testnet_nodes)
+        result["p2pEndpointsTestNet"] = all_p2p_endpoints(testnet_nodes)
+
+        testnet_p2p_ep = best_p2p_endpoint(testnet_nodes)
         if testnet_p2p_ep:
             result["p2pEndpointTestNet"] = testnet_p2p_ep
             result["p2pVerifiedTestNet"] = await check_p2p(testnet_p2p_ep, TESTNET_CHAIN_ID)
@@ -603,8 +639,9 @@ async def validate_producer(
         else:
             errors.append("No testnet p2p_endpoint found in bp.json nodes")
 
-        testnet_ep = best_endpoint(testnet_json.get("nodes", []))
+        testnet_ep = best_endpoint(testnet_nodes)
         if testnet_ep:
+            result["apiEndpointTestNet"] = testnet_ep
             ssl_ok, (api_ok, api_ms, api_version) = await asyncio.gather(
                 check_ssl(session, testnet_ep),
                 check_api(session, testnet_ep, TESTNET_CHAIN_ID),

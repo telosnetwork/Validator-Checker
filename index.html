@@ -22,6 +22,7 @@
       <section class="workspace" aria-label="Validator dashboard">
         <div class="tabs" role="tablist" aria-label="Dashboard sections">
           <button class="tab is-active" id="tab-producers" type="button" role="tab" aria-selected="true" aria-controls="panel-producers" data-tab="producers">Producer Table</button>
+          <button class="tab" id="tab-endpoints" type="button" role="tab" aria-selected="false" aria-controls="panel-endpoints" data-tab="endpoints">Endpoints</button>
           <button class="tab" id="tab-performance" type="button" role="tab" aria-selected="false" aria-controls="panel-performance" data-tab="performance">Performance</button>
         </div>
 
@@ -97,6 +98,39 @@
               <button type="button" class="plain-button" id="selectAllSeries">Select All</button>
               <button type="button" class="plain-button" id="deselectAllSeries">Deselect All</button>
             </div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-endpoints" role="tabpanel" aria-labelledby="tab-endpoints" hidden>
+          <div class="toolbar">
+            <div>
+              <h2>Endpoint Lists</h2>
+              <p class="subtle" id="endpointSummary">Waiting for endpoint data...</p>
+            </div>
+            <div class="toolbar-actions" aria-label="Endpoint controls">
+              <div class="segmented" role="group" aria-label="Endpoint network">
+                <button type="button" class="mode-button is-active" data-endpoint-network="mainnet" aria-pressed="true">Mainnet</button>
+                <button type="button" class="mode-button" data-endpoint-network="testnet" aria-pressed="false">Testnet</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="endpoint-shell">
+            <section class="endpoint-panel" aria-labelledby="apiEndpointHeading">
+              <div class="endpoint-panel-header">
+                <h3 id="apiEndpointHeading">API endpoints</h3>
+                <button type="button" class="plain-button" data-copy-list="api">Copy</button>
+              </div>
+              <div class="endpoint-list" id="apiEndpointList"></div>
+            </section>
+
+            <section class="endpoint-panel" aria-labelledby="peerEndpointHeading">
+              <div class="endpoint-panel-header">
+                <h3 id="peerEndpointHeading">Peering addresses</h3>
+                <button type="button" class="plain-button" data-copy-list="peers">Copy</button>
+              </div>
+              <div class="endpoint-list" id="peerEndpointList"></div>
+            </section>
           </div>
         </section>
       </section>
