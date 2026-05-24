@@ -344,11 +344,11 @@ function renderMetrics() {
   const passing = state.producers.filter(isMainnetPassing).length;
   const testnetPassing = state.producers.filter(isTestnetPassing).length;
   const active = state.producers.filter((producer) => producer.scheduleType === "active").length;
-  const validLatency = state.producers
-    .map((producer) => Number(producer.apiResponseMs))
-    .filter((ms) => Number.isFinite(ms) && ms > 0);
-  const averageLatency = validLatency.length
-    ? Math.round(validLatency.reduce((sum, value) => sum + value, 0) / validLatency.length)
+  const validCpuTimes = state.producers
+    .map((producer) => latestHistoryValue(producer.owner, "cpu"))
+    .filter((us) => Number.isFinite(us) && us > 0);
+  const averageCpuTime = validCpuTimes.length
+    ? Math.round(validCpuTimes.reduce((sum, value) => sum + value, 0) / validCpuTimes.length)
     : null;
 
   const metrics = [
@@ -356,7 +356,7 @@ function renderMetrics() {
     { label: "Mainnet Passing", value: passing, tone: "good" },
     { label: "Mainnet Failing", value: total - passing, tone: "bad" },
     { label: "Testnet Passing", value: testnetPassing, tone: "" },
-    { label: "Avg Latency", value: averageLatency === null ? "N/A" : `${averageLatency} ms`, tone: "info" },
+    { label: "Avg CPU Time", value: averageCpuTime === null ? "N/A" : `${averageCpuTime} us`, tone: "info" },
     { label: "Active Schedule", value: active, tone: "" },
   ];
 
