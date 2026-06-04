@@ -8,6 +8,7 @@ Standalone static rebuild of the validator dashboard shown at https://infinitybl
 - `index.html`, `styles.css`, and `app.js` implement the standalone app.
 - `ifchecker/` implements the Spring/Savanna instant finality readiness checker at `/ifchecker/`.
 - `netlify/functions/` exposes live IF checker API routes through Netlify Functions.
+- `validation/ifchecker/latest.json` stores the latest cached IF checker snapshot.
 - `scripts/validate_bps.py` generates `validation/latest.json` and `validation/history.json`.
 - The app tries local `validation/*.json` first, then local `data/*.json`.
 - CPU timing history is also merged from `https://infinitybloc.io/validation/history.json` so benchmark data can continue coming from the original repo while its GitHub secret remains there.
@@ -44,6 +45,8 @@ It uses live API routes:
 /api/readiness/testnet
 /api/readiness/mainnet
 ```
+
+The page first loads `validation/ifchecker/latest.json` so results are immediately visible on arrival. The scheduled validation workflow refreshes that snapshot, and the page can still run a live refresh through the API routes.
 
 For Netlify-parity local testing:
 

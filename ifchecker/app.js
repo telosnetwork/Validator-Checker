@@ -1,7 +1,15 @@
+const AUTO_REFRESH_MS = 5 * 60 * 1000;
+const SNAPSHOT_URL = "/validation/ifchecker/latest.json";
+
 const state = {
   network: "testnet",
   data: null,
+  results: {},
   loading: false,
+  requestId: 0,
+  refreshTimer: null,
+  nextRefreshAt: null,
+  lastRefreshError: "",
   query: "",
   filter: "all"
 };
@@ -9,6 +17,7 @@ const state = {
 const elements = {
   tabs: [...document.querySelectorAll(".tab")],
   refresh: document.querySelector("#refresh"),
+  refreshStatus: document.querySelector("#refresh-status"),
   statusBand: document.querySelector("#status-band"),
   statusMeta: document.querySelector("#status-meta"),
   metrics: document.querySelector("#metrics-grid"),
@@ -62,30 +71,129 @@ function link(url, label) {
   return `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(label || url)}</a>`;
 }
 
-async function loadNetwork(network = state.network) {
+async function loadNetwork(network = state.network, options = {}) {
+  const { showLoading = true, reason = "manual" } = options;
+  const requestId = state.requestId + 1;
+  state.requestId = requestId;
   state.network = network;
   state.loading = true;
-  renderLoading();
+  updateRefreshUi(reason);
+  if (showLoading || !state.data || state.data.network?.key !== network) {
+    renderLoading("Fetching live RPC, schedule, finalizer tables, and BP metadata");
+  }
   try {
     const response = await fetch(`/api/readiness/${network}?t=${Date.now()}`);
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || response.statusText);
+    if (requestId !== state.requestId) return;
     state.data = payload;
+    state.results[network] = payload;
     state.loading = false;
+    state.lastRefreshError = "";
+    scheduleAutoRefresh();
     render();
   } catch (error) {
+    if (requestId !== state.requestId) return;
     state.loading = false;
+    if (!showLoading && state.data?.network?.key === network) {
+      state.lastRefreshError = error.message;
+      scheduleAutoRefresh();
+      render();
+      updateRefreshUi("error");
+      return;
+    }
+    scheduleAutoRefresh();
     renderError(error);
   }
 }
 
-function renderLoading() {
+async function loadSnapshot() {
+  state.loading = true;
+  updateRefreshUi("snapshot");
+  renderLoading("Loading latest readiness snapshot");
+  try {
+    const response = await fetch(`${SNAPSHOT_URL}?t=${Date.now()}`);
+    const snapshot = await response.json();
+    if (!response.ok) throw new Error(snapshot.error || response.statusText);
+    const networks = snapshot.networks || {};
+    state.results = Object.fromEntries(
+      Object.entries(networks).filter(([, result]) => result?.network?.key)
+    );
+    state.data = state.results[state.network] || Object.values(state.results)[0] || null;
+    if (state.data) state.network = state.data.network.key;
+    if (!state.data) throw new Error("Snapshot did not include IF checker results");
+    state.loading = false;
+    state.lastRefreshError = "";
+    render();
+    scheduleAutoRefresh();
+  } catch (error) {
+    state.loading = false;
+    await loadNetwork(state.network, { showLoading: true, reason: "manual" });
+  }
+}
+
+function selectNetwork(network) {
+  state.network = network;
+  if (state.results[network]) {
+    state.data = state.results[network];
+    render();
+    updateRefreshUi();
+    return;
+  }
+  loadNetwork(network, { showLoading: true, reason: "manual" });
+}
+
+function scheduleAutoRefresh() {
+  if (state.refreshTimer) {
+    clearTimeout(state.refreshTimer);
+  }
+  state.nextRefreshAt = Date.now() + AUTO_REFRESH_MS;
+  state.refreshTimer = setTimeout(() => {
+    if (document.hidden) {
+      state.refreshTimer = null;
+      state.nextRefreshAt = Date.now();
+      updateRefreshUi();
+      return;
+    }
+    loadNetwork(state.network, { showLoading: false, reason: "auto" });
+  }, AUTO_REFRESH_MS);
+  updateRefreshUi();
+}
+
+function updateRefreshUi(reason = "") {
+  elements.refresh.disabled = state.loading;
+  elements.refresh.textContent = state.loading ? "Refreshing" : "Refresh";
+  if (!elements.refreshStatus) return;
+  if (state.loading) {
+    elements.refreshStatus.textContent = reason === "auto" ? "Auto updating" : "Updating";
+    return;
+  }
+  if (reason === "error" || state.lastRefreshError) {
+    elements.refreshStatus.textContent = "Last update failed";
+    return;
+  }
+  if (!state.nextRefreshAt) {
+    elements.refreshStatus.textContent = "";
+    return;
+  }
+  elements.refreshStatus.textContent = `Next auto ${formatTime(state.nextRefreshAt)}`;
+}
+
+function formatTime(value) {
+  const date = new Date(value);
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function renderLoading(message = "Loading readiness data") {
   elements.statusBand.innerHTML = `
     <div>
       <p class="label">Overall</p>
       <div class="status-title skeleton">Checking ${escapeHtml(state.network)}</div>
     </div>
-    <div class="status-meta">Fetching live RPC, schedule, finalizer tables, and BP metadata</div>
+    <div class="status-meta">${escapeHtml(message)}</div>
   `;
   elements.metrics.innerHTML = "";
   elements.gates.innerHTML = "";
@@ -258,10 +366,16 @@ function renderEvidence(data) {
 }
 
 elements.tabs.forEach((tab) => {
-  tab.addEventListener("click", () => loadNetwork(tab.dataset.network));
+  tab.addEventListener("click", () => selectNetwork(tab.dataset.network));
 });
 
-elements.refresh.addEventListener("click", () => loadNetwork(state.network));
+elements.refresh.addEventListener("click", () => loadNetwork(state.network, { showLoading: false, reason: "manual" }));
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && state.nextRefreshAt && Date.now() >= state.nextRefreshAt) {
+    loadNetwork(state.network, { showLoading: false, reason: "auto" });
+  }
+});
 
 elements.search.addEventListener("input", (event) => {
   state.query = event.target.value;
@@ -282,4 +396,4 @@ elements.copyJson.addEventListener("click", async () => {
   }, 1200);
 });
 
-loadNetwork("testnet");
+loadSnapshot();
