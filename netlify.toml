@@ -1,0 +1,20 @@
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/ifchecker"
+  to = "/ifchecker/"
+  status = 301
+
+[[redirects]]
+  from = "/api/networks"
+  to = "/.netlify/functions/networks"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/readiness/:network"
+  to = "/.netlify/functions/readiness?network=:network"
+  status = 200
+  force = true
