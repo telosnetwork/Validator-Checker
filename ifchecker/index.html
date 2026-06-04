@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Telos Instant Finality Readiness</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Telos Spring/Savanna</p>
+          <h1>Instant Finality Readiness</h1>
+        </div>
+        <div class="topbar-actions">
+          <div class="tabs" role="tablist" aria-label="Network">
+            <button class="tab active" data-network="testnet" role="tab" aria-selected="true">Testnet</button>
+            <button class="tab" data-network="mainnet" role="tab" aria-selected="false">Mainnet</button>
+          </div>
+          <button id="refresh" class="command-button" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="status-band" id="status-band">
+          <div>
+            <p class="label">Overall</p>
+            <div class="status-title skeleton">Loading</div>
+          </div>
+          <div class="status-meta" id="status-meta"></div>
+        </section>
+
+        <section class="metrics-grid" id="metrics-grid" aria-label="Readiness metrics"></section>
+
+        <section class="workspace-grid">
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Readiness Gates</h2>
+            </div>
+            <div id="gates" class="gates"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Chain Features</h2>
+            </div>
+            <div id="features" class="feature-list"></div>
+          </div>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="panel-heading table-heading">
+            <div>
+              <h2>Block Producers</h2>
+              <p id="table-caption" class="caption"></p>
+            </div>
+            <div class="table-tools">
+              <input id="search" type="search" placeholder="Search BP" aria-label="Search block producers">
+              <select id="status-filter" aria-label="Status filter">
+                <option value="all">All statuses</option>
+                <option value="blocker">Blocked</option>
+                <option value="review">Review</option>
+                <option value="ok">Ready</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>BP</th>
+                  <th>Sched</th>
+                  <th>Votes</th>
+                  <th>Finalizer</th>
+                  <th>Published API</th>
+                  <th>Missed</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="producer-rows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel evidence-panel">
+          <div class="panel-heading">
+            <h2>Evidence</h2>
+            <button id="copy-json" class="minor-button" type="button">Copy JSON</button>
+          </div>
+          <pre id="evidence"></pre>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
