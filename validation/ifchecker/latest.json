@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-04T21:10:02.652Z",
+  "generatedAt": "2026-06-04T21:52:39.654Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-04T21:10:02.652Z",
-      "durationMs": 20598,
+      "generatedAt": "2026-06-04T21:52:39.654Z",
+      "durationMs": 14883,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 427567184,
-        "lastIrreversibleBlockNum": 427566848,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-04T21:09:41.500",
-        "headBlockProducer": "eosiodetroit",
+        "headBlockNum": 427572309,
+        "lastIrreversibleBlockNum": 427571983,
+        "libLagBlocks": 326,
+        "headBlockTime": "2026-06-04T21:52:24.500",
+        "headBlockProducer": "bp.yknot",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -31,8 +31,8 @@
         "activeSpringCompatible": 13,
         "springCompatible": 13,
         "bpApiSpring": 13,
-        "bpApiReview": 3,
-        "bpApiUnknown": 4,
+        "bpApiReview": 4,
+        "bpApiUnknown": 3,
         "bpApiBlocked": 1
       },
       "gates": [
@@ -69,7 +69,7 @@
           "label": "Spring-compatible active BPs",
           "status": "blocker",
           "value": "13/21 Spring",
-          "detail": "3 review, 4 unknown, 1 blocked"
+          "detail": "4 review, 3 unknown, 1 blocked"
         },
         {
           "key": "savanna",
@@ -1063,7 +1063,7 @@
           "url": "https://cryptolions.io",
           "isActive": true,
           "lifetimeMissedBlocks": 8616,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -1213,22 +1213,38 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
+            "status": "review",
+            "label": "Published endpoint is not Testnet",
             "endpoint": "",
             "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telos.blocksindia.com/chains.json: no path for Testnet | https://telos.blocksindia.com/bp.json: This operation was aborted | https://telos.blocksindia.com/telos.json: This operation was aborted",
+            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
+            "bpJsonSource": "fallback",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://api.telos.blocksindia.com",
+              "http://api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
               {
+                "endpoint": "https://api.telos.blocksindia.com",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v5.0.3",
+                "chainMatches": false
+              },
+              {
+                "endpoint": "http://api.telos.blocksindia.com",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v5.0.3",
+                "chainMatches": false
+              },
+              {
                 "endpoint": "https://telos.blocksindia.com",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "404 Not Found"
               }
             ]
           },
@@ -1238,7 +1254,7 @@
             "Finalizer tables are not readable"
           ],
           "warnings": [
-            "No matching public API"
+            "Published endpoint is not Testnet"
           ]
         },
         {
@@ -1302,16 +1318,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-04T21:09:51.960Z",
-      "durationMs": 9870,
+      "generatedAt": "2026-06-04T21:52:34.858Z",
+      "durationMs": 10057,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 471191374,
-        "lastIrreversibleBlockNum": 471191049,
+        "headBlockNum": 471196497,
+        "lastIrreversibleBlockNum": 471196172,
         "libLagBlocks": 325,
-        "headBlockTime": "2026-06-04T21:09:42.000",
-        "headBlockProducer": "cryptolions1",
-        "serverVersion": "v1.2.2",
+        "headBlockTime": "2026-06-04T21:52:24.500",
+        "headBlockProducer": "telosgermany",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -1383,7 +1399,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -1691,7 +1707,7 @@
           "url": "https://telosgreen.com",
           "isActive": true,
           "lifetimeMissedBlocks": 24671,
-          "missedBlocksPerRotation": 5,
+          "missedBlocksPerRotation": 7,
           "finalizer": {
             "registered": false,
             "active": false,
