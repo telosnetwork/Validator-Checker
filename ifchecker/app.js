@@ -1,7 +1,13 @@
+const AUTO_REFRESH_MS = 5 * 60 * 1000;
+
 const state = {
   network: "testnet",
   data: null,
   loading: false,
+  requestId: 0,
+  refreshTimer: null,
+  nextRefreshAt: null,
+  lastRefreshError: "",
   query: "",
   filter: "all"
 };
@@ -9,6 +15,7 @@ const state = {
 const elements = {
   tabs: [...document.querySelectorAll(".tab")],
   refresh: document.querySelector("#refresh"),
+  refreshStatus: document.querySelector("#refresh-status"),
   statusBand: document.querySelector("#status-band"),
   statusMeta: document.querySelector("#status-meta"),
   metrics: document.querySelector("#metrics-grid"),
@@ -62,21 +69,83 @@ function link(url, label) {
   return `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(label || url)}</a>`;
 }
 
-async function loadNetwork(network = state.network) {
+async function loadNetwork(network = state.network, options = {}) {
+  const { showLoading = true, reason = "manual" } = options;
+  const requestId = state.requestId + 1;
+  state.requestId = requestId;
   state.network = network;
   state.loading = true;
-  renderLoading();
+  updateRefreshUi(reason);
+  if (showLoading || !state.data || state.data.network?.key !== network) {
+    renderLoading();
+  }
   try {
     const response = await fetch(`/api/readiness/${network}?t=${Date.now()}`);
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || response.statusText);
+    if (requestId !== state.requestId) return;
     state.data = payload;
     state.loading = false;
+    state.lastRefreshError = "";
+    scheduleAutoRefresh();
     render();
   } catch (error) {
+    if (requestId !== state.requestId) return;
     state.loading = false;
+    if (!showLoading && state.data?.network?.key === network) {
+      state.lastRefreshError = error.message;
+      scheduleAutoRefresh();
+      render();
+      updateRefreshUi("error");
+      return;
+    }
+    scheduleAutoRefresh();
     renderError(error);
   }
+}
+
+function scheduleAutoRefresh() {
+  if (state.refreshTimer) {
+    clearTimeout(state.refreshTimer);
+  }
+  state.nextRefreshAt = Date.now() + AUTO_REFRESH_MS;
+  state.refreshTimer = setTimeout(() => {
+    if (document.hidden) {
+      state.refreshTimer = null;
+      state.nextRefreshAt = Date.now();
+      updateRefreshUi();
+      return;
+    }
+    loadNetwork(state.network, { showLoading: false, reason: "auto" });
+  }, AUTO_REFRESH_MS);
+  updateRefreshUi();
+}
+
+function updateRefreshUi(reason = "") {
+  elements.refresh.disabled = state.loading;
+  elements.refresh.textContent = state.loading ? "Refreshing" : "Refresh";
+  if (!elements.refreshStatus) return;
+  if (state.loading) {
+    elements.refreshStatus.textContent = reason === "auto" ? "Auto updating" : "Updating";
+    return;
+  }
+  if (reason === "error" || state.lastRefreshError) {
+    elements.refreshStatus.textContent = "Last update failed";
+    return;
+  }
+  if (!state.nextRefreshAt) {
+    elements.refreshStatus.textContent = "";
+    return;
+  }
+  elements.refreshStatus.textContent = `Next auto ${formatTime(state.nextRefreshAt)}`;
+}
+
+function formatTime(value) {
+  const date = new Date(value);
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 }
 
 function renderLoading() {
@@ -258,10 +327,16 @@ function renderEvidence(data) {
 }
 
 elements.tabs.forEach((tab) => {
-  tab.addEventListener("click", () => loadNetwork(tab.dataset.network));
+  tab.addEventListener("click", () => loadNetwork(tab.dataset.network, { showLoading: true, reason: "manual" }));
 });
 
-elements.refresh.addEventListener("click", () => loadNetwork(state.network));
+elements.refresh.addEventListener("click", () => loadNetwork(state.network, { showLoading: false, reason: "manual" }));
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && state.nextRefreshAt && Date.now() >= state.nextRefreshAt) {
+    loadNetwork(state.network, { showLoading: false, reason: "auto" });
+  }
+});
 
 elements.search.addEventListener("input", (event) => {
   state.query = event.target.value;
@@ -282,4 +357,4 @@ elements.copyJson.addEventListener("click", async () => {
   }, 1200);
 });
 
-loadNetwork("testnet");
+loadNetwork("testnet", { showLoading: true, reason: "manual" });
