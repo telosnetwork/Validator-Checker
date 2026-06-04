@@ -5,6 +5,7 @@
   "description": "Telos validator dashboard with instant finality readiness checker.",
   "scripts": {
     "build": "node -e \"console.log('No build required')\"",
+    "build:ifchecker-snapshot": "node scripts/generate_ifchecker_snapshot.js",
     "check:ifchecker": "node ifchecker-api.js --check"
   },
   "engines": {
