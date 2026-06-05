@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-05T21:16:10.804Z",
+  "generatedAt": "2026-06-05T21:51:33.990Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-05T21:16:10.804Z",
-      "durationMs": 16361,
+      "generatedAt": "2026-06-05T21:51:33.990Z",
+      "durationMs": 15096,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 427740662,
-        "lastIrreversibleBlockNum": 427740336,
-        "libLagBlocks": 326,
-        "headBlockTime": "2026-06-05T21:15:54.500",
-        "headBlockProducer": "bp.adex",
+        "headBlockNum": 427744911,
+        "lastIrreversibleBlockNum": 427744584,
+        "libLagBlocks": 327,
+        "headBlockTime": "2026-06-05T21:51:19.000",
+        "headBlockProducer": "persiantelos",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,11 +28,11 @@
         "blocked": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 13,
-        "springCompatible": 13,
-        "bpApiSpring": 13,
+        "activeSpringCompatible": 14,
+        "springCompatible": 14,
+        "bpApiSpring": 14,
         "bpApiReview": 4,
-        "bpApiUnknown": 4,
+        "bpApiUnknown": 3,
         "bpApiBlocked": 0
       },
       "gates": [
@@ -68,8 +68,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "13/21 Spring",
-          "detail": "4 review, 4 unknown, 0 blocked"
+          "value": "14/21 Spring",
+          "detail": "4 review, 3 unknown, 0 blocked"
         },
         {
           "key": "savanna",
@@ -912,34 +912,26 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "https://eosarabia.net/bp.json",
-            "bpJsonSource": "fallback",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet2api.telosarabia.net",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://eosarabia.net/telostest.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://api.eosarabia.net",
-              "http://api.eosarabia.net",
+              "https://testnet2api.telosarabia.net",
+              "http://testnet2api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.eosarabia.net",
-                "ok": false,
-                "error": "fetch failed"
-              },
-              {
-                "endpoint": "http://api.eosarabia.net",
-                "ok": false,
-                "error": "fetch failed"
-              },
-              {
-                "endpoint": "https://eosarabia.net",
-                "ok": false,
-                "error": "403 Forbidden"
+                "endpoint": "https://testnet2api.telosarabia.net",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -948,9 +940,7 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "amsterdam",
@@ -1327,15 +1317,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-05T21:16:08.427Z",
-      "durationMs": 13952,
+      "generatedAt": "2026-06-05T21:51:30.187Z",
+      "durationMs": 11208,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 471364789,
-        "lastIrreversibleBlockNum": 471364463,
-        "libLagBlocks": 326,
-        "headBlockTime": "2026-06-05T21:15:54.500",
-        "headBlockProducer": "telosmadrid1",
+        "headBlockNum": 471369038,
+        "lastIrreversibleBlockNum": 471368711,
+        "libLagBlocks": 327,
+        "headBlockTime": "2026-06-05T21:51:19.000",
+        "headBlockProducer": "bp.yknot",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -1647,7 +1637,7 @@
               {
                 "endpoint": "https://bigironbp.io",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
               }
             ]
           },
