@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-08T06:55:39.936Z",
+  "generatedAt": "2026-06-08T08:40:18.059Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-08T06:55:39.936Z",
-      "durationMs": 15248,
+      "generatedAt": "2026-06-08T08:40:18.058Z",
+      "durationMs": 14975,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428155627,
-        "lastIrreversibleBlockNum": 428155300,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-08T06:55:25.000",
-        "headBlockProducer": "telosunlimit",
+        "headBlockNum": 428168183,
+        "lastIrreversibleBlockNum": 428167851,
+        "libLagBlocks": 332,
+        "headBlockTime": "2026-06-08T08:40:03.500",
+        "headBlockProducer": "theteloscope",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -396,7 +396,7 @@
           "url": "https://detroitledger.tech",
           "isActive": true,
           "lifetimeMissedBlocks": 7550,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -1297,15 +1297,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-08T06:55:36.409Z",
-      "durationMs": 11605,
+      "generatedAt": "2026-06-08T08:40:12.640Z",
+      "durationMs": 9466,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 471779850,
-        "lastIrreversibleBlockNum": 471779523,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-08T06:55:25.000",
-        "headBlockProducer": "telosunlimit",
+        "headBlockNum": 471792407,
+        "lastIrreversibleBlockNum": 471792075,
+        "libLagBlocks": 332,
+        "headBlockTime": "2026-06-08T08:40:03.500",
+        "headBlockProducer": "bigironbptex",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -1386,7 +1386,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 7591"
+          "detail": "Schedule version 7592"
         },
         {
           "key": "bls",
@@ -1631,8 +1631,56 @@
           ]
         },
         {
-          "name": "theteloscope",
+          "name": "ledgerwisete",
           "schedulePosition": 3,
+          "rank": 23,
+          "blockSigningKey": "EOS77CkBFzx12ZY6KW2s32WH2KwPGeSKa54gFM25HiFvHR3YCtoa8",
+          "votes": "263173528616.55972290039062500",
+          "votesCompact": "263.2B",
+          "url": "https://ledgerwise.io",
+          "isActive": true,
+          "lifetimeMissedBlocks": 1592,
+          "missedBlocksPerRotation": 0,
+          "finalizer": {
+            "registered": false,
+            "active": false,
+            "keys": [],
+            "tables": []
+          },
+          "api": {
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telosapi.ledgerwise.io",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://ledgerwise.io/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "https://telosapi.ledgerwise.io",
+              "http://telosapi.ledgerwise.io",
+              "https://ledgerwise.io"
+            ],
+            "attempts": [
+              {
+                "endpoint": "https://telosapi.ledgerwise.io",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
+              }
+            ]
+          },
+          "status": "blocker",
+          "blockers": [
+            "Savanna finalizer actions missing from eosio ABI",
+            "Finalizer tables are not readable"
+          ],
+          "warnings": []
+        },
+        {
+          "name": "theteloscope",
+          "schedulePosition": 4,
           "rank": 19,
           "blockSigningKey": "EOS5AUGHMZqpcSwTQY2fMDrUS38j2FmbiKbTQmXAoQbtuAC6JyZcq",
           "votes": "283256031018.78820800781250000",
@@ -1678,7 +1726,7 @@
         },
         {
           "name": "telosgreenbp",
-          "schedulePosition": 4,
+          "schedulePosition": 5,
           "rank": 7,
           "blockSigningKey": "EOS71Jn2wt32tEru3xSaFjeMES2gXiXgGarmDeuotVUtM5Puf23b2",
           "votes": "713377628511.38671875000000000",
@@ -1726,7 +1774,7 @@
         },
         {
           "name": "cryptolions1",
-          "schedulePosition": 5,
+          "schedulePosition": 6,
           "rank": 21,
           "blockSigningKey": "EOS5hKeDPnk62zCLionSNwMebA95EpfZsJmSu1YA8V2HnakUhc6rM",
           "votes": "269791271784.57324218750000000",
@@ -1775,7 +1823,7 @@
         },
         {
           "name": "telosunlimit",
-          "schedulePosition": 6,
+          "schedulePosition": 7,
           "rank": 4,
           "blockSigningKey": "EOS6eULtNmR8SpczkD1NQ8ufWwhh4W5mgPDNtUQwhTNFbqHMioZMc",
           "votes": "755487399938.88391113281250000",
@@ -1826,7 +1874,7 @@
         },
         {
           "name": "eosriobrazil",
-          "schedulePosition": 7,
+          "schedulePosition": 8,
           "rank": 15,
           "blockSigningKey": "EOS6zAUZCNZkufYLTQv96jsiAgt3aTEaDUak2DRxcuYWWaAJVGnYf",
           "votes": "382685369069.70141601562500000",
@@ -1874,15 +1922,15 @@
         },
         {
           "name": "caleosblocks",
-          "schedulePosition": 8,
+          "schedulePosition": 9,
           "rank": 1,
           "blockSigningKey": "EOS5dE2h1zymNHqu9UFYj57F5qv8E3ghjSLxNSVoRjMCWeGZB4F6T",
           "votes": "938860032150.75134277343750000",
           "votesCompact": "938.9B",
           "url": "https://caleos.io",
           "isActive": true,
-          "lifetimeMissedBlocks": 14685,
-          "missedBlocksPerRotation": 1,
+          "lifetimeMissedBlocks": 14686,
+          "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -1922,7 +1970,7 @@
         },
         {
           "name": "infinitybloc",
-          "schedulePosition": 9,
+          "schedulePosition": 10,
           "rank": 2,
           "blockSigningKey": "EOS7rkeZxB5Ex45tsYTtmoWogzZAnZCDSW1gFaja7xcUT7s17zSnV",
           "votes": "833075099075.00195312500000000",
@@ -1970,7 +2018,7 @@
         },
         {
           "name": "votetelosusa",
-          "schedulePosition": 10,
+          "schedulePosition": 11,
           "rank": 5,
           "blockSigningKey": "EOS5D2Xfg39dfiXYs84FvvEccLD23d1PPmkv8SoU3EgYCjhRtWbzb",
           "votes": "738190632098.59301757812500000",
@@ -2018,7 +2066,7 @@
         },
         {
           "name": "amsterdam",
-          "schedulePosition": 11,
+          "schedulePosition": 12,
           "rank": 14,
           "blockSigningKey": "EOS7FuLHve4xezeRyVMyGedMTg3uD6exwUA9dr8vQrCQtQrrzm1uK",
           "votes": "388911650132.08789062500000000",
@@ -2066,7 +2114,7 @@
         },
         {
           "name": "eosauthority",
-          "schedulePosition": 12,
+          "schedulePosition": 13,
           "rank": 16,
           "blockSigningKey": "EOS6potyADvdFHQFseUsgrkZbsv6wzu8Vej7AGwFer5JncMFryyb1",
           "votes": "351735353875.98620605468750000",
@@ -2114,54 +2162,6 @@
           "warnings": []
         },
         {
-          "name": "telosgermany",
-          "schedulePosition": 13,
-          "rank": 11,
-          "blockSigningKey": "EOS7NVXQ1fqNLZqhYkyVjb5jrQSFWbQyLwQnVZ8zapPCdnBNDVH1w",
-          "votes": "435472691247.42773437500000000",
-          "votesCompact": "435.5B",
-          "url": "https://genereos.io",
-          "isActive": true,
-          "lifetimeMissedBlocks": 5492,
-          "missedBlocksPerRotation": 0,
-          "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
-          },
-          "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://telosgermany.genereos.io",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://genereos.io/telos/bp.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
-            "endpoints": [
-              "https://telosgermany.genereos.io",
-              "http://telosgermany.genereos.io",
-              "https://genereos.io"
-            ],
-            "attempts": [
-              {
-                "endpoint": "https://telosgermany.genereos.io",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
-              }
-            ]
-          },
-          "status": "blocker",
-          "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
-          ],
-          "warnings": []
-        },
-        {
           "name": "southafrica1",
           "schedulePosition": 14,
           "rank": 17,
@@ -2186,7 +2186,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: This operation was aborted | https://eosza.io/bp.json: This operation was aborted | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: This operation was aborted | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
