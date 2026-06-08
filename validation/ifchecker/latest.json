@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-08T22:08:39.057Z",
+  "generatedAt": "2026-06-08T22:50:14.308Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-08T22:08:39.057Z",
-      "durationMs": 25918,
+      "generatedAt": "2026-06-08T22:50:14.308Z",
+      "durationMs": 17748,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428265141,
-        "lastIrreversibleBlockNum": 428264814,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-08T22:08:13.000",
-        "headBlockProducer": "infinitybloc",
+        "headBlockNum": 428270148,
+        "lastIrreversibleBlockNum": 428269818,
+        "libLagBlocks": 330,
+        "headBlockTime": "2026-06-08T22:49:56.500",
+        "headBlockProducer": "katalyotelos",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,11 +28,11 @@
         "blocked": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 11,
-        "springCompatible": 11,
-        "bpApiSpring": 11,
+        "activeSpringCompatible": 13,
+        "springCompatible": 13,
+        "bpApiSpring": 13,
         "bpApiReview": 2,
-        "bpApiUnknown": 8,
+        "bpApiUnknown": 6,
         "bpApiBlocked": 0
       },
       "gates": [
@@ -68,8 +68,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "11/21 Spring",
-          "detail": "2 review, 8 unknown, 0 blocked"
+          "value": "13/21 Spring",
+          "detail": "2 review, 6 unknown, 0 blocked"
         },
         {
           "key": "savanna",
@@ -1028,22 +1028,26 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://cryptolions.io/chains.json: This operation was aborted | https://cryptolions.io/bp.json: This operation was aborted | https://cryptolions.io/telos.json: This operation was aborted",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos-testnet.cryptolions.io",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://cryptolions.io/telos-test.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://telos-testnet.cryptolions.io",
+              "http://telos-testnet.cryptolions.io",
               "https://cryptolions.io"
             ],
             "attempts": [
               {
-                "endpoint": "https://cryptolions.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "endpoint": "https://telos-testnet.cryptolions.io",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1052,9 +1056,7 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "katalyotelos",
@@ -1168,22 +1170,26 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telos.blocksindia.com/chains.json: This operation was aborted | https://telos.blocksindia.com/bp.json: This operation was aborted | https://telos.blocksindia.com/telos.json: This operation was aborted",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet.api.telos.blocksindia.com",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://testnet.api.telos.blocksindia.com",
+              "http://testnet.api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
               {
-                "endpoint": "https://telos.blocksindia.com",
-                "ok": false,
-                "error": "This operation was aborted"
+                "endpoint": "https://testnet.api.telos.blocksindia.com",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1192,9 +1198,7 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "infinitybloc",
@@ -1303,16 +1307,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-08T22:08:38.296Z",
-      "durationMs": 25121,
+      "generatedAt": "2026-06-08T22:50:07.292Z",
+      "durationMs": 10699,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 471889373,
-        "lastIrreversibleBlockNum": 471889046,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-08T22:08:13.000",
-        "headBlockProducer": "telosindiabp",
-        "serverVersion": "v1.2.2",
+        "headBlockNum": 471894378,
+        "lastIrreversibleBlockNum": 471894048,
+        "libLagBlocks": 330,
+        "headBlockTime": "2026-06-08T22:49:56.500",
+        "headBlockProducer": "katalyotelos",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -1327,8 +1331,8 @@
         "springCompatible": 10,
         "bpApiSpring": 10,
         "bpApiReview": 0,
-        "bpApiUnknown": 5,
-        "bpApiBlocked": 6
+        "bpApiUnknown": 4,
+        "bpApiBlocked": 7
       },
       "gates": [
         {
@@ -1364,7 +1368,7 @@
           "label": "Spring-compatible active BPs",
           "status": "blocker",
           "value": "10/21 Spring",
-          "detail": "0 review, 5 unknown, 6 blocked"
+          "detail": "0 review, 4 unknown, 7 blocked"
         },
         {
           "key": "savanna",
@@ -1384,7 +1388,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2128,7 +2132,7 @@
           "url": "https://teloscentral.com",
           "isActive": true,
           "lifetimeMissedBlocks": 43022,
-          "missedBlocksPerRotation": 5,
+          "missedBlocksPerRotation": 7,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -2192,7 +2196,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: This operation was aborted | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
@@ -2471,33 +2475,36 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telos.blocksindia.com/chains.json: This operation was aborted | https://telos.blocksindia.com/bp.json: This operation was aborted | https://telos.blocksindia.com/telos.json: This operation was aborted",
+            "status": "blocker",
+            "label": "Leap or non-Spring",
+            "endpoint": "https://api.telos.blocksindia.com",
+            "version": "v5.0.3",
+            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://api.telos.blocksindia.com",
+              "http://api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
               {
-                "endpoint": "https://telos.blocksindia.com",
-                "ok": false,
-                "error": "This operation was aborted"
+                "endpoint": "https://api.telos.blocksindia.com",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v5.0.3",
+                "chainMatches": true
               }
             ]
           },
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "Finalizer tables are not readable",
+            "Published API is not Spring compatible"
           ],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "eosphereiobp",
