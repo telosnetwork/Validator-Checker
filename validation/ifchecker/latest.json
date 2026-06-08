@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-08T19:35:52.079Z",
+  "generatedAt": "2026-06-08T20:35:01.660Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-08T19:35:52.079Z",
-      "durationMs": 18226,
+      "generatedAt": "2026-06-08T20:35:01.659Z",
+      "durationMs": 18478,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428246823,
-        "lastIrreversibleBlockNum": 428246490,
-        "libLagBlocks": 333,
-        "headBlockTime": "2026-06-08T19:35:34.000",
-        "headBlockProducer": "teloskitchen",
+        "headBlockNum": 428253922,
+        "lastIrreversibleBlockNum": 428253594,
+        "libLagBlocks": 328,
+        "headBlockTime": "2026-06-08T20:34:43.500",
+        "headBlockProducer": "votetelosusa",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,10 +28,10 @@
         "blocked": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 13,
-        "springCompatible": 13,
-        "bpApiSpring": 13,
-        "bpApiReview": 2,
+        "activeSpringCompatible": 12,
+        "springCompatible": 12,
+        "bpApiSpring": 12,
+        "bpApiReview": 3,
         "bpApiUnknown": 6,
         "bpApiBlocked": 0
       },
@@ -68,8 +68,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "13/21 Spring",
-          "detail": "2 review, 6 unknown, 0 blocked"
+          "value": "12/21 Spring",
+          "detail": "3 review, 6 unknown, 0 blocked"
         },
         {
           "key": "savanna",
@@ -870,26 +870,38 @@
             "tables": []
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet2api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
+            "status": "review",
+            "label": "Published endpoint is not Testnet",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://testnet2api.telosarabia.net",
-              "http://testnet2api.telosarabia.net",
+              "https://api.telosarabia.net",
+              "http://api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://testnet2api.telosarabia.net",
+                "endpoint": "https://api.telosarabia.net",
                 "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
                 "version": "v1.2.2",
-                "chainMatches": true
+                "chainMatches": false
+              },
+              {
+                "endpoint": "http://api.telosarabia.net",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": false
+              },
+              {
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "This operation was aborted"
               }
             ]
           },
@@ -898,7 +910,9 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": []
+          "warnings": [
+            "Published endpoint is not Testnet"
+          ]
         },
         {
           "name": "amsterdam",
@@ -1307,15 +1321,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-08T19:35:43.753Z",
-      "durationMs": 9817,
+      "generatedAt": "2026-06-08T20:34:53.075Z",
+      "durationMs": 9807,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 471871066,
-        "lastIrreversibleBlockNum": 471870732,
-        "libLagBlocks": 334,
-        "headBlockTime": "2026-06-08T19:35:34.500",
-        "headBlockProducer": "telosgreenbp",
+        "headBlockNum": 471878154,
+        "lastIrreversibleBlockNum": 471877826,
+        "libLagBlocks": 328,
+        "headBlockTime": "2026-06-08T20:34:43.500",
+        "headBlockProducer": "infinitybloc",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2083,7 +2097,7 @@
           "url": "https://eosauthority.com",
           "isActive": true,
           "lifetimeMissedBlocks": 82,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 5,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -2131,8 +2145,8 @@
           "votesCompact": "501.2B",
           "url": "https://teloscentral.com",
           "isActive": true,
-          "lifetimeMissedBlocks": 43021,
-          "missedBlocksPerRotation": 1,
+          "lifetimeMissedBlocks": 43022,
+          "missedBlocksPerRotation": 5,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -2180,8 +2194,8 @@
           "votesCompact": "329.7B",
           "url": "https://eosza.io",
           "isActive": true,
-          "lifetimeMissedBlocks": 27803,
-          "missedBlocksPerRotation": 2,
+          "lifetimeMissedBlocks": 27805,
+          "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": false,
             "active": false,
