@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-10T16:32:47.356Z",
+  "generatedAt": "2026-06-10T16:48:28.463Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-10T16:32:47.356Z",
-      "durationMs": 26256,
+      "generatedAt": "2026-06-10T16:48:28.463Z",
+      "durationMs": 27737,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428568729,
-        "lastIrreversibleBlockNum": 428568397,
-        "libLagBlocks": 332,
-        "headBlockTime": "2026-06-10T16:32:21.500",
-        "headBlockProducer": "eosauthority",
+        "headBlockNum": 428570412,
+        "lastIrreversibleBlockNum": 428570085,
+        "libLagBlocks": 327,
+        "headBlockTime": "2026-06-10T16:48:01.000",
+        "headBlockProducer": "telosindiabp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -36,13 +36,6 @@
         "bpApiBlocked": 0
       },
       "gates": [
-        {
-          "key": "features",
-          "label": "Pre-Savanna features",
-          "status": "blocker",
-          "value": "2 missing",
-          "detail": "DISABLE_DEFERRED_TRXS_STAGE_1, DISABLE_DEFERRED_TRXS_STAGE_2"
-        },
         {
           "key": "contract",
           "label": "Finalizer contract ABI",
@@ -72,13 +65,6 @@
           "detail": "1 review, 6 unknown, 0 blocked"
         },
         {
-          "key": "savanna",
-          "label": "SAVANNA feature",
-          "status": "manual",
-          "value": "Pending",
-          "detail": "Expected to remain pending until the activation action"
-        },
-        {
           "key": "operator-private",
           "label": "Operator host checks",
           "status": "manual",
@@ -100,23 +86,37 @@
           "detail": "Schedule version 55567"
         },
         {
+          "key": "features",
+          "label": "Pre-Savanna features",
+          "status": "ok",
+          "value": "Complete",
+          "detail": "All listed dependencies except SAVANNA are active"
+        },
+        {
           "key": "bls",
           "label": "BLS_PRIMITIVES2",
           "status": "ok",
           "value": "Active",
           "detail": "Required before finalizer key registration"
+        },
+        {
+          "key": "savanna",
+          "label": "SAVANNA feature",
+          "status": "ok",
+          "value": "Active",
+          "detail": "Savanna is already active"
         }
       ],
       "features": [
         {
           "name": "DISABLE_DEFERRED_TRXS_STAGE_1",
-          "active": false,
-          "activationBlock": null
+          "active": true,
+          "activationBlock": 428569571
         },
         {
           "name": "DISABLE_DEFERRED_TRXS_STAGE_2",
-          "active": false,
-          "activationBlock": null
+          "active": true,
+          "activationBlock": 428569571
         },
         {
           "name": "WTMSIG_BLOCK_SIGNATURES",
@@ -215,8 +215,8 @@
         },
         {
           "name": "SAVANNA",
-          "active": false,
-          "activationBlock": null
+          "active": true,
+          "activationBlock": 428569571
         }
       ],
       "finalizerTables": [
@@ -1305,15 +1305,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-10T16:32:45.787Z",
-      "durationMs": 24578,
+      "generatedAt": "2026-06-10T16:48:26.575Z",
+      "durationMs": 25774,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472194456,
-        "lastIrreversibleBlockNum": 472194124,
-        "libLagBlocks": 332,
-        "headBlockTime": "2026-06-10T16:32:21.500",
-        "headBlockProducer": "votetelosusa",
+        "headBlockNum": 472196335,
+        "lastIrreversibleBlockNum": 472196008,
+        "libLagBlocks": 327,
+        "headBlockTime": "2026-06-10T16:48:01.000",
+        "headBlockProducer": "bp.any",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
