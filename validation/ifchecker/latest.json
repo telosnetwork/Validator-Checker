@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-10T11:22:28.731Z",
+  "generatedAt": "2026-06-10T12:39:58.187Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-10T11:22:28.731Z",
-      "durationMs": 18314,
+      "generatedAt": "2026-06-10T12:39:57.704Z",
+      "durationMs": 17550,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428531523,
-        "lastIrreversibleBlockNum": 428531188,
-        "libLagBlocks": 335,
-        "headBlockTime": "2026-06-10T11:22:11.000",
-        "headBlockProducer": "amsterdam",
+        "headBlockNum": 428540818,
+        "lastIrreversibleBlockNum": 428540484,
+        "libLagBlocks": 334,
+        "headBlockTime": "2026-06-10T12:39:40.500",
+        "headBlockProducer": "telosmadrid1",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,10 +28,10 @@
         "blocked": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 15,
-        "springCompatible": 15,
-        "bpApiSpring": 15,
-        "bpApiReview": 2,
+        "activeSpringCompatible": 16,
+        "springCompatible": 16,
+        "bpApiSpring": 16,
+        "bpApiReview": 1,
         "bpApiUnknown": 4,
         "bpApiBlocked": 0
       },
@@ -68,8 +68,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "15/21 Spring",
-          "detail": "2 review, 4 unknown, 0 blocked"
+          "value": "16/21 Spring",
+          "detail": "1 review, 4 unknown, 0 blocked"
         },
         {
           "key": "savanna",
@@ -1160,38 +1160,26 @@
             "tables": []
           },
           "api": {
-            "status": "review",
-            "label": "Published endpoint is not Testnet",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
-            "bpJsonSource": "fallback",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet.api.telos.blocksindia.com",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://api.telos.blocksindia.com",
-              "http://api.telos.blocksindia.com",
+              "https://testnet.api.telos.blocksindia.com",
+              "http://testnet.api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.telos.blocksindia.com",
+                "endpoint": "https://testnet.api.telos.blocksindia.com",
                 "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
-                "chainMatches": false
-              },
-              {
-                "endpoint": "http://api.telos.blocksindia.com",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
-                "chainMatches": false
-              },
-              {
-                "endpoint": "https://telos.blocksindia.com",
-                "ok": false,
-                "error": "404 Not Found"
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1200,9 +1188,7 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": [
-            "Published endpoint is not Testnet"
-          ]
+          "warnings": []
         },
         {
           "name": "infinitybloc",
@@ -1311,16 +1297,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-10T11:22:28.511Z",
-      "durationMs": 18062,
+      "generatedAt": "2026-06-10T12:39:58.187Z",
+      "durationMs": 18012,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472157235,
-        "lastIrreversibleBlockNum": 472156900,
-        "libLagBlocks": 335,
-        "headBlockTime": "2026-06-10T11:22:11.000",
-        "headBlockProducer": "persiantelos",
-        "serverVersion": "v1.2.2",
+        "headBlockNum": 472166534,
+        "lastIrreversibleBlockNum": 472166200,
+        "libLagBlocks": 334,
+        "headBlockTime": "2026-06-10T12:39:40.500",
+        "headBlockProducer": "southafrica1",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -1392,7 +1378,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2470,7 +2456,7 @@
             "endpoint": "https://api.telos.blocksindia.com",
             "version": "v5.0.3",
             "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
-            "bpJsonSource": "fallback",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
