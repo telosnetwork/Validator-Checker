@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11T21:57:56.539Z",
+  "generatedAt": "2026-06-11T22:43:56.793Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-11T21:57:56.539Z",
-      "durationMs": 18400,
+      "generatedAt": "2026-06-11T22:43:56.793Z",
+      "durationMs": 18950,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428738863,
-        "lastIrreversibleBlockNum": 428738534,
+        "headBlockNum": 428743303,
+        "lastIrreversibleBlockNum": 428742974,
         "libLagBlocks": 329,
-        "headBlockTime": "2026-06-11T21:57:38.000",
-        "headBlockProducer": "eosphereiobp",
+        "headBlockTime": "2026-06-11T22:43:38.000",
+        "headBlockProducer": "infinitybloc",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -385,7 +385,7 @@
           "url": "https://detroitledger.tech",
           "isActive": true,
           "lifetimeMissedBlocks": 7555,
-          "missedBlocksPerRotation": 36,
+          "missedBlocksPerRotation": 72,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -393,10 +393,10 @@
             "tables": []
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet.telos.detroitledger.tech",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://detroitledger.tech/chains/telos/testnet/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -409,10 +409,18 @@
             "attempts": [
               {
                 "endpoint": "https://testnet.telos.detroitledger.tech",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "http://testnet.telos.detroitledger.tech",
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "https://detroitledger.tech",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
@@ -420,7 +428,9 @@
           "blockers": [
             "No finalizer key row found"
           ],
-          "warnings": []
+          "warnings": [
+            "No matching public API"
+          ]
         },
         {
           "name": "telosunlimit",
@@ -897,34 +907,26 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "https://eosarabia.net/bp.json",
-            "bpJsonSource": "fallback",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet2api.telosarabia.net",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://eosarabia.net/telostest.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://api.eosarabia.net",
-              "http://api.eosarabia.net",
+              "https://testnet2api.telosarabia.net",
+              "http://testnet2api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.eosarabia.net",
-                "ok": false,
-                "error": "fetch failed"
-              },
-              {
-                "endpoint": "http://api.eosarabia.net",
-                "ok": false,
-                "error": "fetch failed"
-              },
-              {
-                "endpoint": "https://eosarabia.net",
-                "ok": false,
-                "error": "This operation was aborted"
+                "endpoint": "https://testnet2api.telosarabia.net",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -932,9 +934,7 @@
           "blockers": [
             "No finalizer key row found"
           ],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "amsterdam",
@@ -1295,16 +1295,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-11T21:57:43.327Z",
-      "durationMs": 5153,
+      "generatedAt": "2026-06-11T22:43:43.172Z",
+      "durationMs": 5188,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472405954,
-        "lastIrreversibleBlockNum": 472405625,
+        "headBlockNum": 472411474,
+        "lastIrreversibleBlockNum": 472411145,
         "libLagBlocks": 329,
-        "headBlockTime": "2026-06-11T21:57:38.000",
-        "headBlockProducer": "teloskitchen",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockTime": "2026-06-11T22:43:38.000",
+        "headBlockProducer": "telosindiabp",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -1376,7 +1376,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
