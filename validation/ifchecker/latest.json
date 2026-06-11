@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11T12:25:07.474Z",
+  "generatedAt": "2026-06-11T13:52:37.845Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,26 +8,26 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-11T12:25:07.474Z",
-      "durationMs": 24696,
+      "generatedAt": "2026-06-11T13:52:37.845Z",
+      "durationMs": 25142,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428683253,
-        "lastIrreversibleBlockNum": 428682926,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-11T12:24:43.000",
-        "headBlockProducer": "telosunlimit",
+        "headBlockNum": 428691748,
+        "lastIrreversibleBlockNum": 428691422,
+        "libLagBlocks": 326,
+        "headBlockTime": "2026-06-11T13:52:12.500",
+        "headBlockProducer": "telosindiabp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
         "scheduled": 21,
         "producerRowsActive": 17,
-        "ready": 2,
+        "ready": 3,
         "review": 0,
-        "blocked": 19,
-        "finalizersRegistered": 2,
-        "finalizersActive": 2,
+        "blocked": 18,
+        "finalizersRegistered": 3,
+        "finalizersActive": 3,
         "activeSpringCompatible": 15,
         "springCompatible": 15,
         "bpApiSpring": 15,
@@ -40,7 +40,7 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "2/21 active",
+          "value": "3/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
@@ -97,7 +97,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 2 rows | finalizers: 2 rows"
+          "detail": "finkeys: 3 rows | finalizers: 3 rows"
         },
         {
           "key": "savanna",
@@ -223,13 +223,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 2,
+          "rows": 3,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 2,
+          "rows": 3,
           "error": ""
         }
       ],
@@ -575,10 +575,15 @@
           "lifetimeMissedBlocks": 30138,
           "missedBlocksPerRotation": 11,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_V_GINjVUwhuWRLuuzpNtkVjg2mTTtAWqWzuKZbX9CTvxabb_blvvuJPS01eVR5ETlo3rFjixa8Cp1VJ3mVejOEFw4yyxzHJJM33eVFlmV_ImNHctcSjCgga24ZD0jDwK53E1Qg"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -604,10 +609,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "ok",
+          "blockers": [],
           "warnings": []
         },
         {
@@ -1156,7 +1159,7 @@
               {
                 "endpoint": "https://telos.blocksindia.com",
                 "ok": false,
-                "error": "404 Not Found"
+                "error": "This operation was aborted"
               }
             ]
           },
@@ -1284,16 +1287,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-11T12:25:05.087Z",
-      "durationMs": 22194,
+      "generatedAt": "2026-06-11T13:52:36.505Z",
+      "durationMs": 23768,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472337205,
-        "lastIrreversibleBlockNum": 472336878,
+        "headBlockNum": 472347705,
+        "lastIrreversibleBlockNum": 472347378,
         "libLagBlocks": 327,
-        "headBlockTime": "2026-06-11T12:24:43.000",
-        "headBlockProducer": "telosunlimit",
-        "serverVersion": "v1.2.2",
+        "headBlockTime": "2026-06-11T13:52:13.000",
+        "headBlockProducer": "telosarabia1",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -1365,7 +1368,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2463,7 +2466,7 @@
               {
                 "endpoint": "https://telos.blocksindia.com",
                 "ok": false,
-                "error": "404 Not Found"
+                "error": "This operation was aborted"
               }
             ]
           },
