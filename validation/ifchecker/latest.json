@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11T21:07:53.011Z",
+  "generatedAt": "2026-06-11T21:57:56.539Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-11T21:07:53.011Z",
-      "durationMs": 18488,
+      "generatedAt": "2026-06-11T21:57:56.539Z",
+      "durationMs": 18400,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428734009,
-        "lastIrreversibleBlockNum": 428733674,
-        "libLagBlocks": 335,
-        "headBlockTime": "2026-06-11T21:07:35.000",
-        "headBlockProducer": "eosiodetroit",
+        "headBlockNum": 428738863,
+        "lastIrreversibleBlockNum": 428738534,
+        "libLagBlocks": 329,
+        "headBlockTime": "2026-06-11T21:57:38.000",
+        "headBlockProducer": "eosphereiobp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -31,8 +31,8 @@
         "activeSpringCompatible": 16,
         "springCompatible": 16,
         "bpApiSpring": 16,
-        "bpApiReview": 2,
-        "bpApiUnknown": 3,
+        "bpApiReview": 1,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 0
       },
       "gates": [
@@ -48,7 +48,7 @@
           "label": "Spring-compatible active BPs",
           "status": "review",
           "value": "16/21 Spring",
-          "detail": "2 review, 3 unknown, 0 blocked"
+          "detail": "1 review, 4 unknown, 0 blocked"
         },
         {
           "key": "operator-private",
@@ -897,26 +897,34 @@
             "tables": []
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet2api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://eosarabia.net/bp.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://testnet2api.telosarabia.net",
-              "http://testnet2api.telosarabia.net",
+              "https://api.eosarabia.net",
+              "http://api.eosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://testnet2api.telosarabia.net",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "https://api.eosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "http://api.eosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "This operation was aborted"
               }
             ]
           },
@@ -924,7 +932,9 @@
           "blockers": [
             "No finalizer key row found"
           ],
-          "warnings": []
+          "warnings": [
+            "No matching public API"
+          ]
         },
         {
           "name": "amsterdam",
@@ -1147,38 +1157,26 @@
             "tables": []
           },
           "api": {
-            "status": "review",
-            "label": "Published endpoint is not Testnet",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
-            "bpJsonSource": "fallback",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet.api.telos.blocksindia.com",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://api.telos.blocksindia.com",
-              "http://api.telos.blocksindia.com",
+              "https://testnet.api.telos.blocksindia.com",
+              "http://testnet.api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.telos.blocksindia.com",
+                "endpoint": "https://testnet.api.telos.blocksindia.com",
                 "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
-                "chainMatches": false
-              },
-              {
-                "endpoint": "http://api.telos.blocksindia.com",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
-                "chainMatches": false
-              },
-              {
-                "endpoint": "https://telos.blocksindia.com",
-                "ok": false,
-                "error": "This operation was aborted"
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1186,9 +1184,7 @@
           "blockers": [
             "No finalizer key row found"
           ],
-          "warnings": [
-            "Published endpoint is not Testnet"
-          ]
+          "warnings": []
         },
         {
           "name": "infinitybloc",
@@ -1299,15 +1295,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-11T21:07:44.590Z",
-      "durationMs": 10030,
+      "generatedAt": "2026-06-11T21:57:43.327Z",
+      "durationMs": 5153,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472399948,
-        "lastIrreversibleBlockNum": 472399613,
-        "libLagBlocks": 335,
-        "headBlockTime": "2026-06-11T21:07:35.000",
-        "headBlockProducer": "telosgreenbp",
+        "headBlockNum": 472405954,
+        "lastIrreversibleBlockNum": 472405625,
+        "libLagBlocks": 329,
+        "headBlockTime": "2026-06-11T21:57:38.000",
+        "headBlockProducer": "teloskitchen",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2461,7 +2457,7 @@
             "endpoint": "https://api.telos.blocksindia.com",
             "version": "v5.0.3",
             "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
-            "bpJsonSource": "fallback",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
