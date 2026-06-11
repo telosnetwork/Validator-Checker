@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11T00:01:53.999Z",
+  "generatedAt": "2026-06-11T01:26:18.320Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-11T00:01:53.999Z",
-      "durationMs": 20239,
+      "generatedAt": "2026-06-11T01:26:18.320Z",
+      "durationMs": 21231,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428612344,
-        "lastIrreversibleBlockNum": 428612011,
-        "libLagBlocks": 333,
-        "headBlockTime": "2026-06-11T00:01:34.000",
-        "headBlockProducer": "caleosblocks",
+        "headBlockNum": 428620530,
+        "lastIrreversibleBlockNum": 428620195,
+        "libLagBlocks": 335,
+        "headBlockTime": "2026-06-11T01:25:53.500",
+        "headBlockProducer": "telosgermany",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,10 +28,10 @@
         "blocked": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 15,
-        "springCompatible": 15,
-        "bpApiSpring": 15,
-        "bpApiReview": 1,
+        "activeSpringCompatible": 14,
+        "springCompatible": 14,
+        "bpApiSpring": 14,
+        "bpApiReview": 2,
         "bpApiUnknown": 5,
         "bpApiBlocked": 0
       },
@@ -61,8 +61,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "15/21 Spring",
-          "detail": "1 review, 5 unknown, 0 blocked"
+          "value": "14/21 Spring",
+          "detail": "2 review, 5 unknown, 0 blocked"
         },
         {
           "key": "operator-private",
@@ -906,26 +906,38 @@
             "tables": []
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet2api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
+            "status": "review",
+            "label": "Published endpoint is not Testnet",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://testnet2api.telosarabia.net",
-              "http://testnet2api.telosarabia.net",
+              "https://api.telosarabia.net",
+              "http://api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://testnet2api.telosarabia.net",
+                "endpoint": "https://api.telosarabia.net",
                 "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
                 "version": "v1.2.2",
-                "chainMatches": true
+                "chainMatches": false
+              },
+              {
+                "endpoint": "http://api.telosarabia.net",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": false
+              },
+              {
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "This operation was aborted"
               }
             ]
           },
@@ -934,7 +946,9 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": []
+          "warnings": [
+            "Published endpoint is not Testnet"
+          ]
         },
         {
           "name": "amsterdam",
@@ -1307,15 +1321,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-11T00:01:51.042Z",
-      "durationMs": 17251,
+      "generatedAt": "2026-06-11T01:26:14.225Z",
+      "durationMs": 17104,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472248252,
-        "lastIrreversibleBlockNum": 472247919,
-        "libLagBlocks": 333,
-        "headBlockTime": "2026-06-11T00:01:34.000",
-        "headBlockProducer": "infinitybloc",
+        "headBlockNum": 472258379,
+        "lastIrreversibleBlockNum": 472258047,
+        "libLagBlocks": 332,
+        "headBlockTime": "2026-06-11T01:25:57.500",
+        "headBlockProducer": "telosgermany",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2146,7 +2160,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: fetch failed | https://eosza.io/telos.json: fetch failed",
+            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
@@ -2154,7 +2168,7 @@
               {
                 "endpoint": "https://eosza.io",
                 "ok": false,
-                "error": "fetch failed"
+                "error": "405 Method Not Allowed"
               }
             ]
           },
@@ -2239,7 +2253,7 @@
             "endpoint": "https://mainnet.persiantelos.com",
             "version": "v5.0.2",
             "bpJsonUrl": "https://persiantelos.com/bp.json",
-            "bpJsonSource": "chains.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
