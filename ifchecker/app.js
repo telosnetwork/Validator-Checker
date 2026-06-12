@@ -1,6 +1,6 @@
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 const SNAPSHOT_URL = "/validation/ifchecker/latest.json";
-const PRODUCER_TABLE_COLUMNS = 8;
+const PRODUCER_TABLE_COLUMNS = 7;
 
 const state = {
   network: "testnet",
@@ -382,7 +382,6 @@ function renderProducerRow(data, producer) {
           <span class="bp-url">${producer.url ? link(producer.url, producer.url) : "No BP URL"}</span>
         </td>
         <td>${scheduleLabel}</td>
-        <td>${escapeHtml(producer.votesCompact)}</td>
         <td>
           ${statusPill(finalizerStatus, finalizerLabel)}
           <span class="small-note">${escapeHtml(producer.finalizer.tables.join(", ") || "No table row")}</span>
