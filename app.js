@@ -20,6 +20,7 @@ const VALID_CHART_MODES = ["cpu", "api", "missed"];
 const VALID_ENDPOINT_NETWORKS = ["mainnet", "testnet"];
 const VALID_ENDPOINT_KINDS = ["peers", "api"];
 const VALID_PRODUCER_FILTERS = ["all", "passing", "failing", "testnet", "active", "standby"];
+const PRODUCER_TABLE_COLUMNS = 14;
 
 const PALETTE = [
   "#1f6fb2",
@@ -323,7 +324,7 @@ function renderLoadError(error) {
   els.chartArea.hidden = true;
   els.chartEmpty.hidden = false;
   els.chartEmpty.textContent = "Latest validation data could not be loaded.";
-  els.producerRows.innerHTML = `<tr><td colspan="14" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
+  els.producerRows.innerHTML = `<tr><td colspan="${PRODUCER_TABLE_COLUMNS}" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
   els.endpointSummary.textContent = "No endpoint data available.";
   els.endpointList.innerHTML = `<div class="endpoint-empty">No endpoints available.</div>`;
@@ -747,15 +748,57 @@ function renderTable() {
     rows = [...rows].sort((a, b) => compareProducerValues(a, b, state.sortKey, state.sortAsc));
   }
 
+  rows = groupProducerRowsBySchedule(rows);
+
   updateSortButtons();
   els.tableSummary.textContent = `${rows.length} of ${state.producers.length} producers shown`;
 
   if (!rows.length) {
-    els.producerRows.innerHTML = `<tr><td colspan="14" class="table-empty">No producers match the current view.</td></tr>`;
+    els.producerRows.innerHTML = `<tr><td colspan="${PRODUCER_TABLE_COLUMNS}" class="table-empty">No producers match the current view.</td></tr>`;
     return;
   }
 
-  els.producerRows.innerHTML = rows.map(renderProducerRow).join("");
+  els.producerRows.innerHTML = renderProducerRows(rows);
+}
+
+function groupProducerRowsBySchedule(rows) {
+  if (!shouldShowStandbyDivider(rows)) return rows;
+  const activeRows = rows.filter((producer) => producer.scheduleType === "active");
+  const standbyRows = rows.filter((producer) => producer.scheduleType === "standby");
+  const otherRows = rows.filter((producer) => !["active", "standby"].includes(producer.scheduleType));
+  return [...activeRows, ...otherRows, ...standbyRows];
+}
+
+function shouldShowStandbyDivider(rows) {
+  if (state.filter === "active" || state.filter === "standby") return false;
+  return rows.some((producer) => producer.scheduleType === "active")
+    && rows.some((producer) => producer.scheduleType === "standby");
+}
+
+function renderProducerRows(rows) {
+  const hasDivider = shouldShowStandbyDivider(rows);
+  let standbyDividerRendered = false;
+  return rows
+    .map((producer, index) => {
+      const needsDivider = hasDivider
+        && !standbyDividerRendered
+        && producer.scheduleType === "standby";
+      standbyDividerRendered = standbyDividerRendered || needsDivider;
+      return `${needsDivider ? renderStandbyDivider(rows) : ""}${renderProducerRow(producer, index)}`;
+    })
+    .join("");
+}
+
+function renderStandbyDivider(rows) {
+  const standbyCount = rows.filter((producer) => producer.scheduleType === "standby").length;
+  const label = `Standby producers (${standbyCount})`;
+  return `
+    <tr class="schedule-divider">
+      <td colspan="${PRODUCER_TABLE_COLUMNS}">
+        <span class="schedule-divider-label">${escapeHtml(label)}</span>
+      </td>
+    </tr>
+  `;
 }
 
 function renderEndpoints() {
