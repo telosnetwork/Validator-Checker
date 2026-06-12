@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-12T02:27:47.884Z",
+  "generatedAt": "2026-06-12T03:51:30.589Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,26 +8,26 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-12T02:27:47.884Z",
-      "durationMs": 18539,
+      "generatedAt": "2026-06-12T03:51:30.588Z",
+      "durationMs": 18313,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428764970,
-        "lastIrreversibleBlockNum": 428764634,
+        "headBlockNum": 428773118,
+        "lastIrreversibleBlockNum": 428772782,
         "libLagBlocks": 336,
-        "headBlockTime": "2026-06-12T02:27:23.500",
-        "headBlockProducer": "telosgermany",
+        "headBlockTime": "2026-06-12T03:51:11.500",
+        "headBlockProducer": "votetelosusa",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
         "scheduled": 21,
         "producerRowsActive": 17,
-        "ready": 5,
+        "ready": 6,
         "review": 0,
-        "blocked": 16,
-        "finalizersRegistered": 5,
-        "finalizersActive": 5,
+        "blocked": 15,
+        "finalizersRegistered": 6,
+        "finalizersActive": 6,
         "activeSpringCompatible": 16,
         "springCompatible": 16,
         "bpApiSpring": 16,
@@ -40,7 +40,7 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "5/21 active",
+          "value": "6/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
@@ -97,7 +97,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 5 rows | finalizers: 5 rows"
+          "detail": "finkeys: 6 rows | finalizers: 6 rows"
         },
         {
           "key": "savanna",
@@ -223,13 +223,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 5,
+          "rows": 6,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 5,
+          "rows": 6,
           "error": ""
         }
       ],
@@ -387,10 +387,15 @@
           "lifetimeMissedBlocks": 7555,
           "missedBlocksPerRotation": 96,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_PSM-WGaWvL18ZgJ59SqT7VaJYdK-AzH_Wpj9ZLQQMmD8n0-3htRCyalGnayuKzARs34v_3LH-kPV2HfpFA2fTob9CL5JCwoe859ts_HJFj3OlbdrjepODyjtZlV4cM0N46dU5A"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -416,10 +421,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "ok",
+          "blockers": [],
           "warnings": []
         },
         {
@@ -994,7 +997,7 @@
             "endpoint": "",
             "version": "",
             "bpJsonUrl": "https://persiantelos.com/bp.json",
-            "bpJsonSource": "chains.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -1283,16 +1286,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-12T02:27:37.496Z",
-      "durationMs": 8115,
+      "generatedAt": "2026-06-12T03:51:17.415Z",
+      "durationMs": 5106,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472438337,
-        "lastIrreversibleBlockNum": 472438001,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-12T02:27:29.500",
-        "headBlockProducer": "amsterdam",
-        "serverVersion": "v1.2.2",
+        "headBlockNum": 472448382,
+        "lastIrreversibleBlockNum": 472448057,
+        "libLagBlocks": 325,
+        "headBlockTime": "2026-06-12T03:51:12.000",
+        "headBlockProducer": "telosusa2222",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -1364,7 +1367,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
