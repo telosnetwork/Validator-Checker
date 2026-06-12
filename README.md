@@ -12,7 +12,7 @@ Standalone static rebuild of the validator dashboard shown at https://infinitybl
 - `scripts/validate_bps.py` generates `validation/latest.json` and `validation/history.json`.
 - The app tries local `validation/*.json` first, then local `data/*.json`.
 - CPU timing history is also merged from `https://infinitybloc.io/validation/history.json` so benchmark data can continue coming from the original repo while its GitHub secret remains there.
-- `.github/workflows/validate.yml` refreshes validation snapshots every six hours and can also be run manually from GitHub Actions.
+- `.github/workflows/validate.yml` refreshes validation snapshots every 15 minutes and can also be run manually from GitHub Actions.
 
 ## Run
 
@@ -47,6 +47,8 @@ It uses live API routes:
 ```
 
 The page first loads `validation/ifchecker/latest.json` so results are immediately visible on arrival. The scheduled validation workflow refreshes that snapshot, and the page can still run a live refresh through the API routes.
+
+Readiness includes a public live P2P gate for scheduled BPs. A BP passes that gate only when its published `bp.json` P2P endpoint completes an Antelope peer handshake on the expected Telos chain. Private host checks such as exact `vote-threads = 4`, finalizer key custody, relay vote propagation, and `safety.dat` protection remain operator-attested checks because public RPC and public P2P handshakes do not expose local node config.
 
 For Netlify-parity local testing:
 

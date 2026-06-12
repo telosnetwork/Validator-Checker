@@ -105,7 +105,7 @@ The data generation process is external to the browser app. The source repositor
 - Fetch all registered producers through `https://mainnet.telos.net/v1/chain/get_producers`.
 - Keep producers where `is_active == 1`.
 - Tag producers as `active` if they appear in the current active schedule, otherwise `standby`.
-- Resolve each producer metadata file through `chains.json` and fallback to `/bp.json`.
+- Resolve each producer metadata file through `chains.json` and fallback to `/bp.json` and `/telos.json`.
 - Treat `chains.json` paths as relative to the registered producer URL, whether the registered URL and metadata path include trailing or leading slashes.
 - Select an SSL API endpoint by preferring query nodes, then producer nodes, then seed nodes.
 - Select a P2P endpoint by preferring seed nodes, then producer nodes, then query nodes.
@@ -139,8 +139,29 @@ The app must display:
 - Count of mainnet passing producers where `sslVerified && apiVerified`.
 - Count of mainnet failing producers.
 - Count of testnet passing producers where `sslVerifiedTestNet && apiVerifiedTestNet`.
-- Average mainnet API latency across producers with valid positive `apiResponseMs`.
+- Average mainnet CPU execution time across producers with latest positive CPU benchmark values.
 - Count of active schedule producers.
+
+### Instant Finality Readiness
+
+The IF checker must evaluate scheduled block producers for Spring/Savanna readiness. Publicly observable checks include:
+
+- Public RPC version and required protocol features.
+- Finalizer ABI actions and tables when available.
+- Active finalizer rows for scheduled BPs when finalizer tables are readable.
+- Spring-compatible published API endpoints from BP metadata.
+- Public live P2P endpoints from BP metadata.
+
+For public live P2P readiness:
+
+- Resolve each scheduled BP metadata file through `chains.json`, then `/bp.json`, then `/telos.json`.
+- Read `p2p_endpoint` values from `nodes`.
+- Prefer seed nodes, then producer nodes, then query nodes.
+- Attempt an Antelope peer handshake against each candidate.
+- Require the handshake response to match the expected Telos chain ID.
+- Mark the scheduled BP as blocked when metadata is unavailable, no public P2P endpoint is published, or all public P2P handshakes fail.
+
+The checker must not claim to prove private node configuration such as exact `vote-threads = 4`, finalizer key custody, relay vote propagation, or `safety.dat` protection. These remain manual operator checks.
 
 ### Performance Chart
 

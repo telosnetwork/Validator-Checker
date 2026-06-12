@@ -262,12 +262,14 @@ function metric(label, value, tone = "") {
 
 function renderMetrics(data) {
   const springCompatible = data.counts.activeSpringCompatible ?? data.counts.springCompatible ?? data.counts.bpApiSpring;
+  const publicP2pOk = data.counts.publicP2pOk;
   elements.metrics.innerHTML = [
     metric("Active BPs", data.counts.scheduled),
     metric("Ready rows", data.counts.ready, "ok"),
     metric("Blocked rows", data.counts.blocked, "blocker"),
     metric("Finalizers", `${data.counts.finalizersActive}/${data.counts.scheduled}`),
-    metric("Spring-compatible active BPs", `${springCompatible}/${data.counts.scheduled}`)
+    metric("Spring-compatible active BPs", `${springCompatible}/${data.counts.scheduled}`),
+    metric("Public live P2P", Number.isFinite(publicP2pOk) ? `${publicP2pOk}/${data.counts.scheduled}` : "Not checked")
   ].join("");
 }
 
@@ -317,6 +319,8 @@ function renderProducerRows(data) {
         ? "ok"
         : "blocker";
     const apiEndpoint = producer.api.endpoint ? link(producer.api.endpoint, producer.api.endpoint.replace(/^https?:\/\//, "")) : "";
+    const p2p = producer.p2p || { status: "unknown", label: "Not checked", endpoint: "" };
+    const p2pEndpoint = p2p.endpoint || (Array.isArray(p2p.endpoints) ? p2p.endpoints[0] : "");
     const rowNotes = [...producer.blockers, ...producer.warnings]
       .slice(0, 4)
       .map((note) => `<div>${escapeHtml(note)}</div>`)
@@ -337,6 +341,10 @@ function renderProducerRows(data) {
           ${statusPill(producer.api.status, producer.api.label)}
           <span class="small-note">${escapeHtml(producer.api.version || "")}</span>
           <span class="small-note">${apiEndpoint}</span>
+        </td>
+        <td>
+          ${statusPill(p2p.status, p2p.label)}
+          <span class="small-note">${escapeHtml(p2pEndpoint || "")}</span>
         </td>
         <td>
           ${escapeHtml(producer.missedBlocksPerRotation)}

@@ -1,5 +1,7 @@
 const http = require("node:http");
+const crypto = require("node:crypto");
 const fs = require("node:fs/promises");
+const net = require("node:net");
 const path = require("node:path");
 const { URL } = require("node:url");
 
@@ -51,6 +53,12 @@ const FINALIZER_TABLES = ["finkeys", "finalizers"];
 const PUBLIC_RPC_TIMEOUT_MS = 12_000;
 const BP_METADATA_TIMEOUT_MS = 4_000;
 const BP_API_TIMEOUT_MS = 4_000;
+const BP_P2P_TIMEOUT_MS = 5_000;
+const NET_VERSION_BASE = 0x04B5;
+const NET_VERSION_MAX = 12;
+const HANDSHAKE_MESSAGE_TYPE = 0;
+const GO_AWAY_MESSAGE_TYPE = 2;
+const MAX_P2P_MESSAGE_SIZE = 16 * 1024 * 1024;
 
 function jsonResponse(res, statusCode, payload) {
   const body = JSON.stringify(payload);
@@ -222,6 +230,20 @@ function addCandidate(candidates, rawUrl) {
   if (normalized && !candidates.includes(normalized)) candidates.push(normalized);
 }
 
+function normalizeP2pEndpoint(rawValue) {
+  if (!rawValue || typeof rawValue !== "string") return "";
+  return rawValue
+    .trim()
+    .replace(/^p2p:\/\//i, "")
+    .replace(/^tcp:\/\//i, "")
+    .replace(/\/+$/, "");
+}
+
+function addP2pCandidate(candidates, rawValue) {
+  const endpoint = normalizeP2pEndpoint(rawValue);
+  if (endpoint && !candidates.includes(endpoint)) candidates.push(endpoint);
+}
+
 async function fetchJsonGet(url, timeoutMs) {
   const response = await fetchWithTimeout(url, {
     method: "GET",
@@ -337,6 +359,23 @@ function endpointsFromBpJson(bpJson) {
   return endpoints;
 }
 
+function p2pEndpointsFromBpJson(bpJson) {
+  const endpoints = [];
+  const nodes = Array.isArray(bpJson?.nodes) ? bpJson.nodes : [];
+
+  function addFromNode(node) {
+    addP2pCandidate(endpoints, node?.p2p_endpoint);
+  }
+
+  for (const preferredType of ["seed", "producer", "query"]) {
+    for (const node of nodes) {
+      if (nodeTypes(node).includes(preferredType)) addFromNode(node);
+    }
+  }
+  for (const node of nodes) addFromNode(node);
+  return endpoints;
+}
+
 async function getInfoFromEndpoint(baseUrl) {
   const url = `${baseUrl}/v1/chain/get_info`;
   const headers = {
@@ -361,7 +400,7 @@ async function getInfoFromEndpoint(baseUrl) {
   throw lastError;
 }
 
-async function fetchBpApiStatus(network, producer) {
+async function fetchBpApiStatus(network, producer, metadataOverride = null) {
   const result = {
     status: "unknown",
     label: "No matching public API",
@@ -375,7 +414,7 @@ async function fetchBpApiStatus(network, producer) {
     attempts: []
   };
   const candidates = [];
-  const metadata = await resolveBpMetadata(network, producer.url);
+  const metadata = metadataOverride || await resolveBpMetadata(network, producer.url);
   result.bpJsonUrl = metadata.url;
   result.bpJsonSource = metadata.source;
   if (metadata.ok) {
@@ -416,6 +455,271 @@ async function fetchBpApiStatus(network, producer) {
     result.label = `Published endpoint is not ${network.label}`;
   }
   return result;
+}
+
+function parseP2pEndpoint(endpoint) {
+  const normalized = normalizeP2pEndpoint(endpoint);
+  if (!normalized) return { host: "", port: 0 };
+  try {
+    const parsed = new URL(`tcp://${normalized}`);
+    return {
+      host: parsed.hostname,
+      port: Number(parsed.port || 0)
+    };
+  } catch {
+    return { host: "", port: 0 };
+  }
+}
+
+function packVaruint(value) {
+  if (value < 0) throw new Error("varuint must be non-negative");
+  const bytes = [];
+  let next = value;
+  do {
+    let byte = next & 0x7f;
+    next >>= 7;
+    if (next) byte |= 0x80;
+    bytes.push(byte);
+  } while (next);
+  return Buffer.from(bytes);
+}
+
+function unpackVaruint(buffer, offset = 0) {
+  let value = 0;
+  let shift = 0;
+  let cursor = offset;
+  while (cursor < buffer.length) {
+    const byte = buffer[cursor];
+    cursor += 1;
+    value |= (byte & 0x7f) << shift;
+    if (!(byte & 0x80)) return [value, cursor];
+    shift += 7;
+    if (shift > 35) throw new Error("varuint too large");
+  }
+  throw new Error("unexpected end of payload while reading varuint");
+}
+
+function packString(value) {
+  const body = Buffer.from(String(value), "utf8");
+  return Buffer.concat([packVaruint(body.length), body]);
+}
+
+function emptyPublicKeyBytes() {
+  return Buffer.concat([packVaruint(0), Buffer.alloc(33)]);
+}
+
+function emptySignatureBytes() {
+  return Buffer.concat([packVaruint(0), Buffer.alloc(65)]);
+}
+
+function makeHandshakePayload(expectedChainId) {
+  const nodeId = crypto.randomBytes(32);
+  const networkVersion = Buffer.alloc(2);
+  networkVersion.writeUInt16LE(NET_VERSION_BASE + NET_VERSION_MAX, 0);
+
+  const timestamp = Buffer.alloc(8);
+  timestamp.writeBigInt64LE(BigInt(Date.now()) * 1_000_000n, 0);
+
+  const zero32 = Buffer.alloc(32);
+  const zero4 = Buffer.alloc(4);
+  const generation = Buffer.alloc(2);
+  generation.writeInt16LE(1, 0);
+
+  return Buffer.concat([
+    packVaruint(HANDSHAKE_MESSAGE_TYPE),
+    networkVersion,
+    Buffer.from(expectedChainId, "hex"),
+    nodeId,
+    emptyPublicKeyBytes(),
+    timestamp,
+    zero32,
+    emptySignatureBytes(),
+    packString(`127.0.0.1:0 - ${nodeId.toString("hex").slice(0, 7)}`),
+    zero4,
+    zero32,
+    zero4,
+    zero32,
+    packString("linux"),
+    packString("Telos IF Readiness Checker"),
+    generation
+  ]);
+}
+
+function parseMessageType(payload) {
+  return unpackVaruint(payload, 0)[0];
+}
+
+function handshakeMatchesChain(payload, expectedChainId) {
+  const [, offsetAfterType] = unpackVaruint(payload, 0);
+  const chainOffset = offsetAfterType + 2;
+  if (chainOffset + 32 > payload.length) return false;
+  return payload.subarray(chainOffset, chainOffset + 32).equals(Buffer.from(expectedChainId, "hex"));
+}
+
+function checkP2pHandshake(endpoint, expectedChainId) {
+  const { host, port } = parseP2pEndpoint(endpoint);
+  if (!host || !port) {
+    return Promise.resolve({
+      ok: false,
+      chainMatches: false,
+      error: "missing host or port"
+    });
+  }
+
+  return new Promise((resolve) => {
+    let settled = false;
+    let buffer = Buffer.alloc(0);
+    let connected = false;
+    const socket = net.createConnection({ host, port });
+
+    function finish(result) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      socket.destroy();
+      resolve(result);
+    }
+
+    const timeout = setTimeout(() => {
+      finish({
+        ok: false,
+        chainMatches: false,
+        error: connected ? "timed out waiting for P2P handshake" : "connection timed out"
+      });
+    }, BP_P2P_TIMEOUT_MS);
+
+    socket.once("connect", () => {
+      connected = true;
+      const payload = makeHandshakePayload(expectedChainId);
+      const header = Buffer.alloc(4);
+      header.writeUInt32LE(payload.length, 0);
+      socket.write(Buffer.concat([header, payload]));
+    });
+
+    socket.on("data", (chunk) => {
+      if (settled) return;
+      buffer = Buffer.concat([buffer, chunk]);
+      while (buffer.length >= 4) {
+        const messageSize = buffer.readUInt32LE(0);
+        if (messageSize <= 0 || messageSize > MAX_P2P_MESSAGE_SIZE) {
+          finish({
+            ok: false,
+            chainMatches: false,
+            error: "invalid P2P message size"
+          });
+          return;
+        }
+        if (buffer.length < 4 + messageSize) return;
+
+        const payload = buffer.subarray(4, 4 + messageSize);
+        buffer = buffer.subarray(4 + messageSize);
+
+        try {
+          const messageType = parseMessageType(payload);
+          if (messageType === HANDSHAKE_MESSAGE_TYPE) {
+            const chainMatches = handshakeMatchesChain(payload, expectedChainId);
+            finish({
+              ok: chainMatches,
+              chainMatches,
+              chainMismatch: !chainMatches,
+              error: chainMatches ? "" : "P2P handshake returned a different chain ID"
+            });
+            return;
+          }
+          if (messageType === GO_AWAY_MESSAGE_TYPE) {
+            finish({
+              ok: false,
+              chainMatches: false,
+              error: "peer sent go_away"
+            });
+            return;
+          }
+        } catch (error) {
+          finish({
+            ok: false,
+            chainMatches: false,
+            error: error.message
+          });
+          return;
+        }
+      }
+    });
+
+    socket.once("error", (error) => {
+      finish({
+        ok: false,
+        chainMatches: false,
+        error: error.message
+      });
+    });
+
+    socket.once("close", () => {
+      finish({
+        ok: false,
+        chainMatches: false,
+        error: "connection closed before P2P handshake"
+      });
+    });
+  });
+}
+
+async function fetchBpP2pStatus(network, producer, metadataOverride = null) {
+  const result = {
+    status: "blocker",
+    label: "No public P2P endpoint",
+    endpoint: "",
+    bpJsonUrl: "",
+    bpJsonSource: "",
+    bpJsonStatus: "unknown",
+    bpJsonError: "",
+    endpoints: [],
+    attempts: []
+  };
+  const metadata = metadataOverride || await resolveBpMetadata(network, producer.url);
+  result.bpJsonUrl = metadata.url;
+  result.bpJsonSource = metadata.source;
+  if (metadata.ok) {
+    result.bpJsonStatus = "ok";
+    result.endpoints = p2pEndpointsFromBpJson(metadata.json).slice(0, 8);
+  } else {
+    result.bpJsonStatus = "error";
+    result.bpJsonError = metadata.errors.join(" | ");
+    result.label = "BP metadata unavailable";
+    return result;
+  }
+
+  if (!result.endpoints.length) return result;
+
+  for (const endpoint of result.endpoints) {
+    const attempt = await checkP2pHandshake(endpoint, network.chainId);
+    result.attempts.push({ endpoint, ...attempt });
+    if (attempt.ok) {
+      result.status = "ok";
+      result.label = "Handshake OK";
+      result.endpoint = endpoint;
+      return result;
+    }
+  }
+
+  const wrongChain = result.attempts.some((attempt) => attempt.chainMismatch);
+  const missingPort = result.attempts.length > 0
+    && result.attempts.every((attempt) => attempt.error === "missing host or port");
+  result.endpoint = result.endpoints[0] || "";
+  result.label = wrongChain
+    ? `P2P endpoint is not ${network.label}`
+    : missingPort
+      ? "P2P endpoint missing port"
+      : "P2P handshake failed";
+  return result;
+}
+
+async function fetchBpPublicStatus(network, producer) {
+  const metadata = await resolveBpMetadata(network, producer.url);
+  const [api, p2p] = await Promise.all([
+    fetchBpApiStatus(network, producer, metadata),
+    fetchBpP2pStatus(network, producer, metadata)
+  ]);
+  return { api, p2p };
 }
 
 async function mapLimit(items, limit, mapper) {
@@ -537,14 +841,14 @@ async function evaluateReadiness(networkKey) {
   const finalizerTables = [finkeys, finalizers];
   const finalizerTablesAvailable = finalizerTables.every((tableResult) => tableResult.ok);
   const finalizerIndex = buildFinalizerIndex(finalizerTables);
-  const bpApiStatuses = await mapLimit(activeSchedule, 6, async (entry) => {
+  const bpPublicStatuses = await mapLimit(activeSchedule, 6, async (entry) => {
     const producerRow = producerByName.get(entry.producer_name) || {};
-    return fetchBpApiStatus(network, {
+    return fetchBpPublicStatus(network, {
       name: entry.producer_name,
       url: producerRow.url || ""
     });
   });
-  const bpApiByName = new Map(bpApiStatuses.map((status, index) => [activeSchedule[index].producer_name, status]));
+  const bpPublicByName = new Map(bpPublicStatuses.map((status, index) => [activeSchedule[index].producer_name, status]));
 
   const producers = activeSchedule.map((entry, index) => {
     const row = producerByName.get(entry.producer_name) || {};
@@ -554,7 +858,9 @@ async function evaluateReadiness(networkKey) {
       keys: [],
       tables: []
     };
-    const api = bpApiByName.get(entry.producer_name) || { status: "unknown", label: "Not checked" };
+    const publicStatus = bpPublicByName.get(entry.producer_name) || {};
+    const api = publicStatus.api || { status: "unknown", label: "Not checked" };
+    const p2p = publicStatus.p2p || { status: "blocker", label: "Not checked", endpoint: "" };
     const blockers = [];
     const warnings = [];
     if (Number(row.is_active) !== 1) blockers.push("Producer row is not active");
@@ -564,6 +870,8 @@ async function evaluateReadiness(networkKey) {
     if (finalizerTablesAvailable && finalizer.registered && !finalizer.active) blockers.push("Finalizer key row is not active");
     if (api.status === "blocker") blockers.push("Published API is not Spring compatible");
     if (api.status === "review" || api.status === "unknown") warnings.push(api.label || "Published API needs review");
+    if (p2p.status === "blocker") blockers.push(p2p.label || "Public P2P handshake failed");
+    if (p2p.status === "review" || p2p.status === "unknown") warnings.push(p2p.label || "Published P2P needs review");
     const status = blockers.length > 0 ? "blocker" : warnings.length > 0 ? "review" : "ok";
     return {
       name: entry.producer_name,
@@ -583,6 +891,7 @@ async function evaluateReadiness(networkKey) {
         tables: finalizer.tables
       },
       api,
+      p2p,
       status,
       blockers,
       warnings
@@ -602,7 +911,11 @@ async function evaluateReadiness(networkKey) {
     bpApiSpring: producers.filter((producer) => producer.api.status === "ok").length,
     bpApiReview: producers.filter((producer) => producer.api.status === "review").length,
     bpApiUnknown: producers.filter((producer) => producer.api.status === "unknown").length,
-    bpApiBlocked: producers.filter((producer) => producer.api.status === "blocker").length
+    bpApiBlocked: producers.filter((producer) => producer.api.status === "blocker").length,
+    publicP2pOk: producers.filter((producer) => producer.p2p.status === "ok").length,
+    publicP2pReview: producers.filter((producer) => producer.p2p.status === "review").length,
+    publicP2pUnknown: producers.filter((producer) => producer.p2p.status === "unknown").length,
+    publicP2pBlocked: producers.filter((producer) => producer.p2p.status === "blocker").length
   };
 
   const rpcVersion = classifyVersion(info);
@@ -665,6 +978,13 @@ async function evaluateReadiness(networkKey) {
       detail: `${counts.bpApiReview} review, ${counts.bpApiUnknown} unknown, ${counts.bpApiBlocked} blocked`
     },
     {
+      key: "public-p2p",
+      label: "Public live P2P",
+      status: counts.publicP2pBlocked > 0 ? "blocker" : counts.publicP2pOk === counts.scheduled ? "ok" : "review",
+      value: `${counts.publicP2pOk}/${counts.scheduled} reachable`,
+      detail: `${counts.publicP2pReview} review, ${counts.publicP2pUnknown} unknown, ${counts.publicP2pBlocked} blocked`
+    },
+    {
       key: "savanna",
       label: "SAVANNA feature",
       status: savannaActive ? "ok" : "manual",
@@ -676,7 +996,7 @@ async function evaluateReadiness(networkKey) {
       label: "Operator host checks",
       status: "manual",
       value: "Manual",
-      detail: "Confirm unique BLS keys, vote-threads, relay vote propagation, and protected safety.dat"
+      detail: "Confirm exact vote-threads = 4, unique BLS keys, relay vote propagation, and protected safety.dat"
     }
   ];
 
@@ -717,7 +1037,8 @@ async function evaluateReadiness(networkKey) {
     producers,
     sourceNotes: [
       "Published BP API checks come from bp.json and public API endpoints, not private producer hosts.",
-      "Operator host checks cannot be proven from public RPC."
+      "Public live P2P checks require a bp.json p2p_endpoint that completes a peer handshake on the expected chain.",
+      "Exact vote-threads configuration and private producer-host settings cannot be proven from public RPC."
     ]
   };
 }
