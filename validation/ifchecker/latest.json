@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-12T19:17:48.168Z",
+  "generatedAt": "2026-06-12T20:19:09.516Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-12T19:17:48.167Z",
-      "durationMs": 19481,
+      "generatedAt": "2026-06-12T20:19:09.516Z",
+      "durationMs": 21758,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428863081,
-        "lastIrreversibleBlockNum": 428862746,
-        "libLagBlocks": 335,
-        "headBlockTime": "2026-06-12T19:17:29.000",
-        "headBlockProducer": "telosgermany",
+        "headBlockNum": 428869034,
+        "lastIrreversibleBlockNum": 428868698,
+        "libLagBlocks": 336,
+        "headBlockTime": "2026-06-12T20:18:47.500",
+        "headBlockProducer": "telosarabia1",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -33,10 +33,10 @@
         "blockedRows": 13,
         "finalizersRegistered": 13,
         "finalizersActive": 13,
-        "activeSpringCompatible": 16,
-        "springCompatible": 16,
-        "bpApiSpring": 16,
-        "bpApiReview": 2,
+        "activeSpringCompatible": 17,
+        "springCompatible": 17,
+        "bpApiSpring": 17,
+        "bpApiReview": 1,
         "bpApiUnknown": 3,
         "bpApiBlocked": 0,
         "publicP2pOk": 13,
@@ -63,8 +63,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "16/21 Spring",
-          "detail": "2 review, 3 unknown, 0 blocked"
+          "value": "17/21 Spring",
+          "detail": "1 review, 3 unknown, 0 blocked"
         },
         {
           "key": "operator-private",
@@ -1588,58 +1588,45 @@
             ]
           },
           "api": {
-            "status": "review",
-            "label": "Published endpoint is not Testnet",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
-            "bpJsonSource": "fallback",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet.api.telos.blocksindia.com",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://api.telos.blocksindia.com",
-              "http://api.telos.blocksindia.com",
+              "https://testnet.api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.telos.blocksindia.com",
+                "endpoint": "https://testnet.api.telos.blocksindia.com",
                 "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
-                "chainMatches": false
-              },
-              {
-                "endpoint": "http://api.telos.blocksindia.com",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
-                "chainMatches": false
-              },
-              {
-                "endpoint": "https://telos.blocksindia.com",
-                "ok": false,
-                "error": "This operation was aborted"
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
             "status": "blocker",
             "label": "P2P handshake failed",
-            "endpoint": "p2p.telos.blocksindia.com:7776",
-            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
-            "bpJsonSource": "fallback",
+            "endpoint": "testnet.p2p.telos.blocksindia.com:9879",
+            "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "p2p.telos.blocksindia.com:7776"
+              "testnet.p2p.telos.blocksindia.com:9879"
             ],
             "attempts": [
               {
-                "endpoint": "p2p.telos.blocksindia.com:7776",
+                "endpoint": "testnet.p2p.telos.blocksindia.com:9879",
                 "ok": false,
                 "chainMatches": false,
-                "error": "peer sent go_away"
+                "error": "connection timed out"
               }
             ]
           },
@@ -1647,9 +1634,7 @@
           "blockers": [
             "P2P handshake failed"
           ],
-          "warnings": [
-            "Published endpoint is not Testnet"
-          ]
+          "warnings": []
         },
         {
           "name": "infinitybloc",
@@ -1935,15 +1920,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-12T19:17:48.168Z",
-      "durationMs": 19445,
+      "generatedAt": "2026-06-12T20:19:09.515Z",
+      "durationMs": 21723,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472559536,
-        "lastIrreversibleBlockNum": 472559201,
-        "libLagBlocks": 335,
-        "headBlockTime": "2026-06-12T19:17:29.000",
-        "headBlockProducer": "votetelosusa",
+        "headBlockNum": 472566893,
+        "lastIrreversibleBlockNum": 472566557,
+        "libLagBlocks": 336,
+        "headBlockTime": "2026-06-12T20:18:47.500",
+        "headBlockProducer": "teloscentral",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
