@@ -357,6 +357,32 @@ tbody tr:hover {
   background: #faf7ef;
 }
 
+tbody tr.schedule-divider:hover,
+.schedule-divider {
+  background: #f1f4f8;
+}
+
+.schedule-divider td {
+  padding: 0;
+  border-top: 2px solid #9aa7b7;
+  border-bottom: 1px solid var(--line);
+}
+
+.schedule-divider-label {
+  display: block;
+  padding: 10px 14px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.standby-rank {
+  color: var(--muted);
+  font-weight: 800;
+}
+
 th:nth-child(1),
 td:nth-child(1) {
   width: 16%;

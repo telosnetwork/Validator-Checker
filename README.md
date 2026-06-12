@@ -50,6 +50,8 @@ The page first loads `validation/ifchecker/latest.json` so results are immediate
 
 Readiness includes a public live P2P gate for scheduled BPs. A BP passes that gate only when its published `bp.json` P2P endpoint completes an Antelope peer handshake on the expected Telos chain. Private host checks such as exact `vote-threads = 4`, finalizer key custody, relay vote propagation, and `safety.dat` protection remain operator-attested checks because public RPC and public P2P handshakes do not expose local node config.
 
+The IF checker table also shows active standby BPs below a divider for operator visibility. Standby rows are checked for published API/P2P health, but scheduled finalizer readiness gates and top-level pass counts are based on the active schedule only.
+
 For Netlify-parity local testing:
 
 ```sh

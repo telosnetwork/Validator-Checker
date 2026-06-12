@@ -1,5 +1,6 @@
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 const SNAPSHOT_URL = "/validation/ifchecker/latest.json";
+const PRODUCER_TABLE_COLUMNS = 8;
 
 const state = {
   network: "testnet",
@@ -265,8 +266,9 @@ function renderMetrics(data) {
   const publicP2pOk = data.counts.publicP2pOk;
   elements.metrics.innerHTML = [
     metric("Active BPs", data.counts.scheduled),
-    metric("Ready rows", data.counts.ready, "ok"),
-    metric("Blocked rows", data.counts.blocked, "blocker"),
+    metric("Standby BPs", data.counts.standby ?? 0),
+    metric("Ready scheduled", data.counts.ready, "ok"),
+    metric("Blocked scheduled", data.counts.blocked, "blocker"),
     metric("Finalizers", `${data.counts.finalizersActive}/${data.counts.scheduled}`),
     metric("Spring-compatible active BPs", `${springCompatible}/${data.counts.scheduled}`),
     metric("Public live P2P", Number.isFinite(publicP2pOk) ? `${publicP2pOk}/${data.counts.scheduled}` : "Not checked")
@@ -303,35 +305,83 @@ function producerMatchesFilters(producer) {
 }
 
 function renderProducerRows(data) {
-  const rows = data.producers.filter(producerMatchesFilters);
-  elements.caption.textContent = `${rows.length} of ${data.producers.length} scheduled producers shown`;
-  elements.rows.innerHTML = rows.map((producer) => {
-    const finalizerLabel = !data.finalizerTables.every((table) => table.ok)
+  const rows = groupProducerRowsBySchedule(data.producers.filter(producerMatchesFilters));
+  const scheduledCount = rows.filter((producer) => producer.scheduleType === "active").length;
+  const standbyCount = rows.filter((producer) => producer.scheduleType === "standby").length;
+  elements.caption.textContent = `${rows.length} of ${data.producers.length} producers shown - ${scheduledCount} scheduled, ${standbyCount} standby`;
+  elements.rows.innerHTML = renderProducerTableRows(data, rows);
+}
+
+function groupProducerRowsBySchedule(rows) {
+  if (!shouldShowStandbyDivider(rows)) return rows;
+  const scheduledRows = rows.filter((producer) => producer.scheduleType === "active");
+  const standbyRows = rows.filter((producer) => producer.scheduleType === "standby");
+  const otherRows = rows.filter((producer) => !["active", "standby"].includes(producer.scheduleType));
+  return [...scheduledRows, ...otherRows, ...standbyRows];
+}
+
+function shouldShowStandbyDivider(rows) {
+  return rows.some((producer) => producer.scheduleType === "active")
+    && rows.some((producer) => producer.scheduleType === "standby");
+}
+
+function renderProducerTableRows(data, rows) {
+  let standbyDividerRendered = false;
+  const hasDivider = shouldShowStandbyDivider(rows);
+  return rows.map((producer) => {
+    const needsDivider = hasDivider && !standbyDividerRendered && producer.scheduleType === "standby";
+    standbyDividerRendered = standbyDividerRendered || needsDivider;
+    return `${needsDivider ? renderStandbyDivider(rows) : ""}${renderProducerRow(data, producer)}`;
+  }).join("");
+}
+
+function renderStandbyDivider(rows) {
+  const standbyCount = rows.filter((producer) => producer.scheduleType === "standby").length;
+  return `
+    <tr class="schedule-divider">
+      <td colspan="${PRODUCER_TABLE_COLUMNS}">
+        <span class="schedule-divider-label">${escapeHtml(`Standby producers (${standbyCount})`)}</span>
+      </td>
+    </tr>
+  `;
+}
+
+function renderProducerRow(data, producer) {
+  const scheduled = producer.scheduleType !== "standby";
+  const finalizerLabel = !scheduled
+    ? "Not scheduled"
+    : !data.finalizerTables.every((table) => table.ok)
       ? "Table unavailable"
       : producer.finalizer.active
         ? "Active"
         : producer.finalizer.registered
           ? "Registered"
           : "Missing";
-    const finalizerStatus = !data.finalizerTables.every((table) => table.ok)
+  const finalizerStatus = !scheduled
+    ? "manual"
+    : !data.finalizerTables.every((table) => table.ok)
       ? "blocker"
       : producer.finalizer.active
         ? "ok"
         : "blocker";
-    const apiEndpoint = producer.api.endpoint ? link(producer.api.endpoint, producer.api.endpoint.replace(/^https?:\/\//, "")) : "";
-    const p2p = producer.p2p || { status: "unknown", label: "Not checked", endpoint: "" };
-    const p2pEndpoint = p2p.endpoint || (Array.isArray(p2p.endpoints) ? p2p.endpoints[0] : "");
-    const rowNotes = [...producer.blockers, ...producer.warnings]
-      .slice(0, 4)
-      .map((note) => `<div>${escapeHtml(note)}</div>`)
-      .join("");
-    return `
+  const apiEndpoint = producer.api.endpoint ? link(producer.api.endpoint, producer.api.endpoint.replace(/^https?:\/\//, "")) : "";
+  const p2p = producer.p2p || { status: "unknown", label: "Not checked", endpoint: "" };
+  const p2pEndpoint = p2p.endpoint || (Array.isArray(p2p.endpoints) ? p2p.endpoints[0] : "");
+  const rowNotes = [...producer.blockers, ...producer.warnings]
+    .slice(0, 4)
+    .map((note) => `<div>${escapeHtml(note)}</div>`)
+    .join("");
+  const scheduleLabel = scheduled
+    ? `#${escapeHtml(producer.schedulePosition)}`
+    : `<span class="standby-rank">Standby</span><span class="small-note">rank ${escapeHtml(producer.rank || "-")}</span>`;
+
+  return `
       <tr>
         <td>
           <div class="bp-name">${escapeHtml(producer.name)}</div>
           <span class="bp-url">${producer.url ? link(producer.url, producer.url) : "No BP URL"}</span>
         </td>
-        <td>#${escapeHtml(producer.schedulePosition)}</td>
+        <td>${scheduleLabel}</td>
         <td>${escapeHtml(producer.votesCompact)}</td>
         <td>
           ${statusPill(finalizerStatus, finalizerLabel)}
@@ -356,7 +406,6 @@ function renderProducerRows(data) {
         </td>
       </tr>
     `;
-  }).join("");
 }
 
 function renderEvidence(data) {

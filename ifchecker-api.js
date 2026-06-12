@@ -841,43 +841,64 @@ async function evaluateReadiness(networkKey) {
   const finalizerTables = [finkeys, finalizers];
   const finalizerTablesAvailable = finalizerTables.every((tableResult) => tableResult.ok);
   const finalizerIndex = buildFinalizerIndex(finalizerTables);
-  const bpPublicStatuses = await mapLimit(activeSchedule, 6, async (entry) => {
-    const producerRow = producerByName.get(entry.producer_name) || {};
-    return fetchBpPublicStatus(network, {
+  const activeNameSet = new Set(activeNames);
+  const tableRows = [
+    ...activeSchedule.map((entry, index) => ({
       name: entry.producer_name,
+      scheduleType: "active",
+      schedulePosition: index + 1,
+      scheduleEntry: entry
+    })),
+    ...activeProducerRows
+      .filter((row) => !activeNameSet.has(row.owner))
+      .map((row) => ({
+        name: row.owner,
+        scheduleType: "standby",
+        schedulePosition: null,
+        scheduleEntry: null
+      }))
+  ];
+
+  const bpPublicStatuses = await mapLimit(tableRows, 6, async (entry) => {
+    const producerRow = producerByName.get(entry.name) || {};
+    return fetchBpPublicStatus(network, {
+      name: entry.name,
       url: producerRow.url || ""
     });
   });
-  const bpPublicByName = new Map(bpPublicStatuses.map((status, index) => [activeSchedule[index].producer_name, status]));
+  const bpPublicByName = new Map(bpPublicStatuses.map((status, index) => [tableRows[index].name, status]));
 
-  const producers = activeSchedule.map((entry, index) => {
-    const row = producerByName.get(entry.producer_name) || {};
-    const finalizer = finalizerIndex.get(entry.producer_name) || {
+  const producers = tableRows.map((entry) => {
+    const row = producerByName.get(entry.name) || {};
+    const finalizer = finalizerIndex.get(entry.name) || {
       registered: false,
       active: false,
       keys: [],
       tables: []
     };
-    const publicStatus = bpPublicByName.get(entry.producer_name) || {};
+    const publicStatus = bpPublicByName.get(entry.name) || {};
     const api = publicStatus.api || { status: "unknown", label: "Not checked" };
     const p2p = publicStatus.p2p || { status: "blocker", label: "Not checked", endpoint: "" };
     const blockers = [];
     const warnings = [];
+    const isScheduled = entry.scheduleType === "active";
     if (Number(row.is_active) !== 1) blockers.push("Producer row is not active");
-    if (missingFinalizerActions.length > 0) blockers.push("Savanna finalizer actions missing from eosio ABI");
-    if (!finalizerTablesAvailable) blockers.push("Finalizer tables are not readable");
-    if (finalizerTablesAvailable && !finalizer.registered) blockers.push("No finalizer key row found");
-    if (finalizerTablesAvailable && finalizer.registered && !finalizer.active) blockers.push("Finalizer key row is not active");
+    if (isScheduled && missingFinalizerActions.length > 0) blockers.push("Savanna finalizer actions missing from eosio ABI");
+    if (isScheduled && !finalizerTablesAvailable) blockers.push("Finalizer tables are not readable");
+    if (isScheduled && finalizerTablesAvailable && !finalizer.registered) blockers.push("No finalizer key row found");
+    if (isScheduled && finalizerTablesAvailable && finalizer.registered && !finalizer.active) blockers.push("Finalizer key row is not active");
     if (api.status === "blocker") blockers.push("Published API is not Spring compatible");
     if (api.status === "review" || api.status === "unknown") warnings.push(api.label || "Published API needs review");
     if (p2p.status === "blocker") blockers.push(p2p.label || "Public P2P handshake failed");
     if (p2p.status === "review" || p2p.status === "unknown") warnings.push(p2p.label || "Published P2P needs review");
+    if (!isScheduled) warnings.push("Standby BP - not part of scheduled finalizer gate");
     const status = blockers.length > 0 ? "blocker" : warnings.length > 0 ? "review" : "ok";
     return {
-      name: entry.producer_name,
-      schedulePosition: index + 1,
-      rank: rankByName.get(entry.producer_name) || null,
-      blockSigningKey: producerKeyFromScheduleEntry(entry),
+      name: entry.name,
+      scheduleType: entry.scheduleType,
+      schedulePosition: entry.schedulePosition,
+      rank: rankByName.get(entry.name) || null,
+      blockSigningKey: entry.scheduleEntry ? producerKeyFromScheduleEntry(entry.scheduleEntry) : "",
       votes: row.total_votes || "",
       votesCompact: formatVotes(row.total_votes),
       url: row.url || "",
@@ -897,25 +918,31 @@ async function evaluateReadiness(networkKey) {
       warnings
     };
   });
+  const scheduledProducers = producers.filter((producer) => producer.scheduleType === "active");
 
   const counts = {
-    scheduled: producers.length,
+    totalRows: producers.length,
+    scheduled: scheduledProducers.length,
+    standby: producers.filter((producer) => producer.scheduleType === "standby").length,
     producerRowsActive: producers.filter((producer) => producer.isActive).length,
-    ready: producers.filter((producer) => producer.status === "ok").length,
-    review: producers.filter((producer) => producer.status === "review").length,
-    blocked: producers.filter((producer) => producer.status === "blocker").length,
-    finalizersRegistered: producers.filter((producer) => producer.finalizer.registered).length,
-    finalizersActive: producers.filter((producer) => producer.finalizer.active).length,
-    activeSpringCompatible: producers.filter((producer) => producer.api.status === "ok").length,
-    springCompatible: producers.filter((producer) => producer.api.status === "ok").length,
-    bpApiSpring: producers.filter((producer) => producer.api.status === "ok").length,
-    bpApiReview: producers.filter((producer) => producer.api.status === "review").length,
-    bpApiUnknown: producers.filter((producer) => producer.api.status === "unknown").length,
-    bpApiBlocked: producers.filter((producer) => producer.api.status === "blocker").length,
-    publicP2pOk: producers.filter((producer) => producer.p2p.status === "ok").length,
-    publicP2pReview: producers.filter((producer) => producer.p2p.status === "review").length,
-    publicP2pUnknown: producers.filter((producer) => producer.p2p.status === "unknown").length,
-    publicP2pBlocked: producers.filter((producer) => producer.p2p.status === "blocker").length
+    ready: scheduledProducers.filter((producer) => producer.status === "ok").length,
+    review: scheduledProducers.filter((producer) => producer.status === "review").length,
+    blocked: scheduledProducers.filter((producer) => producer.status === "blocker").length,
+    readyRows: producers.filter((producer) => producer.status === "ok").length,
+    reviewRows: producers.filter((producer) => producer.status === "review").length,
+    blockedRows: producers.filter((producer) => producer.status === "blocker").length,
+    finalizersRegistered: scheduledProducers.filter((producer) => producer.finalizer.registered).length,
+    finalizersActive: scheduledProducers.filter((producer) => producer.finalizer.active).length,
+    activeSpringCompatible: scheduledProducers.filter((producer) => producer.api.status === "ok").length,
+    springCompatible: scheduledProducers.filter((producer) => producer.api.status === "ok").length,
+    bpApiSpring: scheduledProducers.filter((producer) => producer.api.status === "ok").length,
+    bpApiReview: scheduledProducers.filter((producer) => producer.api.status === "review").length,
+    bpApiUnknown: scheduledProducers.filter((producer) => producer.api.status === "unknown").length,
+    bpApiBlocked: scheduledProducers.filter((producer) => producer.api.status === "blocker").length,
+    publicP2pOk: scheduledProducers.filter((producer) => producer.p2p.status === "ok").length,
+    publicP2pReview: scheduledProducers.filter((producer) => producer.p2p.status === "review").length,
+    publicP2pUnknown: scheduledProducers.filter((producer) => producer.p2p.status === "unknown").length,
+    publicP2pBlocked: scheduledProducers.filter((producer) => producer.p2p.status === "blocker").length
   };
 
   const rpcVersion = classifyVersion(info);
