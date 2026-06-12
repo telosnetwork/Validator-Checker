@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-12T07:15:46.966Z",
+  "generatedAt": "2026-06-12T08:47:40.409Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,26 +8,26 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-12T07:15:46.966Z",
-      "durationMs": 17997,
+      "generatedAt": "2026-06-12T08:47:40.409Z",
+      "durationMs": 17592,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428792954,
-        "lastIrreversibleBlockNum": 428792618,
+        "headBlockNum": 428801882,
+        "lastIrreversibleBlockNum": 428801546,
         "libLagBlocks": 336,
-        "headBlockTime": "2026-06-12T07:15:29.500",
-        "headBlockProducer": "telosarabia1",
+        "headBlockTime": "2026-06-12T08:47:17.500",
+        "headBlockProducer": "votetelosusa",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
         "scheduled": 21,
         "producerRowsActive": 17,
-        "ready": 7,
-        "review": 0,
-        "blocked": 14,
-        "finalizersRegistered": 7,
-        "finalizersActive": 7,
+        "ready": 9,
+        "review": 1,
+        "blocked": 11,
+        "finalizersRegistered": 10,
+        "finalizersActive": 10,
         "activeSpringCompatible": 16,
         "springCompatible": 16,
         "bpApiSpring": 16,
@@ -40,7 +40,7 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "7/21 active",
+          "value": "10/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
@@ -97,7 +97,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 7 rows | finalizers: 7 rows"
+          "detail": "finkeys: 10 rows | finalizers: 10 rows"
         },
         {
           "key": "savanna",
@@ -223,13 +223,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 7,
+          "rows": 10,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 7,
+          "rows": 10,
           "error": ""
         }
       ],
@@ -340,10 +340,15 @@
           "lifetimeMissedBlocks": 26275,
           "missedBlocksPerRotation": 0,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_r6UC1O1DdrskLow8JcPyRg0jlxs_IswVBgzXc5T4TRSiYSbJopKccEWWeZftDhgOp3EfthSLrRVV3floL_ldjK_fc4FaR3msKxoRlwSfeS-GOhlFLKvbYHEeZq3mW6MIl6I41Q"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -369,10 +374,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "ok",
+          "blockers": [],
           "warnings": []
         },
         {
@@ -689,10 +692,15 @@
           "lifetimeMissedBlocks": 25890,
           "missedBlocksPerRotation": 12,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_UTKfeolLfkK5wTgEKg6UdCURikkHcSZvf1C8c0SWLKZC-CcE_lkGBqQZ9eoe6ZIMmHstb2rua3uWjfZV5vNw29O8cQLqm8-1d99ze1tuBWmxReDBsnntheicSXWLlX0MBtgzrw"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -718,10 +726,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "ok",
+          "blockers": [],
           "warnings": []
         },
         {
@@ -894,10 +900,15 @@
           "lifetimeMissedBlocks": 8231,
           "missedBlocksPerRotation": 12,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_L0Au16mted0NVrpFcNjOgvv-HioeKafpfDIFiSzyK_CCpNwU3zQ61Gj4bag1eUsLCUWlnEfZKYHV994NLtRJ9Z_xeQfllwbIfwFfhb4mEf-Z2CgvDXN-tDxwE2q9Ih8ZR9bTXA"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "unknown",
@@ -919,10 +930,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "No matching public API"
           ]
@@ -1163,7 +1172,6 @@
             "bpJsonError": "",
             "endpoints": [
               "https://testnet.api.telos.blocksindia.com",
-              "http://testnet.api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
@@ -1289,15 +1297,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-12T07:15:36.665Z",
-      "durationMs": 7592,
+      "generatedAt": "2026-06-12T08:47:27.976Z",
+      "durationMs": 5123,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472472897,
-        "lastIrreversibleBlockNum": 472472561,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-12T07:15:29.500",
-        "headBlockProducer": "teloscentral",
+        "headBlockNum": 472483924,
+        "lastIrreversibleBlockNum": 472483589,
+        "libLagBlocks": 335,
+        "headBlockTime": "2026-06-12T08:47:23.000",
+        "headBlockProducer": "telosusa1111",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -1309,11 +1317,11 @@
         "blocked": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 11,
-        "springCompatible": 11,
-        "bpApiSpring": 11,
+        "activeSpringCompatible": 10,
+        "springCompatible": 10,
+        "bpApiSpring": 10,
         "bpApiReview": 0,
-        "bpApiUnknown": 4,
+        "bpApiUnknown": 5,
         "bpApiBlocked": 6
       },
       "gates": [
@@ -1349,8 +1357,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "blocker",
-          "value": "11/21 Spring",
-          "detail": "0 review, 4 unknown, 6 blocked"
+          "value": "10/21 Spring",
+          "detail": "0 review, 5 unknown, 6 blocked"
         },
         {
           "key": "savanna",
@@ -1378,7 +1386,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 7606"
+          "detail": "Schedule version 7607"
         },
         {
           "key": "bls",
@@ -1900,15 +1908,15 @@
           "warnings": []
         },
         {
-          "name": "telosusa2222",
+          "name": "telosusa1111",
           "schedulePosition": 9,
-          "rank": 30,
+          "rank": 31,
           "blockSigningKey": "EOS5D2Xfg39dfiXYs84FvvEccLD23d1PPmkv8SoU3EgYCjhRtWbzb",
-          "votes": "6305842832.71893119812011719",
+          "votes": "6287602730.71893119812011719",
           "votesCompact": "6.3B",
           "url": "https://eosusa.io/bp/telos/",
           "isActive": true,
-          "lifetimeMissedBlocks": 10,
+          "lifetimeMissedBlocks": 0,
           "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": false,
@@ -2190,15 +2198,15 @@
           "warnings": []
         },
         {
-          "name": "bp.yknot",
+          "name": "southafrica1",
           "schedulePosition": 15,
-          "rank": 19,
-          "blockSigningKey": "EOS7vjN5aHuRjg5q8kfWLsFGcZu2s8tnAAPq84pLPQiAz5uav9aHL",
-          "votes": "299648054765.50042724609375000",
-          "votesCompact": "299.6B",
-          "url": "https://y-knot.io",
+          "rank": 18,
+          "blockSigningKey": "EOS6nDHipr7zi3r8SjArhs7NQ66LhNSfPDon7p9awXf6KFUqSrKSN",
+          "votes": "329669096648.15295410156250000",
+          "votesCompact": "329.7B",
+          "url": "https://eosza.io",
           "isActive": true,
-          "lifetimeMissedBlocks": 9237,
+          "lifetimeMissedBlocks": 27805,
           "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": false,
@@ -2207,26 +2215,22 @@
             "tables": []
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://bp-telos.y-knot.io",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://y-knot.io/telos.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
-              "https://bp-telos.y-knot.io",
-              "http://bp-telos.y-knot.io",
-              "https://y-knot.io"
+              "https://eosza.io"
             ],
             "attempts": [
               {
-                "endpoint": "https://bp-telos.y-knot.io",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "https://eosza.io",
+                "ok": false,
+                "error": "405 Method Not Allowed"
               }
             ]
           },
@@ -2235,7 +2239,9 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": []
+          "warnings": [
+            "No matching public API"
+          ]
         },
         {
           "name": "persiantelos",
