@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13T13:39:46.279Z",
+  "generatedAt": "2026-06-13T14:32:22.155Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,29 +8,29 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-13T13:39:46.279Z",
-      "durationMs": 29074,
+      "generatedAt": "2026-06-13T14:32:22.155Z",
+      "durationMs": 24188,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428969834,
-        "lastIrreversibleBlockNum": 428969498,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-13T13:39:17.500",
-        "headBlockProducer": "telosgreenbp",
+        "headBlockNum": 428974955,
+        "lastIrreversibleBlockNum": 428974622,
+        "libLagBlocks": 333,
+        "headBlockTime": "2026-06-13T14:31:58.000",
+        "headBlockProducer": "telosunlimit",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
-        "totalRows": 25,
+        "totalRows": 28,
         "scheduled": 21,
-        "standby": 4,
-        "producerRowsActive": 20,
+        "standby": 7,
+        "producerRowsActive": 23,
         "ready": 12,
         "review": 0,
         "blocked": 9,
         "readyRows": 12,
         "reviewRows": 1,
-        "blockedRows": 12,
+        "blockedRows": 15,
         "finalizersRegistered": 15,
         "finalizersActive": 15,
         "activeSpringCompatible": 17,
@@ -113,7 +113,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 18 rows | finalizers: 18 rows"
+          "detail": "finkeys: 21 rows | finalizers: 21 rows"
         },
         {
           "key": "savanna",
@@ -239,13 +239,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 18,
+          "rows": 21,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 18,
+          "rows": 21,
           "error": ""
         }
       ],
@@ -256,8 +256,8 @@
           "schedulePosition": 1,
           "rank": 16,
           "blockSigningKey": "EOS7aJLknepv59ZBsEbLLyEDE2nKcjxMZqAtajVjT8gyDt96Db9kb",
-          "votes": "25140474302.34439086914062500",
-          "votesCompact": "25.1B",
+          "votes": "25634243507.28783798217773438",
+          "votesCompact": "25.6B",
           "url": "https://www.eosphere.io",
           "isActive": true,
           "lifetimeMissedBlocks": 7790,
@@ -469,8 +469,8 @@
           "schedulePosition": 4,
           "rank": 15,
           "blockSigningKey": "EOS7bKQpzgZY685Un7rhiUhknSHTUZ3mwPS7xghTLzksfkxQNYXXT",
-          "votes": "25676633332.33273315429687500",
-          "votesCompact": "25.7B",
+          "votes": "26170402537.27618026733398438",
+          "votesCompact": "26.2B",
           "url": "https://detroitledger.tech",
           "isActive": true,
           "lifetimeMissedBlocks": 7555,
@@ -1437,8 +1437,8 @@
           "schedulePosition": 17,
           "rank": 12,
           "blockSigningKey": "EOS7bLioNJeJWTcpXdcK7rLSv54AuQ3wyYHcwi647hBNkZs933NHa",
-          "votes": "112525755438.14178466796875000",
-          "votesCompact": "112.5B",
+          "votes": "113019524643.08523559570312500",
+          "votesCompact": "113.0B",
           "url": "https://cryptolions.io",
           "isActive": true,
           "lifetimeMissedBlocks": 8634,
@@ -1791,8 +1791,8 @@
           "schedulePosition": null,
           "rank": 14,
           "blockSigningKey": "",
-          "votes": "28570494403.91835784912109375",
-          "votesCompact": "28.6B",
+          "votes": "34001805914.24589538574218750",
+          "votesCompact": "34.0B",
           "url": "https://eosrio.io",
           "isActive": true,
           "lifetimeMissedBlocks": 10753,
@@ -2051,6 +2051,198 @@
             "No matching public API",
             "Standby BP - not part of scheduled finalizer gate"
           ]
+        },
+        {
+          "name": "tempbpfill11",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 21,
+          "blockSigningKey": "",
+          "votes": "0.00000000000000000",
+          "votesCompact": "0",
+          "url": "http://38.49.217.195:8889",
+          "isActive": true,
+          "lifetimeMissedBlocks": 0,
+          "missedBlocksPerRotation": 0,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_qCejCQTDkZrr8ZPKw5G-FDIy2X8S5CZJpqIyzmR_uL5rI6HWt84H2fMCTj1w2zIWcomewMlMFmnZufZQ0sIo3XlyEzUG2Z_XR1Pg1m4MPVi8gBMNM1epjp-cZ0sxI3YMt855CQ"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "http://38.49.217.195:8889",
+            "version": "v1.2.2",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "http://38.49.217.195:8889/chains.json: 404 Not Found | http://38.49.217.195:8889/testnet.json: 404 Not Found | http://38.49.217.195:8889/bp.json: 404 Not Found | http://38.49.217.195:8889/telos.json: 404 Not Found",
+            "endpoints": [
+              "http://38.49.217.195:8889"
+            ],
+            "attempts": [
+              {
+                "endpoint": "http://38.49.217.195:8889",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
+              }
+            ]
+          },
+          "p2p": {
+            "status": "blocker",
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "http://38.49.217.195:8889/chains.json: 404 Not Found | http://38.49.217.195:8889/testnet.json: 404 Not Found | http://38.49.217.195:8889/bp.json: 404 Not Found | http://38.49.217.195:8889/telos.json: 404 Not Found",
+            "endpoints": [],
+            "attempts": []
+          },
+          "status": "blocker",
+          "blockers": [
+            "BP metadata unavailable"
+          ],
+          "warnings": [
+            "Standby BP - not part of scheduled finalizer gate"
+          ]
+        },
+        {
+          "name": "tempbpfill22",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 22,
+          "blockSigningKey": "",
+          "votes": "0.00000000000000000",
+          "votesCompact": "0",
+          "url": "http://38.49.217.195:8890",
+          "isActive": true,
+          "lifetimeMissedBlocks": 0,
+          "missedBlocksPerRotation": 0,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_MheoGDPeLydd3KvZvEXuyRhqdBlvDxAPysp1FahZJZhFBn-ezPbEjWo-e-_qdyoN2e7ti3Rt8bI8p12LA2zS8KjA_s9TkGB9qgeZFWz8bF7mGz7cyBU-g_bG739B9zsAOaL7NA"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "http://38.49.217.195:8890",
+            "version": "v1.2.2",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "http://38.49.217.195:8890/chains.json: 404 Not Found | http://38.49.217.195:8890/testnet.json: 404 Not Found | http://38.49.217.195:8890/bp.json: 404 Not Found | http://38.49.217.195:8890/telos.json: 404 Not Found",
+            "endpoints": [
+              "http://38.49.217.195:8890"
+            ],
+            "attempts": [
+              {
+                "endpoint": "http://38.49.217.195:8890",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
+              }
+            ]
+          },
+          "p2p": {
+            "status": "blocker",
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "http://38.49.217.195:8890/chains.json: 404 Not Found | http://38.49.217.195:8890/testnet.json: 404 Not Found | http://38.49.217.195:8890/bp.json: 404 Not Found | http://38.49.217.195:8890/telos.json: 404 Not Found",
+            "endpoints": [],
+            "attempts": []
+          },
+          "status": "blocker",
+          "blockers": [
+            "BP metadata unavailable"
+          ],
+          "warnings": [
+            "Standby BP - not part of scheduled finalizer gate"
+          ]
+        },
+        {
+          "name": "tempbpfill33",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 23,
+          "blockSigningKey": "",
+          "votes": "0.00000000000000000",
+          "votesCompact": "0",
+          "url": "http://38.49.217.195:8891",
+          "isActive": true,
+          "lifetimeMissedBlocks": 0,
+          "missedBlocksPerRotation": 0,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_NQRfgBZm89OBgfmK5BTHkrM8AlLvDgKE39uQF6r1Hsw2Rq3KV_wIJdq8UvgYRaMJ2NtZoBUFfS_wtyIUAlw9W-YJQQ5hxfS4elxfJ9ihowub7NxVI9C8UeIRTfIEDQAYQORxKA"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "http://38.49.217.195:8891",
+            "version": "v1.2.2",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "http://38.49.217.195:8891/chains.json: 404 Not Found | http://38.49.217.195:8891/testnet.json: 404 Not Found | http://38.49.217.195:8891/bp.json: 404 Not Found | http://38.49.217.195:8891/telos.json: 404 Not Found",
+            "endpoints": [
+              "http://38.49.217.195:8891"
+            ],
+            "attempts": [
+              {
+                "endpoint": "http://38.49.217.195:8891",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
+              }
+            ]
+          },
+          "p2p": {
+            "status": "blocker",
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "http://38.49.217.195:8891/chains.json: 404 Not Found | http://38.49.217.195:8891/testnet.json: 404 Not Found | http://38.49.217.195:8891/bp.json: 404 Not Found | http://38.49.217.195:8891/telos.json: 404 Not Found",
+            "endpoints": [],
+            "attempts": []
+          },
+          "status": "blocker",
+          "blockers": [
+            "BP metadata unavailable"
+          ],
+          "warnings": [
+            "Standby BP - not part of scheduled finalizer gate"
+          ]
         }
       ],
       "sourceNotes": [
@@ -2066,15 +2258,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-13T13:39:45.270Z",
-      "durationMs": 28034,
+      "generatedAt": "2026-06-13T14:32:22.154Z",
+      "durationMs": 24154,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472691667,
-        "lastIrreversibleBlockNum": 472691331,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-13T13:39:17.500",
-        "headBlockProducer": "telosgreenbp",
+        "headBlockNum": 472697988,
+        "lastIrreversibleBlockNum": 472697655,
+        "libLagBlocks": 333,
+        "headBlockTime": "2026-06-13T14:31:58.000",
+        "headBlockProducer": "eosriobrazil",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
