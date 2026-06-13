@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13T18:11:52.286Z",
+  "generatedAt": "2026-06-13T18:48:02.119Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-13T18:11:52.285Z",
-      "durationMs": 24462,
+      "generatedAt": "2026-06-13T18:48:02.119Z",
+      "durationMs": 25332,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428996230,
-        "lastIrreversibleBlockNum": 428995894,
+        "headBlockNum": 428999746,
+        "lastIrreversibleBlockNum": 428999410,
         "libLagBlocks": 336,
-        "headBlockTime": "2026-06-13T18:11:23.500",
-        "headBlockProducer": "amsterdam",
+        "headBlockTime": "2026-06-13T18:47:35.500",
+        "headBlockProducer": "infinitybloc",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2453,16 +2453,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-13T18:11:52.286Z",
-      "durationMs": 24433,
+      "generatedAt": "2026-06-13T18:48:02.118Z",
+      "durationMs": 25309,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472724229,
-        "lastIrreversibleBlockNum": 472723895,
-        "libLagBlocks": 334,
-        "headBlockTime": "2026-06-13T18:11:28.500",
-        "headBlockProducer": "persiantelos",
-        "serverVersion": "v1.2.2",
+        "headBlockNum": 472728565,
+        "lastIrreversibleBlockNum": 472728239,
+        "libLagBlocks": 326,
+        "headBlockTime": "2026-06-13T18:47:36.500",
+        "headBlockProducer": "eosphereiobp",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2550,7 +2550,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -4103,7 +4103,7 @@
           "p2p": {
             "status": "ok",
             "label": "Handshake OK",
-            "endpoint": "peer1-telos.eosphere.io:9876",
+            "endpoint": "peer2-telos.eosphere.io:9876",
             "bpJsonUrl": "https://www.eosphere.io/telos/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -4115,6 +4115,12 @@
             "attempts": [
               {
                 "endpoint": "peer1-telos.eosphere.io:9876",
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection timed out"
+              },
+              {
+                "endpoint": "peer2-telos.eosphere.io:9876",
                 "ok": true,
                 "chainMatches": true,
                 "chainMismatch": false,
