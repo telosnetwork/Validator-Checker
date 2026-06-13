@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13T04:12:21.568Z",
+  "generatedAt": "2026-06-13T04:19:45.649Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-13T04:12:08.986Z",
-      "durationMs": 25347,
+      "generatedAt": "2026-06-13T04:19:45.648Z",
+      "durationMs": 23573,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 428914699,
-        "lastIrreversibleBlockNum": 428914370,
-        "libLagBlocks": 329,
-        "headBlockTime": "2026-06-13T04:11:44.000",
-        "headBlockProducer": "telosindiabp",
+        "headBlockNum": 428915438,
+        "lastIrreversibleBlockNum": 428915102,
+        "libLagBlocks": 336,
+        "headBlockTime": "2026-06-13T04:19:17.500",
+        "headBlockProducer": "telosgermany",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -33,16 +33,16 @@
         "blockedRows": 13,
         "finalizersRegistered": 14,
         "finalizersActive": 14,
-        "activeSpringCompatible": 17,
-        "springCompatible": 17,
-        "bpApiSpring": 17,
+        "activeSpringCompatible": 16,
+        "springCompatible": 16,
+        "bpApiSpring": 16,
         "bpApiReview": 1,
-        "bpApiUnknown": 3,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 0,
-        "publicP2pOk": 13,
+        "publicP2pOk": 12,
         "publicP2pReview": 0,
         "publicP2pUnknown": 0,
-        "publicP2pBlocked": 8
+        "publicP2pBlocked": 9
       },
       "gates": [
         {
@@ -56,15 +56,15 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "blocker",
-          "value": "13/21 reachable",
-          "detail": "0 review, 0 unknown, 8 blocked"
+          "value": "12/21 reachable",
+          "detail": "0 review, 0 unknown, 9 blocked"
         },
         {
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "17/21 Spring",
-          "detail": "1 review, 3 unknown, 0 blocked"
+          "value": "16/21 Spring",
+          "detail": "1 review, 4 unknown, 0 blocked"
         },
         {
           "key": "operator-private",
@@ -1012,12 +1012,12 @@
               {
                 "endpoint": "https://sslapi.teloscentral.com:8891",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "fetch failed"
               },
               {
                 "endpoint": "http://sslapi.teloscentral.com:8890",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "fetch failed"
               },
               {
                 "endpoint": "https://teloscentral.com",
@@ -1293,10 +1293,10 @@
             "tables": []
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://telostest.eu.eosamsterdam.net",
-            "version": "v1.3.0",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://telostestweb.eosams.xeos.me/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -1309,16 +1309,24 @@
             "attempts": [
               {
                 "endpoint": "https://telostest.eu.eosamsterdam.net",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.3.0",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "http://telostest.eu.eosamsterdam.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "https://telostestweb.eosams.xeos.me",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "blocker",
+            "label": "P2P handshake failed",
             "endpoint": "telostest.eu.eosamsterdam.net:9907",
             "bpJsonUrl": "https://telostestweb.eosams.xeos.me/bp.json",
             "bpJsonSource": "chains.json",
@@ -1330,18 +1338,20 @@
             "attempts": [
               {
                 "endpoint": "telostest.eu.eosamsterdam.net:9907",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "getaddrinfo ENOTFOUND telostest.eu.eosamsterdam.net"
               }
             ]
           },
           "status": "blocker",
           "blockers": [
-            "No finalizer key row found"
+            "No finalizer key row found",
+            "P2P handshake failed"
           ],
-          "warnings": []
+          "warnings": [
+            "No matching public API"
+          ]
         },
         {
           "name": "persiantelos",
@@ -1399,7 +1409,7 @@
           },
           "p2p": {
             "status": "blocker",
-            "label": "P2P handshake failed",
+            "label": "P2P endpoint is not Testnet",
             "endpoint": "mainnet.persiantelos.com:8880",
             "bpJsonUrl": "https://persiantelos.com/bp.json",
             "bpJsonSource": "chains.json",
@@ -1413,7 +1423,8 @@
                 "endpoint": "mainnet.persiantelos.com:8880",
                 "ok": false,
                 "chainMatches": false,
-                "error": "invalid P2P message size"
+                "chainMismatch": true,
+                "error": "endpoint hostname looks like Mainnet"
               }
             ]
           },
@@ -1421,7 +1432,7 @@
           "blockers": [
             "Producer row is not active",
             "No finalizer key row found",
-            "P2P handshake failed"
+            "P2P endpoint is not Testnet"
           ],
           "warnings": [
             "Published endpoint is not Testnet"
@@ -1752,7 +1763,7 @@
           },
           "p2p": {
             "status": "blocker",
-            "label": "P2P handshake failed",
+            "label": "P2P endpoint is not Testnet",
             "endpoint": "mainnet.smartelos.com:8880",
             "bpJsonUrl": "https://smartelos.com/bp.json",
             "bpJsonSource": "fallback",
@@ -1766,7 +1777,8 @@
                 "endpoint": "mainnet.smartelos.com:8880",
                 "ok": false,
                 "chainMatches": false,
-                "error": "getaddrinfo ENOTFOUND mainnet.smartelos.com"
+                "chainMismatch": true,
+                "error": "endpoint hostname looks like Mainnet"
               }
             ]
           },
@@ -1774,7 +1786,7 @@
           "blockers": [
             "Producer row is not active",
             "No finalizer key row found",
-            "P2P handshake failed"
+            "P2P endpoint is not Testnet"
           ],
           "warnings": [
             "No matching public API"
@@ -1987,16 +1999,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-13T04:12:21.568Z",
-      "durationMs": 37850,
+      "generatedAt": "2026-06-13T04:19:45.646Z",
+      "durationMs": 23551,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472623574,
-        "lastIrreversibleBlockNum": 472623245,
-        "libLagBlocks": 329,
-        "headBlockTime": "2026-06-13T04:11:44.000",
-        "headBlockProducer": "telosarabia1",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockNum": 472624491,
+        "lastIrreversibleBlockNum": 472624157,
+        "libLagBlocks": 334,
+        "headBlockTime": "2026-06-13T04:19:22.500",
+        "headBlockProducer": "eosauthority",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2084,7 +2096,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3160,7 +3172,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: fetch failed | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: fetch failed",
+            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
@@ -3168,7 +3180,7 @@
               {
                 "endpoint": "https://eosza.io",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "405 Method Not Allowed"
               }
             ]
           },
@@ -3179,7 +3191,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: fetch failed | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: fetch failed",
+            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [],
             "attempts": []
           },

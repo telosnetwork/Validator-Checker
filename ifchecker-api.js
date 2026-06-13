@@ -251,6 +251,19 @@ function addP2pCandidate(candidates, rawValue) {
   if (endpoint && !candidates.includes(endpoint)) candidates.push(endpoint);
 }
 
+function endpointNetworkMismatch(endpoint, network) {
+  const { host } = parseP2pEndpoint(endpoint);
+  const value = `${host || endpoint}`.toLowerCase();
+  if (!value) return "";
+
+  const testnetPattern = /(^|[.\-_])(testnet|test)([.\-_]|$)|telostest|telos-test/i;
+  const mainnetPattern = /(^|[.\-_])(mainnet|main)([.\-_]|$)|telosmain|telos-main/i;
+
+  if (network.key === "testnet" && mainnetPattern.test(value)) return "Mainnet";
+  if (network.key === "mainnet" && testnetPattern.test(value)) return "Testnet";
+  return "";
+}
+
 async function fetchJsonGet(url, timeoutMs) {
   const response = await fetchWithTimeout(url, {
     method: "GET",
@@ -698,6 +711,18 @@ async function fetchBpP2pStatus(network, producer, metadataOverride = null) {
   if (!result.endpoints.length) return result;
 
   for (const endpoint of result.endpoints) {
+    const mismatchedNetwork = endpointNetworkMismatch(endpoint, network);
+    if (mismatchedNetwork) {
+      result.attempts.push({
+        endpoint,
+        ok: false,
+        chainMatches: false,
+        chainMismatch: true,
+        error: `endpoint hostname looks like ${mismatchedNetwork}`
+      });
+      continue;
+    }
+
     const attempt = await checkP2pHandshake(endpoint, network.chainId);
     result.attempts.push({ endpoint, ...attempt });
     if (attempt.ok) {
