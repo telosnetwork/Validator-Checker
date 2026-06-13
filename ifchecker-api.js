@@ -51,7 +51,7 @@ const REQUIRED_FEATURES = [
 const FINALIZER_ACTIONS = ["regfinkey", "actfinkey", "delfinkey", "switchtosvnn"];
 const FINALIZER_TABLES = ["finkeys", "finalizers"];
 const PUBLIC_RPC_TIMEOUT_MS = 12_000;
-const BP_METADATA_TIMEOUT_MS = 4_000;
+const BP_METADATA_TIMEOUT_MS = 8_000;
 const BP_API_TIMEOUT_MS = 4_000;
 const BP_P2P_TIMEOUT_MS = 5_000;
 const NET_VERSION_BASE = 0x04B5;
@@ -213,6 +213,13 @@ function metadataFallbackUrl(baseUrl, fileName) {
   return parsed.toString();
 }
 
+function metadataFallbackFileNames(network) {
+  const fileNames = network.key === "testnet"
+    ? ["testnet.json", "bp.json", "telos.json"]
+    : ["bp.json", "mainnet.json", "telos.json"];
+  return [...new Set(fileNames)];
+}
+
 function normalizeApiBase(rawUrl) {
   const parsed = getOriginPathUrl(rawUrl);
   if (!parsed) return null;
@@ -315,7 +322,7 @@ async function resolveBpMetadata(network, rawUrl) {
     result.errors.push(`${metadataUrl(baseUrl, "chains.json")}: ${error.message}`);
   }
 
-  for (const fileName of ["bp.json", "telos.json"]) {
+  for (const fileName of metadataFallbackFileNames(network)) {
     const fallbackUrl = metadataFallbackUrl(baseUrl, fileName);
     if (!fallbackUrl) continue;
     try {
@@ -1063,8 +1070,8 @@ async function evaluateReadiness(networkKey) {
     })),
     producers,
     sourceNotes: [
-      "Published BP API checks come from bp.json and public API endpoints, not private producer hosts.",
-      "Public live P2P checks require a bp.json p2p_endpoint that completes a peer handshake on the expected chain.",
+      "Published BP API checks come from BP metadata and public API endpoints, not private producer hosts.",
+      "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain.",
       "Exact vote-threads configuration and private producer-host settings cannot be proven from public RPC."
     ]
   };

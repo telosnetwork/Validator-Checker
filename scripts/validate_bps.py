@@ -502,6 +502,15 @@ def metadata_url(base_url: str, path: str) -> str:
     return f"{base_url.rstrip('/')}/{clean_path.lstrip('/')}"
 
 
+def metadata_fallback_urls(base_url: str, file_names: list) -> list:
+    urls = []
+    for file_name in file_names:
+        url = f"{base_url.rstrip('/')}/{file_name}"
+        if url not in urls:
+            urls.append(url)
+    return urls
+
+
 def normalize_producer_url(url: str) -> str:
     base_url = (url or "").strip().rstrip("/")
     if base_url and not base_url.startswith(("http://", "https://")):
@@ -548,25 +557,22 @@ async def resolve_bp_json(
             if bp_json:
                 return bp_json, errors, testnet_path
             fallback_errors.append(
-                f"bp.json at {bp_url} unreachable — trying /bp.json and /telos.json"
+                f"bp.json at {bp_url} unreachable — trying /bp.json, /mainnet.json, and /telos.json"
             )
         else:
             fallback_errors.append(
-                "Mainnet chain ID missing from chains.json — trying /bp.json and /telos.json"
+                "Mainnet chain ID missing from chains.json — trying /bp.json, /mainnet.json, and /telos.json"
             )
     else:
-        fallback_errors.append("chains.json missing — trying /bp.json and /telos.json")
+        fallback_errors.append("chains.json missing — trying /bp.json, /mainnet.json, and /telos.json")
 
-    bp_json = await fetch_json(session, f"{base_url}/bp.json")
-    if bp_json:
-        return bp_json, errors, testnet_path
-
-    telos_json = await fetch_json(session, f"{base_url}/telos.json")
-    if telos_json:
-        return telos_json, errors, testnet_path
+    for fallback_url in metadata_fallback_urls(base_url, ["bp.json", "mainnet.json", "telos.json"]):
+        bp_json = await fetch_json(session, fallback_url)
+        if bp_json:
+            return bp_json, errors, testnet_path
 
     errors.extend(fallback_errors)
-    errors.append("/bp.json and /telos.json also unreachable")
+    errors.append("/bp.json, /mainnet.json, and /telos.json also unreachable")
     return None, errors, None
 
 
@@ -585,18 +591,19 @@ async def resolve_testnet_bp_json(
             bp_json = await fetch_json(session, bp_url)
             if bp_json:
                 return bp_json, errors
-            fallback_errors.append(f"Testnet bp.json at {bp_url} unreachable — trying /bp.json")
+            fallback_errors.append(f"Testnet bp.json at {bp_url} unreachable — trying /testnet.json and /bp.json")
         else:
-            fallback_errors.append("Testnet chain ID missing from chains.json — trying /bp.json")
+            fallback_errors.append("Testnet chain ID missing from chains.json — trying /testnet.json and /bp.json")
     else:
-        fallback_errors.append("Testnet chains.json missing — trying /bp.json")
+        fallback_errors.append("Testnet chains.json missing — trying /testnet.json and /bp.json")
 
-    bp_json = await fetch_json(session, f"{base_url}/bp.json")
-    if bp_json:
-        return bp_json, errors
+    for fallback_url in metadata_fallback_urls(base_url, ["testnet.json", "bp.json", "telos.json"]):
+        bp_json = await fetch_json(session, fallback_url)
+        if bp_json:
+            return bp_json, errors
 
     errors.extend(fallback_errors)
-    errors.append("Testnet /bp.json also unreachable")
+    errors.append("Testnet /testnet.json, /bp.json, and /telos.json also unreachable")
     return None, errors
 
 
