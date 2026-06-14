@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14T03:50:19.374Z",
+  "generatedAt": "2026-06-14T05:42:49.914Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-14T03:50:19.372Z",
-      "durationMs": 24282,
+      "generatedAt": "2026-06-14T05:42:49.914Z",
+      "durationMs": 30071,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 429052429,
-        "lastIrreversibleBlockNum": 429052102,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-14T03:49:55.000",
-        "headBlockProducer": "telosunlimit",
+        "headBlockNum": 429063346,
+        "lastIrreversibleBlockNum": 429063010,
+        "libLagBlocks": 336,
+        "headBlockTime": "2026-06-14T05:42:17.500",
+        "headBlockProducer": "amsterdam",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,24 +25,24 @@
         "scheduled": 21,
         "standby": 10,
         "producerRowsActive": 26,
-        "ready": 13,
+        "ready": 12,
         "review": 0,
-        "blocked": 8,
-        "readyRows": 13,
+        "blocked": 9,
+        "readyRows": 12,
         "reviewRows": 2,
-        "blockedRows": 16,
+        "blockedRows": 17,
         "finalizersRegistered": 16,
         "finalizersActive": 16,
-        "activeSpringCompatible": 17,
-        "springCompatible": 17,
-        "bpApiSpring": 17,
-        "bpApiReview": 1,
+        "activeSpringCompatible": 16,
+        "springCompatible": 16,
+        "bpApiSpring": 16,
+        "bpApiReview": 2,
         "bpApiUnknown": 3,
         "bpApiBlocked": 0,
-        "publicP2pOk": 13,
+        "publicP2pOk": 12,
         "publicP2pReview": 0,
         "publicP2pUnknown": 0,
-        "publicP2pBlocked": 8
+        "publicP2pBlocked": 9
       },
       "gates": [
         {
@@ -56,15 +56,15 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "blocker",
-          "value": "13/21 reachable",
-          "detail": "0 review, 0 unknown, 8 blocked"
+          "value": "12/21 reachable",
+          "detail": "0 review, 0 unknown, 9 blocked"
         },
         {
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "17/21 Spring",
-          "detail": "1 review, 3 unknown, 0 blocked"
+          "value": "16/21 Spring",
+          "detail": "2 review, 3 unknown, 0 blocked"
         },
         {
           "key": "operator-private",
@@ -1226,53 +1226,68 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet2api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
+            "status": "review",
+            "label": "Published endpoint is not Testnet",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://testnet2api.telosarabia.net",
-              "http://testnet2api.telosarabia.net",
+              "https://api.telosarabia.net",
+              "http://api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://testnet2api.telosarabia.net",
+                "endpoint": "https://api.telosarabia.net",
                 "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
                 "version": "v1.2.2",
-                "chainMatches": true
+                "chainMatches": false
+              },
+              {
+                "endpoint": "http://api.telosarabia.net",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": false
+              },
+              {
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "This operation was aborted"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
-            "endpoint": "testnet2p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
+            "status": "blocker",
+            "label": "P2P handshake failed",
+            "endpoint": "p2p.telosarabia.net:9876",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "testnet2p2p.telosarabia.net:9876"
+              "p2p.telosarabia.net:9876"
             ],
             "attempts": [
               {
-                "endpoint": "testnet2p2p.telosarabia.net:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "endpoint": "p2p.telosarabia.net:9876",
+                "ok": false,
+                "chainMatches": false,
+                "error": "peer sent go_away"
               }
             ]
           },
-          "status": "ok",
-          "blockers": [],
-          "warnings": []
+          "status": "blocker",
+          "blockers": [
+            "P2P handshake failed"
+          ],
+          "warnings": [
+            "Published endpoint is not Testnet"
+          ]
         },
         {
           "name": "amsterdam",
@@ -1604,7 +1619,7 @@
             "endpoint": "https://testnet.api.telos.blocksindia.com",
             "version": "v1.2.2",
             "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
-            "bpJsonSource": "chains.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -1626,7 +1641,7 @@
             "label": "P2P handshake failed",
             "endpoint": "testnet.p2p.telos.blocksindia.com:9879",
             "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
-            "bpJsonSource": "chains.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -2464,16 +2479,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-14T03:50:19.374Z",
-      "durationMs": 24194,
+      "generatedAt": "2026-06-14T05:42:46.303Z",
+      "durationMs": 26430,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472793534,
-        "lastIrreversibleBlockNum": 472793207,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-14T03:49:55.000",
-        "headBlockProducer": "telosunlimit",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockNum": 472807025,
+        "lastIrreversibleBlockNum": 472806695,
+        "libLagBlocks": 330,
+        "headBlockTime": "2026-06-14T05:42:20.500",
+        "headBlockProducer": "persiantelos",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2561,7 +2576,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
