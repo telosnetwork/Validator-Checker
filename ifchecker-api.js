@@ -685,7 +685,7 @@ function checkP2pHandshake(endpoint, expectedChainId) {
 
 async function fetchBpP2pStatus(network, producer, metadataOverride = null) {
   const result = {
-    status: "blocker",
+    status: "review",
     label: "No public P2P endpoint",
     endpoint: "",
     bpJsonUrl: "",
@@ -910,7 +910,7 @@ async function evaluateReadiness(networkKey) {
     };
     const publicStatus = bpPublicByName.get(entry.name) || {};
     const api = publicStatus.api || { status: "unknown", label: "Not checked" };
-    const p2p = publicStatus.p2p || { status: "blocker", label: "Not checked", endpoint: "" };
+    const p2p = publicStatus.p2p || { status: "review", label: "Not checked", endpoint: "" };
     const blockers = [];
     const warnings = [];
     const isScheduled = entry.scheduleType === "active";
@@ -1039,9 +1039,9 @@ async function evaluateReadiness(networkKey) {
     {
       key: "public-p2p",
       label: "Public live P2P",
-      status: counts.publicP2pBlocked > 0 ? "blocker" : counts.publicP2pOk === counts.scheduled ? "ok" : "review",
+      status: counts.publicP2pOk === counts.scheduled ? "ok" : "review",
       value: `${counts.publicP2pOk}/${counts.scheduled} reachable`,
-      detail: `${counts.publicP2pReview} review, ${counts.publicP2pUnknown} unknown, ${counts.publicP2pBlocked} blocked`
+      detail: `${counts.publicP2pReview + counts.publicP2pBlocked} review, ${counts.publicP2pUnknown} unknown`
     },
     {
       key: "savanna",
@@ -1096,7 +1096,7 @@ async function evaluateReadiness(networkKey) {
     producers,
     sourceNotes: [
       "Published BP API checks come from BP metadata and public API endpoints, not private producer hosts.",
-      "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain.",
+      "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain; failures are review items because private peering can still be healthy.",
       "Exact vote-threads configuration and private producer-host settings cannot be proven from public RPC."
     ]
   };

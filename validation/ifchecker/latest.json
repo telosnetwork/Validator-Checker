@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14T17:35:18.247Z",
+  "generatedAt": "2026-06-14T18:01:54.973Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-14T17:35:09.744Z",
-      "durationMs": 22388,
-      "overallStatus": "blocker",
+      "generatedAt": "2026-06-14T18:01:54.973Z",
+      "durationMs": 21945,
+      "overallStatus": "review",
       "info": {
-        "headBlockNum": 429138718,
-        "lastIrreversibleBlockNum": 429138382,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-14T17:34:47.500",
-        "headBlockProducer": "infinitybloc",
+        "headBlockNum": 429141765,
+        "lastIrreversibleBlockNum": 429141763,
+        "libLagBlocks": 2,
+        "headBlockTime": "2026-06-14T18:01:33.500",
+        "headBlockProducer": "telosarabia1",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -26,11 +26,11 @@
         "standby": 4,
         "producerRowsActive": 25,
         "ready": 15,
-        "review": 0,
-        "blocked": 6,
+        "review": 6,
+        "blocked": 0,
         "readyRows": 15,
-        "reviewRows": 0,
-        "blockedRows": 10,
+        "reviewRows": 10,
+        "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
         "activeSpringCompatible": 21,
@@ -40,17 +40,17 @@
         "bpApiUnknown": 0,
         "bpApiBlocked": 0,
         "publicP2pOk": 15,
-        "publicP2pReview": 0,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
-        "publicP2pBlocked": 6
+        "publicP2pBlocked": 0
       },
       "gates": [
         {
           "key": "public-p2p",
           "label": "Public live P2P",
-          "status": "blocker",
+          "status": "review",
           "value": "15/21 reachable",
-          "detail": "0 review, 0 unknown, 6 blocked"
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -296,7 +296,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -306,11 +306,11 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
+          "status": "review",
+          "blockers": [],
+          "warnings": [
             "BP metadata unavailable"
-          ],
-          "warnings": []
+          ]
         },
         {
           "name": "tempbpfill33",
@@ -358,7 +358,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -368,11 +368,11 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
+          "status": "review",
+          "blockers": [],
+          "warnings": [
             "BP metadata unavailable"
-          ],
-          "warnings": []
+          ]
         },
         {
           "name": "tempbpfill22",
@@ -420,7 +420,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -430,11 +430,11 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
+          "status": "review",
+          "blockers": [],
+          "warnings": [
             "BP metadata unavailable"
-          ],
-          "warnings": []
+          ]
         },
         {
           "name": "tempbpfill11",
@@ -482,7 +482,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -492,11 +492,11 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
+          "status": "review",
+          "blockers": [],
+          "warnings": [
             "BP metadata unavailable"
-          ],
-          "warnings": []
+          ]
         },
         {
           "name": "bigironbptex",
@@ -762,7 +762,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "p2p.testnet.telos.detroitledger.tech:3018",
             "bpJsonUrl": "https://detroitledger.tech/chains/telos/testnet/bp.json",
@@ -781,11 +781,11 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
+          "status": "review",
+          "blockers": [],
+          "warnings": [
             "P2P handshake failed"
-          ],
-          "warnings": []
+          ]
         },
         {
           "name": "telosunlimit",
@@ -1014,7 +1014,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 25037,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 60,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1374,7 +1374,7 @@
           "url": "https://telostestweb.eosams.xeos.me",
           "isActive": true,
           "lifetimeMissedBlocks": 19534,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 48,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1590,7 +1590,7 @@
           "url": "https://telos.blocksindia.com/",
           "isActive": true,
           "lifetimeMissedBlocks": 2245,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 57,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1626,7 +1626,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "testnet.p2p.telos.blocksindia.com:9879",
             "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
@@ -1645,11 +1645,11 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
+          "status": "review",
+          "blockers": [],
+          "warnings": [
             "P2P handshake failed"
-          ],
-          "warnings": []
+          ]
         },
         {
           "name": "infinitybloc",
@@ -1769,7 +1769,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -1779,11 +1779,10 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
-            "BP metadata unavailable"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
+            "BP metadata unavailable",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -1833,7 +1832,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -1843,11 +1842,10 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
-            "BP metadata unavailable"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
+            "BP metadata unavailable",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -1890,7 +1888,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -1900,12 +1898,11 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
-            "BP metadata unavailable"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "No matching public API",
+            "BP metadata unavailable",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -1953,7 +1950,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "p2p-testnet.tlos.news:9876",
             "bpJsonUrl": "https://www.tlos.news/test-bp.json",
@@ -1972,19 +1969,18 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "P2P handshake failed"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "No matching public API",
+            "P2P handshake failed",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         }
       ],
       "sourceNotes": [
         "Published BP API checks come from BP metadata and public API endpoints, not private producer hosts.",
-        "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain.",
+        "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain; failures are review items because private peering can still be healthy.",
         "Exact vote-threads configuration and private producer-host settings cannot be proven from public RPC."
       ]
     },
@@ -1995,15 +1991,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-14T17:35:18.247Z",
-      "durationMs": 30794,
+      "generatedAt": "2026-06-14T18:01:54.970Z",
+      "durationMs": 21926,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472892518,
-        "lastIrreversibleBlockNum": 472892182,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-14T17:34:47.500",
-        "headBlockProducer": "eosphereiobp",
+        "headBlockNum": 472895730,
+        "lastIrreversibleBlockNum": 472895398,
+        "libLagBlocks": 332,
+        "headBlockTime": "2026-06-14T18:01:33.500",
+        "headBlockProducer": "persiantelos",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2016,8 +2012,8 @@
         "review": 0,
         "blocked": 21,
         "readyRows": 0,
-        "reviewRows": 7,
-        "blockedRows": 26,
+        "reviewRows": 11,
+        "blockedRows": 22,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
         "activeSpringCompatible": 10,
@@ -2027,9 +2023,9 @@
         "bpApiUnknown": 4,
         "bpApiBlocked": 7,
         "publicP2pOk": 13,
-        "publicP2pReview": 0,
+        "publicP2pReview": 8,
         "publicP2pUnknown": 0,
-        "publicP2pBlocked": 8
+        "publicP2pBlocked": 0
       },
       "gates": [
         {
@@ -2070,9 +2066,9 @@
         {
           "key": "public-p2p",
           "label": "Public live P2P",
-          "status": "blocker",
+          "status": "review",
           "value": "13/21 reachable",
-          "detail": "0 review, 0 unknown, 8 blocked"
+          "detail": "8 review, 0 unknown"
         },
         {
           "key": "savanna",
@@ -2359,7 +2355,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "p2p.bigironbp.io:9876",
             "bpJsonUrl": "https://bigironbp.io/telos.json",
@@ -2381,11 +2377,11 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "P2P handshake failed"
+            "Finalizer tables are not readable"
           ],
           "warnings": [
-            "No matching public API"
+            "No matching public API",
+            "P2P handshake failed"
           ]
         },
         {
@@ -2427,7 +2423,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -2440,11 +2436,11 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "BP metadata unavailable"
+            "Finalizer tables are not readable"
           ],
           "warnings": [
-            "No matching public API"
+            "No matching public API",
+            "BP metadata unavailable"
           ]
         },
         {
@@ -3055,7 +3051,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "p2p.telosgermany.genereos.io:9876",
             "bpJsonUrl": "https://genereos.io/telos/bp.json",
@@ -3077,10 +3073,11 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "P2P handshake failed"
+            "Finalizer tables are not readable"
           ],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "teloscentral",
@@ -3125,7 +3122,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "sslapi.teloscentral.com:9876",
             "bpJsonUrl": "https://teloscentral.com/telos.json",
@@ -3148,10 +3145,11 @@
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable",
-            "Published API is not Spring compatible",
-            "P2P handshake failed"
+            "Published API is not Spring compatible"
           ],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "southafrica1",
@@ -3179,7 +3177,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: fetch failed | https://eosza.io/mainnet.json: fetch failed | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
@@ -3192,24 +3190,24 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: fetch failed | https://eosza.io/mainnet.json: fetch failed | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [],
             "attempts": []
           },
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "BP metadata unavailable"
+            "Finalizer tables are not readable"
           ],
           "warnings": [
-            "No matching public API"
+            "No matching public API",
+            "BP metadata unavailable"
           ]
         },
         {
@@ -3255,7 +3253,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P endpoint missing port",
             "endpoint": "p2p-telos.y-knot.io",
             "bpJsonUrl": "https://y-knot.io/telos.json",
@@ -3277,10 +3275,11 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "P2P endpoint missing port"
+            "Finalizer tables are not readable"
           ],
-          "warnings": []
+          "warnings": [
+            "P2P endpoint missing port"
+          ]
         },
         {
           "name": "persiantelos",
@@ -3325,7 +3324,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "mainnet.persiantelos.com:8880",
             "bpJsonUrl": "https://persiantelos.com/bp.json",
@@ -3348,10 +3347,11 @@
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable",
-            "Published API is not Spring compatible",
-            "P2P handshake failed"
+            "Published API is not Spring compatible"
           ],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "katalyotelos",
@@ -3392,7 +3392,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -3405,11 +3405,11 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "BP metadata unavailable"
+            "Finalizer tables are not readable"
           ],
           "warnings": [
-            "No matching public API"
+            "No matching public API",
+            "BP metadata unavailable"
           ]
         },
         {
@@ -3806,7 +3806,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "telos.cryptolions.io:9871",
             "bpJsonUrl": "https://cryptolions.io/telos.json",
@@ -3827,10 +3827,10 @@
           },
           "status": "blocker",
           "blockers": [
-            "Published API is not Spring compatible",
-            "P2P handshake failed"
+            "Published API is not Spring compatible"
           ],
           "warnings": [
+            "P2P handshake failed",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -3877,7 +3877,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "telosp2p.ledgerwise.io:23877",
             "bpJsonUrl": "https://ledgerwise.io/telos/bp.json",
@@ -3896,11 +3896,10 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "P2P handshake failed"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
+            "P2P handshake failed",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -4078,7 +4077,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "BP metadata unavailable",
             "endpoint": "",
             "bpJsonUrl": "",
@@ -4088,12 +4087,11 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "blocker",
-          "blockers": [
-            "BP metadata unavailable"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "No matching public API",
+            "BP metadata unavailable",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -4136,7 +4134,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "mainnet.smartelos.com:8880",
             "bpJsonUrl": "https://smartelos.com/bp.json",
@@ -4155,12 +4153,11 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "P2P handshake failed"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "No matching public API",
+            "P2P handshake failed",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -4203,7 +4200,7 @@
             ]
           },
           "p2p": {
-            "status": "blocker",
+            "status": "review",
             "label": "P2P handshake failed",
             "endpoint": "p2p-mainnet.tlos.news:9876",
             "bpJsonUrl": "https://www.tlos.news/bp.json",
@@ -4222,12 +4219,11 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "P2P handshake failed"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "No matching public API",
+            "P2P handshake failed",
             "Standby BP - not part of scheduled finalizer gate"
           ]
         },
@@ -4510,7 +4506,7 @@
       ],
       "sourceNotes": [
         "Published BP API checks come from BP metadata and public API endpoints, not private producer hosts.",
-        "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain.",
+        "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain; failures are review items because private peering can still be healthy.",
         "Exact vote-threads configuration and private producer-host settings cannot be proven from public RPC."
       ]
     }

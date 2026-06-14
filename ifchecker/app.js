@@ -268,6 +268,7 @@ function renderMetrics(data) {
     metric("Active BPs", data.counts.scheduled),
     metric("Standby BPs", data.counts.standby ?? 0),
     metric("Ready scheduled", data.counts.ready, "ok"),
+    metric("Review scheduled", data.counts.review, "review"),
     metric("Blocked scheduled", data.counts.blocked, "blocker"),
     metric("Finalizers", `${data.counts.finalizersActive}/${data.counts.scheduled}`),
     metric("Spring-compatible active BPs", `${springCompatible}/${data.counts.scheduled}`),
