@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14T18:49:20.479Z",
+  "generatedAt": "2026-06-14T19:37:16.357Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.net",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-14T18:49:03.852Z",
-      "durationMs": 22777,
+      "generatedAt": "2026-06-14T19:37:08.108Z",
+      "durationMs": 22260,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 429146605,
-        "lastIrreversibleBlockNum": 429146603,
+        "headBlockNum": 429151546,
+        "lastIrreversibleBlockNum": 429151544,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-14T18:48:41.500",
-        "headBlockProducer": "tempbpfill11",
+        "headBlockTime": "2026-06-14T19:36:46.000",
+        "headBlockProducer": "tempbpfill33",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -1014,7 +1014,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 25037,
-          "missedBlocksPerRotation": 324,
+          "missedBlocksPerRotation": 600,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1319,37 +1319,59 @@
             "label": "No matching public API",
             "endpoint": "",
             "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/testnet.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
+            "bpJsonUrl": "https://eosarabia.net/bp.json",
+            "bpJsonSource": "fallback",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://api.eosarabia.net",
+              "http://api.eosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
+                "endpoint": "https://api.eosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "http://api.eosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
                 "endpoint": "https://eosarabia.net",
                 "ok": false,
-                "error": "403 Forbidden"
+                "error": "This operation was aborted"
               }
             ]
           },
           "p2p": {
             "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/testnet.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
-            "endpoints": [],
-            "attempts": []
+            "label": "P2P endpoint is not Testnet",
+            "endpoint": "mainnet.eosarabia.net:3571",
+            "bpJsonUrl": "https://eosarabia.net/bp.json",
+            "bpJsonSource": "fallback",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "mainnet.eosarabia.net:3571"
+            ],
+            "attempts": [
+              {
+                "endpoint": "mainnet.eosarabia.net:3571",
+                "ok": false,
+                "chainMatches": false,
+                "chainMismatch": true,
+                "error": "endpoint hostname looks like Mainnet"
+              }
+            ]
           },
           "status": "review",
           "blockers": [],
           "warnings": [
             "No matching public API",
-            "BP metadata unavailable"
+            "P2P endpoint is not Testnet"
           ]
         },
         {
@@ -1363,7 +1385,7 @@
           "url": "https://telostestweb.eosams.xeos.me",
           "isActive": true,
           "lifetimeMissedBlocks": 19534,
-          "missedBlocksPerRotation": 312,
+          "missedBlocksPerRotation": 588,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1580,7 +1602,7 @@
           "url": "https://telos.blocksindia.com/",
           "isActive": true,
           "lifetimeMissedBlocks": 2245,
-          "missedBlocksPerRotation": 321,
+          "missedBlocksPerRotation": 597,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2170,15 +2192,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-14T18:49:20.479Z",
-      "durationMs": 39295,
+      "generatedAt": "2026-06-14T19:37:16.356Z",
+      "durationMs": 30478,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472901386,
-        "lastIrreversibleBlockNum": 472901050,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-14T18:48:41.500",
-        "headBlockProducer": "telosgreenbp",
+        "headBlockNum": 472907155,
+        "lastIrreversibleBlockNum": 472906822,
+        "libLagBlocks": 333,
+        "headBlockTime": "2026-06-14T19:36:46.000",
+        "headBlockProducer": "bigironbptex",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2195,14 +2217,14 @@
         "blockedRows": 22,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 9,
-        "springCompatible": 9,
-        "bpApiSpring": 9,
+        "activeSpringCompatible": 10,
+        "springCompatible": 10,
+        "bpApiSpring": 10,
         "bpApiReview": 0,
-        "bpApiUnknown": 5,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 7,
-        "publicP2pOk": 12,
-        "publicP2pReview": 9,
+        "publicP2pOk": 13,
+        "publicP2pReview": 8,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2239,15 +2261,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "blocker",
-          "value": "9/21 Spring",
-          "detail": "0 review, 5 unknown, 7 blocked"
+          "value": "10/21 Spring",
+          "detail": "0 review, 4 unknown, 7 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "12/21 reachable",
-          "detail": "9 review, 0 unknown"
+          "value": "13/21 reachable",
+          "detail": "8 review, 0 unknown"
         },
         {
           "key": "savanna",
@@ -3680,45 +3702,56 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/mainnet.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://api.telosarabia.net",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://api.telosarabia.net",
+              "http://api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://eosarabia.net",
-                "ok": false,
-                "error": "403 Forbidden"
+                "endpoint": "https://api.telosarabia.net",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/mainnet.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "p2p.telosarabia.net:9876",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "p2p.telosarabia.net:9876"
+            ],
+            "attempts": [
+              {
+                "endpoint": "p2p.telosarabia.net:9876",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "warnings": []
         },
         {
           "name": "telosindiabp",
