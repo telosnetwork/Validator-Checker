@@ -72,6 +72,38 @@ a:hover {
   border-bottom: 1px solid var(--border);
 }
 
+.header-actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.network-switch {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(88px, 1fr));
+  padding: 3px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.network-button {
+  min-height: 34px;
+  padding: 0 14px;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.network-button.is-active {
+  color: #ffffff;
+  background: var(--blue);
+}
+
 .eyebrow {
   margin: 0 0 4px;
   color: var(--muted);
@@ -626,7 +658,7 @@ a.endpoint-value {
 
 table {
   width: 100%;
-  min-width: 1540px;
+  min-width: 1120px;
   border-collapse: collapse;
 }
 
@@ -818,8 +850,14 @@ tbody tr.schedule-divider:hover td,
     flex-direction: column;
   }
 
+  .header-actions,
   .status-line {
+    width: 100%;
     text-align: left;
+  }
+
+  .network-switch {
+    width: 100%;
   }
 
   .metrics {
@@ -844,10 +882,6 @@ tbody tr.schedule-divider:hover td,
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
-  }
-
-  .endpoint-network {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .endpoint-toggle {

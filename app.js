@@ -15,12 +15,19 @@ const DATA_SOURCES = {
 
 const MAX_MERGED_HISTORY_RUNS = 112;
 const UI_STATE_STORAGE_KEY = "telos-validator-checker-ui";
+const VALID_NETWORKS = ["mainnet", "testnet"];
 const VALID_TABS = ["producers", "endpoints", "performance"];
 const VALID_CHART_MODES = ["cpu", "api", "missed"];
-const VALID_ENDPOINT_NETWORKS = ["mainnet", "testnet"];
 const VALID_ENDPOINT_KINDS = ["peers", "api"];
-const VALID_PRODUCER_FILTERS = ["all", "passing", "failing", "testnet", "active", "standby"];
-const PRODUCER_TABLE_COLUMNS = 14;
+const VALID_PRODUCER_FILTERS = ["all", "passing", "failing", "active", "standby"];
+const VALID_SORT_KEYS = ["scheduleType", "owner", "sslVerified", "apiVerified", "p2pVerified", "nodeosVersion", "cpuUs", "missedBlocksPerRotation", "errors"];
+const SORT_KEY_ALIASES = {
+  scheduleTypeTestNet: "scheduleType",
+  sslVerifiedTestNet: "sslVerified",
+  apiVerifiedTestNet: "apiVerified",
+  p2pVerifiedTestNet: "p2pVerified",
+  nodeosVersionTestNet: "nodeosVersion",
+};
 
 const PALETTE = [
   "#1f6fb2",
@@ -67,6 +74,7 @@ const state = {
   latest: null,
   producers: [],
   historyRuns: [],
+  network: "mainnet",
   chartMode: "cpu",
   hiddenSeries: new Set(),
   filter: "all",
@@ -74,7 +82,6 @@ const state = {
   sortKey: null,
   sortAsc: true,
   activeTab: "producers",
-  endpointNetwork: "mainnet",
   endpointKind: "peers",
   endpointCopyFormats: {
     api: "plain",
@@ -98,6 +105,7 @@ async function init() {
 function cacheElements() {
   els.statusLine = document.getElementById("statusLine");
   els.metrics = document.getElementById("metrics");
+  els.producerHeaderRow = document.getElementById("producerHeaderRow");
   els.chartHeading = document.getElementById("chartHeading");
   els.chartSubhead = document.getElementById("chartSubhead");
   els.chartArea = document.getElementById("chartArea");
@@ -117,16 +125,16 @@ function cacheElements() {
 }
 
 function bindEvents() {
+  document.querySelectorAll("[data-network]").forEach((button) => {
+    button.addEventListener("click", () => setNetwork(button.dataset.network));
+  });
+
   document.querySelectorAll("[data-tab]").forEach((button) => {
     button.addEventListener("click", () => setTab(button.dataset.tab));
   });
 
   document.querySelectorAll("[data-mode]").forEach((button) => {
     button.addEventListener("click", () => setChartMode(button.dataset.mode));
-  });
-
-  document.querySelectorAll("[data-endpoint-network]").forEach((button) => {
-    button.addEventListener("click", () => setEndpointNetwork(button.dataset.endpointNetwork));
   });
 
   document.querySelectorAll("[data-endpoint-kind]").forEach((button) => {
@@ -150,14 +158,14 @@ function bindEvents() {
     button.addEventListener("click", () => setProducerFilter(button.dataset.filter));
   });
 
-  document.querySelectorAll("[data-sort]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const nextKey = button.dataset.sort;
-      state.sortAsc = state.sortKey === nextKey ? !state.sortAsc : true;
-      state.sortKey = nextKey;
-      saveUiState();
-      renderTable();
-    });
+  els.producerHeaderRow.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-sort]");
+    if (!button) return;
+    const nextKey = button.dataset.sort;
+    state.sortAsc = state.sortKey === nextKey ? !state.sortAsc : true;
+    state.sortKey = nextKey;
+    saveUiState();
+    renderTable();
   });
 
   els.producerSearch.addEventListener("input", () => {
@@ -195,13 +203,20 @@ function restoreUiState() {
   const saved = readUiState();
   if (!saved) return;
 
+  if (VALID_NETWORKS.includes(saved.network)) state.network = saved.network;
+  else if (VALID_NETWORKS.includes(saved.endpointNetwork)) state.network = saved.endpointNetwork;
   if (VALID_TABS.includes(saved.activeTab)) state.activeTab = saved.activeTab;
   if (VALID_CHART_MODES.includes(saved.chartMode)) state.chartMode = saved.chartMode;
-  if (VALID_ENDPOINT_NETWORKS.includes(saved.endpointNetwork)) state.endpointNetwork = saved.endpointNetwork;
   if (VALID_ENDPOINT_KINDS.includes(saved.endpointKind)) state.endpointKind = saved.endpointKind;
   if (VALID_PRODUCER_FILTERS.includes(saved.filter)) state.filter = saved.filter;
+  else if (saved.filter === "testnet") state.filter = "passing";
   if (typeof saved.query === "string") state.query = saved.query.slice(0, 160).toLowerCase();
-  if (typeof saved.sortKey === "string" || saved.sortKey === null) state.sortKey = saved.sortKey;
+  if (typeof saved.sortKey === "string") {
+    const sortKey = SORT_KEY_ALIASES[saved.sortKey] || saved.sortKey;
+    state.sortKey = VALID_SORT_KEYS.includes(sortKey) ? sortKey : null;
+  } else if (saved.sortKey === null) {
+    state.sortKey = null;
+  }
   if (typeof saved.sortAsc === "boolean") state.sortAsc = saved.sortAsc;
   if (typeof saved.endpointPassingOnly === "boolean") state.endpointPassingOnly = saved.endpointPassingOnly;
   if (saved.endpointCopyFormats && typeof saved.endpointCopyFormats === "object") {
@@ -215,9 +230,9 @@ function restoreUiState() {
 }
 
 function syncControlsFromState() {
+  setNetwork(state.network, { persist: false, render: false });
   setTab(state.activeTab, { persist: false });
   setChartMode(state.chartMode, { persist: false, render: false });
-  setEndpointNetwork(state.endpointNetwork, { persist: false, render: false });
   setEndpointKind(state.endpointKind, { persist: false, render: false });
   setProducerFilter(state.filter, { persist: false, render: false });
   els.producerSearch.value = state.query;
@@ -236,9 +251,9 @@ function readUiState() {
 function saveUiState() {
   try {
     localStorage.setItem(UI_STATE_STORAGE_KEY, JSON.stringify({
+      network: state.network,
       activeTab: state.activeTab,
       chartMode: state.chartMode,
-      endpointNetwork: state.endpointNetwork,
       endpointKind: state.endpointKind,
       endpointCopyFormats: state.endpointCopyFormats,
       endpointPassingOnly: state.endpointPassingOnly,
@@ -324,40 +339,47 @@ function renderLoadError(error) {
   els.chartArea.hidden = true;
   els.chartEmpty.hidden = false;
   els.chartEmpty.textContent = "Latest validation data could not be loaded.";
-  els.producerRows.innerHTML = `<tr><td colspan="${PRODUCER_TABLE_COLUMNS}" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
+  els.producerHeaderRow.innerHTML = renderProducerHeaderCells();
+  els.producerRows.innerHTML = `<tr><td colspan="${getProducerTableColumns().length}" class="table-empty">Latest validation data could not be loaded.</td></tr>`;
   els.tableSummary.textContent = "No producer data available.";
   els.endpointSummary.textContent = "No endpoint data available.";
   els.endpointList.innerHTML = `<div class="endpoint-empty">No endpoints available.</div>`;
 }
 
 function renderStatus() {
-  if (!state.producers.length) {
-    els.statusLine.textContent = "No producers were found in the latest snapshot.";
+  const producers = getNetworkProducers();
+  if (!producers.length) {
+    els.statusLine.textContent = `No ${getNetworkLabel()} producers were found in the latest snapshot.`;
     return;
   }
 
   const generatedAt = formatDateTime(state.latest.generatedAt);
-  els.statusLine.textContent = `Updated ${generatedAt} - ${state.producers.length} producers`;
+  els.statusLine.textContent = `${getNetworkLabel()} - updated ${generatedAt} - ${producers.length} producers`;
 }
 
 function renderMetrics() {
-  const total = state.producers.length;
-  const passing = state.producers.filter(isMainnetPassing).length;
-  const testnetPassing = state.producers.filter(isTestnetPassing).length;
-  const active = state.producers.filter((producer) => producer.scheduleType === "active").length;
-  const validCpuTimes = state.producers
+  const producers = getNetworkProducers();
+  const total = producers.length;
+  const passing = producers.filter(isNetworkPassing).length;
+  const p2pPassing = producers.filter((producer) => getNetworkBoolean(producer, "p2pVerified")).length;
+  const active = producers.filter((producer) => getNetworkScheduleType(producer) === "active").length;
+  const nodeosSeen = producers.filter((producer) => getNetworkValue(producer, "nodeosVersion")).length;
+  const validCpuTimes = state.network === "mainnet" ? producers
     .map((producer) => latestHistoryValue(producer.owner, "cpu"))
-    .filter((us) => Number.isFinite(us) && us > 0);
+    .filter((us) => Number.isFinite(us) && us > 0) : [];
   const averageCpuTime = validCpuTimes.length
     ? Math.round(validCpuTimes.reduce((sum, value) => sum + value, 0) / validCpuTimes.length)
     : null;
+  const networkLabel = getNetworkLabel();
 
   const metrics = [
     { label: "Registered BPs", value: total, tone: "" },
-    { label: "Mainnet Passing", value: passing, tone: "good" },
-    { label: "Mainnet Failing", value: total - passing, tone: "bad" },
-    { label: "Testnet Passing", value: testnetPassing, tone: "" },
-    { label: "Avg CPU Time", value: averageCpuTime === null ? "N/A" : `${averageCpuTime} us`, tone: "info" },
+    { label: `${networkLabel} Passing`, value: passing, tone: "good" },
+    { label: `${networkLabel} Failing`, value: total - passing, tone: "bad" },
+    { label: "P2P Passing", value: p2pPassing, tone: "" },
+    state.network === "mainnet"
+      ? { label: "Avg CPU Time", value: averageCpuTime === null ? "N/A" : `${averageCpuTime} us`, tone: "info" }
+      : { label: "Nodeos Seen", value: nodeosSeen, tone: "info" },
     { label: "Active Schedule", value: active, tone: "" },
   ];
 
@@ -369,6 +391,27 @@ function renderMetrics() {
       </article>
     `)
     .join("");
+}
+
+function setNetwork(network, options = {}) {
+  if (!VALID_NETWORKS.includes(network)) return;
+  const { persist = true, render = true } = options;
+  state.network = network;
+  if (!VALID_PRODUCER_FILTERS.includes(state.filter)) state.filter = "all";
+  if (!getProducerTableColumns().some((column) => column.sort === state.sortKey)) state.sortKey = null;
+  document.querySelectorAll("[data-network]").forEach((button) => {
+    const active = button.dataset.network === state.network;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
+  if (persist) saveUiState();
+  if (render && state.latest) {
+    renderStatus();
+    renderMetrics();
+    renderTable();
+    renderEndpoints();
+    renderChart();
+  }
 }
 
 function setTab(tabName, options = {}) {
@@ -403,19 +446,6 @@ function setChartMode(mode, options = {}) {
   if (render) renderChart();
 }
 
-function setEndpointNetwork(network, options = {}) {
-  if (!VALID_ENDPOINT_NETWORKS.includes(network)) return;
-  const { persist = true, render = true } = options;
-  state.endpointNetwork = network;
-  document.querySelectorAll("[data-endpoint-network]").forEach((networkButton) => {
-    const active = networkButton.dataset.endpointNetwork === state.endpointNetwork;
-    networkButton.classList.toggle("is-active", active);
-    networkButton.setAttribute("aria-pressed", String(active));
-  });
-  if (persist) saveUiState();
-  if (render) renderEndpoints();
-}
-
 function setEndpointKind(kind, options = {}) {
   if (!VALID_ENDPOINT_KINDS.includes(kind)) return;
   const { persist = true, render = true } = options;
@@ -442,6 +472,17 @@ function setProducerFilter(filter, options = {}) {
 }
 
 function renderChart() {
+  if (state.network === "testnet") {
+    hideChartTooltip();
+    els.chartHeading.textContent = "Testnet Performance";
+    els.chartSubhead.textContent = "Performance history is currently collected for mainnet only.";
+    els.chartLegend.innerHTML = "";
+    els.chartArea.hidden = true;
+    els.chartEmpty.hidden = false;
+    els.chartEmpty.textContent = "Testnet CPU, API latency, and missed-block history is not available in this dashboard yet.";
+    return;
+  }
+
   const config = getChartConfig();
   const runs = state.historyRuns;
   const seriesNames = getCurrentSeriesNames();
@@ -741,8 +782,38 @@ function hideChartTooltip() {
   els.chartTooltip.hidden = true;
 }
 
+function getProducerTableColumns() {
+  const columns = [
+    { label: "#", className: "rank-col" },
+    { label: "Type", sort: "scheduleType" },
+    { label: "Producer", sort: "owner" },
+    { label: "SSL", sort: "sslVerified" },
+    { label: "API", sort: "apiVerified" },
+    { label: "P2P", sort: "p2pVerified" },
+    { label: "Nodeos", sort: "nodeosVersion" },
+  ];
+
+  if (state.network === "mainnet") {
+    columns.push({ label: "CPU us", sort: "cpuUs" });
+    columns.push({ label: "Missed", sort: "missedBlocksPerRotation" });
+  }
+
+  columns.push({ label: "Errors", sort: "errors" });
+  return columns;
+}
+
+function renderProducerHeaderCells() {
+  return getProducerTableColumns()
+    .map((column) => {
+      const className = column.className ? ` class="${column.className}"` : "";
+      if (!column.sort) return `<th${className}>${escapeHtml(column.label)}</th>`;
+      return `<th${className}><button type="button" class="sort-button" data-sort="${escapeAttribute(column.sort)}">${escapeHtml(column.label)}</button></th>`;
+    })
+    .join("");
+}
+
 function renderTable() {
-  let rows = state.producers.filter(matchesQuery).filter(matchesFilter);
+  let rows = getNetworkProducers().filter(matchesQuery).filter(matchesFilter);
 
   if (state.sortKey) {
     rows = [...rows].sort((a, b) => compareProducerValues(a, b, state.sortKey, state.sortAsc));
@@ -750,11 +821,12 @@ function renderTable() {
 
   rows = groupProducerRowsBySchedule(rows);
 
+  els.producerHeaderRow.innerHTML = renderProducerHeaderCells();
   updateSortButtons();
-  els.tableSummary.textContent = `${rows.length} of ${state.producers.length} producers shown`;
+  els.tableSummary.textContent = `${rows.length} of ${getNetworkProducers().length} ${getNetworkLabel().toLowerCase()} producers shown`;
 
   if (!rows.length) {
-    els.producerRows.innerHTML = `<tr><td colspan="${PRODUCER_TABLE_COLUMNS}" class="table-empty">No producers match the current view.</td></tr>`;
+    els.producerRows.innerHTML = `<tr><td colspan="${getProducerTableColumns().length}" class="table-empty">No producers match the current view.</td></tr>`;
     return;
   }
 
@@ -763,16 +835,16 @@ function renderTable() {
 
 function groupProducerRowsBySchedule(rows) {
   if (!shouldShowStandbyDivider(rows)) return rows;
-  const activeRows = rows.filter((producer) => producer.scheduleType === "active");
-  const standbyRows = rows.filter((producer) => producer.scheduleType === "standby");
-  const otherRows = rows.filter((producer) => !["active", "standby"].includes(producer.scheduleType));
+  const activeRows = rows.filter((producer) => getNetworkScheduleType(producer) === "active");
+  const standbyRows = rows.filter((producer) => getNetworkScheduleType(producer) === "standby");
+  const otherRows = rows.filter((producer) => !["active", "standby"].includes(getNetworkScheduleType(producer)));
   return [...activeRows, ...otherRows, ...standbyRows];
 }
 
 function shouldShowStandbyDivider(rows) {
   if (state.filter === "active" || state.filter === "standby") return false;
-  return rows.some((producer) => producer.scheduleType === "active")
-    && rows.some((producer) => producer.scheduleType === "standby");
+  return rows.some((producer) => getNetworkScheduleType(producer) === "active")
+    && rows.some((producer) => getNetworkScheduleType(producer) === "standby");
 }
 
 function renderProducerRows(rows) {
@@ -782,7 +854,7 @@ function renderProducerRows(rows) {
     .map((producer, index) => {
       const needsDivider = hasDivider
         && !standbyDividerRendered
-        && producer.scheduleType === "standby";
+        && getNetworkScheduleType(producer) === "standby";
       standbyDividerRendered = standbyDividerRendered || needsDivider;
       return `${needsDivider ? renderStandbyDivider(rows) : ""}${renderProducerRow(producer, index)}`;
     })
@@ -790,11 +862,11 @@ function renderProducerRows(rows) {
 }
 
 function renderStandbyDivider(rows) {
-  const standbyCount = rows.filter((producer) => producer.scheduleType === "standby").length;
+  const standbyCount = rows.filter((producer) => getNetworkScheduleType(producer) === "standby").length;
   const label = `Standby producers (${standbyCount})`;
   return `
     <tr class="schedule-divider">
-      <td colspan="${PRODUCER_TABLE_COLUMNS}">
+      <td colspan="${getProducerTableColumns().length}">
         <span class="schedule-divider-label">${escapeHtml(label)}</span>
       </td>
     </tr>
@@ -802,8 +874,8 @@ function renderStandbyDivider(rows) {
 }
 
 function renderEndpoints() {
-  const network = state.endpointNetwork;
-  const networkLabel = network === "testnet" ? "Testnet" : "Mainnet";
+  const network = state.network;
+  const networkLabel = getNetworkLabel();
   const kindLabel = state.endpointKind === "peers" ? "Peering addresses" : "API endpoints";
   const allApiRows = getEndpointRows("api", network);
   const allPeerRows = getEndpointRows("peers", network);
@@ -984,7 +1056,7 @@ function formatEndpointCopy(rows, kind, format) {
     return endpoints.join(", ");
   }
   if (format === "nodeos" && kind === "peers") {
-    const networkLabel = state.endpointNetwork === "testnet" ? "Testnet" : "Mainnet";
+    const networkLabel = getNetworkLabel();
     const generatedAt = state.latest && state.latest.generatedAt
       ? ` updated ${formatDateTime(state.latest.generatedAt)}`
       : "";
@@ -1022,7 +1094,7 @@ function formatPeerComment(row) {
 
 async function copyEndpointList() {
   const kind = state.endpointKind;
-  const rows = filterEndpointRows(getEndpointRows(kind, state.endpointNetwork));
+  const rows = filterEndpointRows(getEndpointRows(kind, state.network));
   const text = formatEndpointCopy(rows, kind, state.endpointCopyFormats[kind]);
   if (!text) return;
 
@@ -1067,33 +1139,35 @@ function renderProducerRow(producer, index) {
     : "";
   const country = org.location && org.location.country ? String(org.location.country) : "";
   const site = getSafeUrl(org.website || producer.url || "");
-  const hasTestnet = hasTestnetData(producer);
-  const errors = Array.isArray(producer.validationErrors) ? producer.validationErrors : [];
+  const errors = getNetworkErrors(producer);
   const errorText = errors.length ? escapeHtml(errors.join(" | ")) : "";
   const missed = Number(producer.missedBlocksPerRotation);
   const cpuUs = latestHistoryValue(producer.owner, "cpu");
+  const cells = [
+    `<td class="rank-cell">${index + 1}</td>`,
+    `<td>${scheduleBadge(getNetworkScheduleType(producer))}</td>`,
+    `<td>
+      <span class="producer-name">${escapeHtml(producer.owner || "")}</span>
+      ${candidate}
+      ${country ? `<span class="producer-meta">${escapeHtml(country)}</span>` : ""}
+      ${site ? `<span class="producer-meta"><a href="${escapeAttribute(site)}" target="_blank" rel="noopener noreferrer">${escapeHtml(stripProtocol(site))}</a></span>` : ""}
+    </td>`,
+    `<td>${statusPill(getNetworkBoolean(producer, "sslVerified"), true)}</td>`,
+    `<td>${statusPill(getNetworkBoolean(producer, "apiVerified"), true)}</td>`,
+    `<td>${statusPill(getNetworkBoolean(producer, "p2pVerified"), Boolean(getNetworkValue(producer, "p2pEndpoint")), getNetworkValue(producer, "p2pEndpoint"))}</td>`,
+    `<td>${versionText(getNetworkValue(producer, "nodeosVersion"))}</td>`,
+  ];
+
+  if (state.network === "mainnet") {
+    cells.push(`<td>${timing(cpuUs, "us")}</td>`);
+    cells.push(`<td class="numeric">${Number.isFinite(missed) ? missed : 0}</td>`);
+  }
+
+  cells.push(`<td class="error-list">${errorText}</td>`);
 
   return `
     <tr>
-      <td class="rank-cell">${index + 1}</td>
-      <td>${scheduleBadge(producer.scheduleType)}</td>
-      <td>
-        <span class="producer-name">${escapeHtml(producer.owner || "")}</span>
-        ${candidate}
-        ${country ? `<span class="producer-meta">${escapeHtml(country)}</span>` : ""}
-        ${site ? `<span class="producer-meta"><a href="${escapeAttribute(site)}" target="_blank" rel="noopener noreferrer">${escapeHtml(stripProtocol(site))}</a></span>` : ""}
-      </td>
-      <td>${statusPill(Boolean(producer.sslVerified), true)}</td>
-      <td>${statusPill(Boolean(producer.apiVerified), true)}</td>
-      <td>${statusPill(Boolean(producer.p2pVerified), Boolean(producer.p2pEndpoint), producer.p2pEndpoint)}</td>
-      <td>${versionText(producer.nodeosVersion)}</td>
-      <td>${timing(cpuUs, "us")}</td>
-      <td>${hasTestnet ? statusPill(Boolean(producer.sslVerifiedTestNet), true) : statusPill(false, false)}</td>
-      <td>${hasTestnet ? statusPill(Boolean(producer.apiVerifiedTestNet), true) : statusPill(false, false)}</td>
-      <td>${statusPill(Boolean(producer.p2pVerifiedTestNet), Boolean(producer.p2pEndpointTestNet), producer.p2pEndpointTestNet)}</td>
-      <td>${hasTestnet ? versionText(producer.nodeosVersionTestNet) : versionText(null)}</td>
-      <td class="numeric">${Number.isFinite(missed) ? missed : 0}</td>
-      <td class="error-list">${errorText}</td>
+      ${cells.join("")}
     </tr>
   `;
 }
@@ -1113,11 +1187,10 @@ function matchesQuery(producer) {
 }
 
 function matchesFilter(producer) {
-  if (state.filter === "passing") return isMainnetPassing(producer);
-  if (state.filter === "failing") return !isMainnetPassing(producer);
-  if (state.filter === "testnet") return isTestnetPassing(producer);
-  if (state.filter === "active") return producer.scheduleType === "active";
-  if (state.filter === "standby") return producer.scheduleType === "standby";
+  if (state.filter === "passing") return isNetworkPassing(producer);
+  if (state.filter === "failing") return !isNetworkPassing(producer);
+  if (state.filter === "active") return getNetworkScheduleType(producer) === "active";
+  if (state.filter === "standby") return getNetworkScheduleType(producer) === "standby";
   return true;
 }
 
@@ -1144,6 +1217,12 @@ function compareProducerValues(a, b, key, ascending) {
 
 function producerSortValue(producer, key) {
   if (key === "cpuUs") return latestHistoryValue(producer.owner, "cpu");
+  if (key === "scheduleType") return getNetworkScheduleType(producer);
+  if (key === "sslVerified") return getNetworkBoolean(producer, "sslVerified");
+  if (key === "apiVerified") return getNetworkBoolean(producer, "apiVerified");
+  if (key === "p2pVerified") return getNetworkBoolean(producer, "p2pVerified");
+  if (key === "nodeosVersion") return getNetworkValue(producer, "nodeosVersion");
+  if (key === "errors") return getNetworkErrors(producer).join(" ");
   return producer[key];
 }
 
@@ -1199,17 +1278,60 @@ function versionText(value) {
   return `<span class="version-text">${escapeHtml(version)}</span>`;
 }
 
-function hasTestnetData(producer) {
-  if (producer.sslVerifiedTestNet || producer.apiVerifiedTestNet) return true;
-  return (producer.validationErrors || []).some((error) => /testnet/i.test(String(error)));
+function getNetworkLabel() {
+  return state.network === "testnet" ? "Testnet" : "Mainnet";
 }
 
-function isMainnetPassing(producer) {
-  return Boolean(producer.sslVerified && producer.apiVerified);
+function getNetworkProducers() {
+  if (state.network === "testnet") {
+    return state.producers.filter((producer) => getNetworkScheduleType(producer));
+  }
+  return state.producers.filter((producer) => getNetworkScheduleType(producer));
 }
 
-function isTestnetPassing(producer) {
-  return Boolean(producer.sslVerifiedTestNet && producer.apiVerifiedTestNet);
+function getNetworkKey(baseKey) {
+  if (state.network !== "testnet") return baseKey;
+  const keys = {
+    scheduleType: "scheduleTypeTestNet",
+    sslVerified: "sslVerifiedTestNet",
+    apiVerified: "apiVerifiedTestNet",
+    apiResponseMs: "apiResponseMsTestNet",
+    apiEndpoint: "apiEndpointTestNet",
+    apiEndpoints: "apiEndpointsTestNet",
+    apiEndpointChecks: "apiEndpointChecksTestNet",
+    p2pVerified: "p2pVerifiedTestNet",
+    p2pEndpoint: "p2pEndpointTestNet",
+    p2pEndpoints: "p2pEndpointsTestNet",
+    p2pEndpointChecks: "p2pEndpointChecksTestNet",
+    hasActiveFinalizerKey: "hasActiveFinalizerKeyTestNet",
+    activeFinalizerKeys: "activeFinalizerKeysTestNet",
+    nodeosVersion: "nodeosVersionTestNet",
+  };
+  return keys[baseKey] || baseKey;
+}
+
+function getNetworkValue(producer, baseKey) {
+  return producer[getNetworkKey(baseKey)];
+}
+
+function getNetworkBoolean(producer, baseKey) {
+  return Boolean(getNetworkValue(producer, baseKey));
+}
+
+function getNetworkScheduleType(producer) {
+  return getNetworkValue(producer, "scheduleType") || "";
+}
+
+function getNetworkErrors(producer) {
+  const errors = Array.isArray(producer.validationErrors) ? producer.validationErrors : [];
+  if (state.network === "testnet") {
+    return errors.filter((error) => /testnet/i.test(String(error)));
+  }
+  return errors.filter((error) => !/testnet/i.test(String(error)));
+}
+
+function isNetworkPassing(producer) {
+  return Boolean(getNetworkBoolean(producer, "sslVerified") && getNetworkBoolean(producer, "apiVerified"));
 }
 
 function formatDateTime(value) {

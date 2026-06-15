@@ -13,7 +13,13 @@
         <p class="eyebrow">Telos Block Producer Checks</p>
         <h1>Validator Checker</h1>
       </div>
-      <p class="status-line" id="statusLine">Loading data...</p>
+      <div class="header-actions">
+        <div class="network-switch" role="tablist" aria-label="Network">
+          <button class="network-button is-active" type="button" data-network="mainnet" role="tab" aria-selected="true">Mainnet</button>
+          <button class="network-button" type="button" data-network="testnet" role="tab" aria-selected="false">Testnet</button>
+        </div>
+        <p class="status-line" id="statusLine">Loading data...</p>
+      </div>
     </header>
 
     <main>
@@ -35,7 +41,6 @@
               <button type="button" class="filter-button is-active" data-filter="all">All</button>
               <button type="button" class="filter-button" data-filter="passing">Passing</button>
               <button type="button" class="filter-button" data-filter="failing">Failing</button>
-              <button type="button" class="filter-button" data-filter="testnet">Testnet Passing</button>
               <button type="button" class="filter-button" data-filter="active">Active</button>
               <button type="button" class="filter-button" data-filter="standby">Standby</button>
             </div>
@@ -46,26 +51,11 @@
           <div class="table-wrap">
             <table>
               <thead>
-                <tr>
-                  <th class="rank-col">#</th>
-                  <th><button type="button" class="sort-button" data-sort="scheduleType">Type</button></th>
-                  <th><button type="button" class="sort-button" data-sort="owner">Producer</button></th>
-                  <th><button type="button" class="sort-button" data-sort="sslVerified">SSL</button></th>
-                  <th><button type="button" class="sort-button" data-sort="apiVerified">API</button></th>
-                  <th><button type="button" class="sort-button" data-sort="p2pVerified">P2P</button></th>
-                  <th><button type="button" class="sort-button" data-sort="nodeosVersion">Nodeos</button></th>
-                  <th><button type="button" class="sort-button" data-sort="cpuUs">CPU us</button></th>
-                  <th><button type="button" class="sort-button" data-sort="sslVerifiedTestNet">Testnet SSL</button></th>
-                  <th><button type="button" class="sort-button" data-sort="apiVerifiedTestNet">Testnet API</button></th>
-                  <th><button type="button" class="sort-button" data-sort="p2pVerifiedTestNet">Testnet P2P</button></th>
-                  <th><button type="button" class="sort-button" data-sort="nodeosVersionTestNet">Testnet Nodeos</button></th>
-                  <th><button type="button" class="sort-button" data-sort="missedBlocksPerRotation">Missed</button></th>
-                  <th>Errors</th>
-                </tr>
+                <tr id="producerHeaderRow"></tr>
               </thead>
               <tbody id="producerRows">
                 <tr>
-                  <td colspan="14" class="table-empty">Loading...</td>
+                  <td colspan="10" class="table-empty">Loading...</td>
                 </tr>
               </tbody>
             </table>
@@ -109,10 +99,6 @@
               <p class="subtle" id="endpointSummary">Waiting for endpoint data...</p>
             </div>
             <div class="toolbar-actions endpoint-controls" aria-label="Endpoint controls">
-              <div class="segmented endpoint-network" role="group" aria-label="Endpoint network">
-                <button type="button" class="mode-button is-active" data-endpoint-network="mainnet" aria-pressed="true">Mainnet</button>
-                <button type="button" class="mode-button" data-endpoint-network="testnet" aria-pressed="false">Testnet</button>
-              </div>
               <label class="toggle-control endpoint-toggle">
                 <input type="checkbox" id="endpointPassingOnly" checked>
                 <span>Passing only</span>
