@@ -349,22 +349,7 @@ function renderStandbyDivider(rows) {
 
 function renderProducerRow(data, producer) {
   const scheduled = producer.scheduleType !== "standby";
-  const finalizerLabel = !scheduled
-    ? "Not scheduled"
-    : !data.finalizerTables.every((table) => table.ok)
-      ? "Table unavailable"
-      : producer.finalizer.active
-        ? "Active"
-        : producer.finalizer.registered
-          ? "Registered"
-          : "Missing";
-  const finalizerStatus = !scheduled
-    ? "manual"
-    : !data.finalizerTables.every((table) => table.ok)
-      ? "blocker"
-      : producer.finalizer.active
-        ? "ok"
-        : "blocker";
+  const finalizerDisplay = getFinalizerDisplay(data, producer);
   const apiEndpoint = producer.api.endpoint ? link(producer.api.endpoint, producer.api.endpoint.replace(/^https?:\/\//, "")) : "";
   const p2p = producer.p2p || { status: "unknown", label: "Not checked", endpoint: "" };
   const p2pEndpoint = p2p.endpoint || (Array.isArray(p2p.endpoints) ? p2p.endpoints[0] : "");
@@ -384,7 +369,7 @@ function renderProducerRow(data, producer) {
         </td>
         <td>${scheduleLabel}</td>
         <td>
-          ${statusPill(finalizerStatus, finalizerLabel)}
+          ${statusPill(finalizerDisplay.status, finalizerDisplay.label)}
           <span class="small-note">${escapeHtml(producer.finalizer.tables.join(", ") || "No table row")}</span>
         </td>
         <td>
@@ -406,6 +391,37 @@ function renderProducerRow(data, producer) {
         </td>
       </tr>
     `;
+}
+
+function getFinalizerDisplay(data, producer) {
+  const scheduled = producer.scheduleType !== "standby";
+  const tablesAvailable = data.finalizerTables.every((table) => table.ok);
+
+  if (!tablesAvailable) {
+    return {
+      label: "Table unavailable",
+      status: scheduled ? "blocker" : "unknown"
+    };
+  }
+
+  if (producer.finalizer.active) {
+    return {
+      label: "Active",
+      status: "ok"
+    };
+  }
+
+  if (producer.finalizer.registered) {
+    return {
+      label: "Registered",
+      status: scheduled ? "blocker" : "review"
+    };
+  }
+
+  return {
+    label: "Missing",
+    status: scheduled ? "blocker" : "manual"
+  };
 }
 
 function renderEvidence(data) {
