@@ -20,12 +20,13 @@ const VALID_TABS = ["producers", "endpoints", "performance"];
 const VALID_CHART_MODES = ["cpu", "api", "missed"];
 const VALID_ENDPOINT_KINDS = ["peers", "api"];
 const VALID_PRODUCER_FILTERS = ["all", "passing", "failing", "active", "standby"];
-const VALID_SORT_KEYS = ["scheduleType", "owner", "sslVerified", "apiVerified", "p2pVerified", "nodeosVersion", "cpuUs", "missedBlocksPerRotation", "errors"];
+const VALID_SORT_KEYS = ["scheduleType", "owner", "sslVerified", "apiVerified", "p2pVerified", "hasActiveFinalizerKey", "nodeosVersion", "cpuUs", "missedBlocksPerRotation", "errors"];
 const SORT_KEY_ALIASES = {
   scheduleTypeTestNet: "scheduleType",
   sslVerifiedTestNet: "sslVerified",
   apiVerifiedTestNet: "apiVerified",
   p2pVerifiedTestNet: "p2pVerified",
+  hasActiveFinalizerKeyTestNet: "hasActiveFinalizerKey",
   nodeosVersionTestNet: "nodeosVersion",
 };
 
@@ -362,6 +363,7 @@ function renderMetrics() {
   const total = producers.length;
   const passing = producers.filter(isNetworkPassing).length;
   const p2pPassing = producers.filter((producer) => getNetworkBoolean(producer, "p2pVerified")).length;
+  const finalizerPassing = producers.filter((producer) => getNetworkBoolean(producer, "hasActiveFinalizerKey")).length;
   const active = producers.filter((producer) => getNetworkScheduleType(producer) === "active").length;
   const nodeosSeen = producers.filter((producer) => getNetworkValue(producer, "nodeosVersion")).length;
   const validCpuTimes = state.network === "mainnet" ? producers
@@ -377,6 +379,7 @@ function renderMetrics() {
     { label: `${networkLabel} Passing`, value: passing, tone: "good" },
     { label: `${networkLabel} Failing`, value: total - passing, tone: "bad" },
     { label: "P2P Passing", value: p2pPassing, tone: "" },
+    { label: "Finalizer Passing", value: finalizerPassing, tone: finalizerPassing >= active ? "good" : "bad" },
     state.network === "mainnet"
       ? { label: "Avg CPU Time", value: averageCpuTime === null ? "N/A" : `${averageCpuTime} us`, tone: "info" }
       : { label: "Nodeos Seen", value: nodeosSeen, tone: "info" },
@@ -790,6 +793,7 @@ function getProducerTableColumns() {
     { label: "SSL", sort: "sslVerified" },
     { label: "API", sort: "apiVerified" },
     { label: "P2P", sort: "p2pVerified" },
+    { label: "Finalizer", sort: "hasActiveFinalizerKey" },
     { label: "Nodeos", sort: "nodeosVersion" },
   ];
 
@@ -1155,6 +1159,7 @@ function renderProducerRow(producer, index) {
     `<td>${statusPill(getNetworkBoolean(producer, "sslVerified"), true)}</td>`,
     `<td>${statusPill(getNetworkBoolean(producer, "apiVerified"), true)}</td>`,
     `<td>${statusPill(getNetworkBoolean(producer, "p2pVerified"), Boolean(getNetworkValue(producer, "p2pEndpoint")), getNetworkValue(producer, "p2pEndpoint"))}</td>`,
+    `<td>${statusPill(getNetworkBoolean(producer, "hasActiveFinalizerKey"), true, formatFinalizerKeys(producer))}</td>`,
     `<td>${versionText(getNetworkValue(producer, "nodeosVersion"))}</td>`,
   ];
 
@@ -1221,6 +1226,7 @@ function producerSortValue(producer, key) {
   if (key === "sslVerified") return getNetworkBoolean(producer, "sslVerified");
   if (key === "apiVerified") return getNetworkBoolean(producer, "apiVerified");
   if (key === "p2pVerified") return getNetworkBoolean(producer, "p2pVerified");
+  if (key === "hasActiveFinalizerKey") return getNetworkBoolean(producer, "hasActiveFinalizerKey");
   if (key === "nodeosVersion") return getNetworkValue(producer, "nodeosVersion");
   if (key === "errors") return getNetworkErrors(producer).join(" ");
   return producer[key];
@@ -1256,6 +1262,12 @@ function statusPill(value, available, label) {
   return value
     ? `<span class="status-pill pass"${title}>Pass</span>`
     : `<span class="status-pill fail"${title}>Fail</span>`;
+}
+
+function formatFinalizerKeys(producer) {
+  const keys = getNetworkValue(producer, "activeFinalizerKeys");
+  if (!Array.isArray(keys) || !keys.length) return "";
+  return keys.join(", ");
 }
 
 function latency(value) {
