@@ -314,11 +314,21 @@ function renderProducerRows(data) {
 }
 
 function groupProducerRowsBySchedule(rows) {
-  if (!shouldShowStandbyDivider(rows)) return rows;
-  const scheduledRows = rows.filter((producer) => producer.scheduleType === "active");
-  const standbyRows = rows.filter((producer) => producer.scheduleType === "standby");
-  const otherRows = rows.filter((producer) => !["active", "standby"].includes(producer.scheduleType));
+  const sortedRows = [...rows].sort(compareByVoteRank);
+  if (!shouldShowStandbyDivider(sortedRows)) return sortedRows;
+  const scheduledRows = sortedRows.filter((producer) => producer.scheduleType === "active");
+  const standbyRows = sortedRows.filter((producer) => producer.scheduleType === "standby");
+  const otherRows = sortedRows.filter((producer) => !["active", "standby"].includes(producer.scheduleType));
   return [...scheduledRows, ...otherRows, ...standbyRows];
+}
+
+function compareByVoteRank(a, b) {
+  const aRank = Number(a.rank);
+  const bRank = Number(b.rank);
+  const aValue = Number.isFinite(aRank) ? aRank : Number.MAX_SAFE_INTEGER;
+  const bValue = Number.isFinite(bRank) ? bRank : Number.MAX_SAFE_INTEGER;
+  if (aValue !== bValue) return aValue - bValue;
+  return String(a.name || "").localeCompare(String(b.name || ""));
 }
 
 function shouldShowStandbyDivider(rows) {
@@ -357,9 +367,11 @@ function renderProducerRow(data, producer) {
     .slice(0, 4)
     .map((note) => `<div>${escapeHtml(note)}</div>`)
     .join("");
+  const voteRank = producer.rank || producer.schedulePosition || "-";
+  const voteNote = producer.votesCompact ? `<span class="small-note">votes ${escapeHtml(producer.votesCompact)}</span>` : "";
   const scheduleLabel = scheduled
-    ? `#${escapeHtml(producer.schedulePosition)}`
-    : `<span class="standby-rank">Standby</span><span class="small-note">rank ${escapeHtml(producer.rank || "-")}</span>`;
+    ? `<span class="standby-rank">#${escapeHtml(voteRank)}</span>${voteNote}`
+    : `<span class="standby-rank">Standby</span><span class="small-note">rank ${escapeHtml(voteRank)}</span>${voteNote}`;
 
   return `
       <tr>

@@ -897,22 +897,22 @@ async function evaluateReadiness(networkKey) {
   const finalizerTablesAvailable = finalizerTables.every((tableResult) => tableResult.ok);
   const finalizerIndex = buildFinalizerIndex(finalizerTables);
   const activeNameSet = new Set(activeNames);
-  const tableRows = [
-    ...activeSchedule.map((entry, index) => ({
-      name: entry.producer_name,
-      scheduleType: "active",
-      schedulePosition: index + 1,
-      scheduleEntry: entry
-    })),
-    ...activeProducerRows
-      .filter((row) => !activeNameSet.has(row.owner))
-      .map((row) => ({
-        name: row.owner,
-        scheduleType: "standby",
-        schedulePosition: null,
-        scheduleEntry: null
-      }))
-  ];
+  const scheduleEntryByName = new Map(activeSchedule.map((entry, index) => [
+    entry.producer_name,
+    {
+      entry,
+      position: index + 1
+    }
+  ]));
+  const tableRows = activeProducerRows.map((row) => {
+    const scheduled = scheduleEntryByName.get(row.owner);
+    return {
+      name: row.owner,
+      scheduleType: activeNameSet.has(row.owner) ? "active" : "standby",
+      schedulePosition: scheduled?.position || null,
+      scheduleEntry: scheduled?.entry || null
+    };
+  });
 
   const bpPublicStatuses = await mapLimit(tableRows, 6, async (entry) => {
     const producerRow = producerByName.get(entry.name) || {};
@@ -942,11 +942,13 @@ async function evaluateReadiness(networkKey) {
     if (isScheduled && !finalizerTablesAvailable) blockers.push("Finalizer tables are not readable");
     if (isScheduled && finalizerTablesAvailable && !finalizer.registered) blockers.push("No finalizer key row found");
     if (isScheduled && finalizerTablesAvailable && finalizer.registered && !finalizer.active) blockers.push("Finalizer key row is not active");
+    if (!isScheduled && finalizerTablesAvailable && !finalizer.active) {
+      warnings.push(finalizer.registered ? "Finalizer key row is not active" : "No finalizer key row found");
+    }
     if (api.status === "blocker") blockers.push("Published API is not Spring compatible");
     if (api.status === "review" || api.status === "unknown") warnings.push(api.label || "Published API needs review");
     if (p2p.status === "blocker") blockers.push(p2p.label || "Public P2P handshake failed");
     if (p2p.status === "review" || p2p.status === "unknown") warnings.push(p2p.label || "Published P2P needs review");
-    if (!isScheduled) warnings.push("Standby BP - not part of scheduled finalizer gate");
     const status = blockers.length > 0 ? "blocker" : warnings.length > 0 ? "review" : "ok";
     return {
       name: entry.name,
