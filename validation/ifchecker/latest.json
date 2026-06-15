@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-15T08:31:30.691Z",
+  "generatedAt": "2026-06-15T10:43:18.354Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-15T08:31:23.185Z",
-      "durationMs": 20745,
+      "generatedAt": "2026-06-15T10:43:18.354Z",
+      "durationMs": 22032,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 429244265,
-        "lastIrreversibleBlockNum": 429244263,
+        "headBlockNum": 429260093,
+        "lastIrreversibleBlockNum": 429260091,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-15T08:31:02.500",
-        "headBlockProducer": "telosmadrid1",
+        "headBlockTime": "2026-06-15T10:42:56.500",
+        "headBlockProducer": "eosriobrazil",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,11 +25,11 @@
         "scheduled": 21,
         "standby": 7,
         "producerRowsActive": 28,
-        "ready": 19,
-        "review": 2,
+        "ready": 18,
+        "review": 3,
         "blocked": 0,
-        "readyRows": 19,
-        "reviewRows": 9,
+        "readyRows": 18,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -39,8 +39,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 0,
         "bpApiBlocked": 0,
-        "publicP2pOk": 19,
-        "publicP2pReview": 2,
+        "publicP2pOk": 18,
+        "publicP2pReview": 3,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -49,8 +49,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "19/21 reachable",
-          "detail": "2 review, 0 unknown"
+          "value": "18/21 reachable",
+          "detail": "3 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -1082,8 +1082,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
             "bpJsonUrl": "https://www.orbitalblock.com/testnet-bp.json",
             "bpJsonSource": "chains.json",
@@ -1095,16 +1095,17 @@
             "attempts": [
               {
                 "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection closed before P2P handshake"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "eosriobrazil",
@@ -2259,15 +2260,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-15T08:31:30.691Z",
-      "durationMs": 28219,
+      "generatedAt": "2026-06-15T10:43:18.354Z",
+      "durationMs": 22011,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 473000056,
-        "lastIrreversibleBlockNum": 472999714,
-        "libLagBlocks": 342,
-        "headBlockTime": "2026-06-15T08:31:02.500",
-        "headBlockProducer": "telosmadrid1",
+        "headBlockNum": 473015884,
+        "lastIrreversibleBlockNum": 473015554,
+        "libLagBlocks": 330,
+        "headBlockTime": "2026-06-15T10:42:56.500",
+        "headBlockProducer": "southafrica1",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
