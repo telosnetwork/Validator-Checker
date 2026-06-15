@@ -1282,7 +1282,7 @@ function formatFinalizerKeys(producer) {
 
 function finalizerPill(producer) {
   const status = getFinalizerStatus(producer);
-  if (status.status === "pass") return statePill("pass", "Pass", status.detail);
+  if (status.status === "pass") return statePill("pass", "Live", status.detail);
   if (status.status === "fail") return statePill("fail", "Fail", status.detail);
   if (status.status === "review") return statePill("review", "Pending", status.detail);
   return statePill("none", "N/A", status.detail);
@@ -1356,7 +1356,7 @@ function getFinalizerSummary(producers) {
   }
 
   return {
-    label: "Finalizer Passing",
+    label: "Finalizer Live",
     value: `${passing}/${scheduled.length}`,
     tone: failing === 0 && passing === scheduled.length ? "good" : "bad",
   };
