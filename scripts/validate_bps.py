@@ -21,8 +21,8 @@ from typing import Optional, Tuple
 from urllib.parse import urlparse
 
 # ── Chain constants ──────────────────────────────────────────────────────────
-TELOS_API         = "https://mainnet.telos.net"
-TELOS_TESTNET_API = "https://testnet.telos.net"
+TELOS_API         = os.environ.get("TELOS_API", "https://mainnet.telos.net")
+TELOS_TESTNET_API = os.environ.get("TELOS_TESTNET_API", "https://testnet.telos.caleos.io")
 MAINNET_CHAIN_ID = "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
 TESTNET_CHAIN_ID = "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
 
@@ -45,6 +45,18 @@ CURL_PATH = shutil.which("curl")
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
 HISTORY_PATH = os.path.join(SCRIPT_DIR, "..", "validation", "history.json")
 MAX_HISTORY  = 56   # ~14 days at 6-hour intervals
+
+TEMP_TESTNET_ENDPOINTS = {
+    "tempbpfill11": {"api": "http://38.49.217.195:8889", "p2p": "38.49.217.195:9878"},
+    "tempbpfill22": {"api": "http://38.49.217.195:8890", "p2p": "38.49.217.195:9879"},
+    "tempbpfill33": {"api": "http://38.49.217.195:8891", "p2p": "38.49.217.195:9880"},
+    "tempbpfill44": {"api": "http://38.49.217.195:8892", "p2p": "38.49.217.195:9881"},
+    "tempbpfill55": {"api": "http://38.49.217.195:8893", "p2p": "38.49.217.195:9882"},
+    "tempbpfillaa": {"api": "http://38.49.217.195:8894", "p2p": "38.49.217.195:9883"},
+    "tempbpfillbb": {"api": "http://38.49.217.195:8895", "p2p": "38.49.217.195:9884"},
+    "tempbpfillcc": {"api": "http://38.49.217.195:8896", "p2p": "38.49.217.195:9885"},
+    "tempbpfilldd": {"api": "http://38.49.217.195:8897", "p2p": "38.49.217.195:9886"},
+}
 
 # ────────────────────────────────────────────────────────────────────────────
 
@@ -491,6 +503,61 @@ def select_p2p_endpoint_check(nodes: list, checks: list) -> Optional[dict]:
     return checks[0] if checks else None
 
 
+def temp_testnet_nodes(owner: str) -> list:
+    override = TEMP_TESTNET_ENDPOINTS.get(owner)
+    if not override:
+        return []
+
+    return [{
+        "node_type": ["query", "producer", "seed"],
+        "ssl_endpoint": override["api"],
+        "api_endpoint": override["api"],
+        "p2p_endpoint": override["p2p"],
+    }]
+
+
+def is_temp_testnet_api_endpoint(endpoint: str) -> bool:
+    normalized = (endpoint or "").strip().rstrip("/")
+    return any(normalized == override["api"] for override in TEMP_TESTNET_ENDPOINTS.values())
+
+
+async def apply_testnet_nodes(
+    session: aiohttp.ClientSession,
+    result: dict,
+    nodes: list,
+    errors: list,
+) -> None:
+    result["apiEndpointsTestNet"] = all_ssl_endpoints(nodes)
+    result["p2pEndpointsTestNet"] = all_p2p_endpoints(nodes)
+    result["apiEndpointChecksTestNet"], result["p2pEndpointChecksTestNet"] = await asyncio.gather(
+        check_api_endpoints(session, result["apiEndpointsTestNet"], TESTNET_CHAIN_ID),
+        check_p2p_endpoints(result["p2pEndpointsTestNet"], TESTNET_CHAIN_ID),
+    )
+
+    testnet_p2p_check = select_p2p_endpoint_check(nodes, result["p2pEndpointChecksTestNet"])
+    if testnet_p2p_check:
+        result["p2pEndpointTestNet"] = testnet_p2p_check["endpoint"]
+        result["p2pVerifiedTestNet"] = bool(testnet_p2p_check["verified"])
+        if not result["p2pVerifiedTestNet"]:
+            errors.append(f"Testnet P2P handshake failed: {result['p2pEndpointTestNet']}")
+    else:
+        errors.append("No testnet p2p_endpoint found in bp.json nodes")
+
+    testnet_api_check = select_api_endpoint_check(nodes, result["apiEndpointChecksTestNet"])
+    if testnet_api_check:
+        result["apiEndpointTestNet"] = testnet_api_check["endpoint"]
+        result["sslVerifiedTestNet"]    = bool(testnet_api_check["sslVerified"])
+        result["apiVerifiedTestNet"]    = bool(testnet_api_check["apiVerified"])
+        result["apiResponseMsTestNet"]  = testnet_api_check["apiResponseMs"]
+        result["nodeosVersionTestNet"]  = testnet_api_check["nodeosVersion"]
+        if not result["sslVerifiedTestNet"] and not is_temp_testnet_api_endpoint(result["apiEndpointTestNet"]):
+            errors.append(f"Testnet SSL failed: {result['apiEndpointTestNet']}")
+        if not result["apiVerifiedTestNet"]:
+            errors.append(f"Testnet API failed: {result['apiEndpointTestNet']}")
+    else:
+        errors.append("No testnet ssl_endpoint found in bp.json nodes")
+
+
 def metadata_url(base_url: str, path: str) -> str:
     """Resolve a chains.json metadata path relative to the registered BP URL."""
     clean_path = (path or "").strip()
@@ -620,6 +687,7 @@ async def validate_producer(
     testnet_base_url = normalize_producer_url(
         testnet_producer.get("url", "") if testnet_producer else ""
     )
+    testnet_override_nodes = temp_testnet_nodes(owner)
     mainnet_finalizer_keys = active_schedule.get(owner, [])
     testnet_finalizer_keys = (testnet_active_schedule or {}).get(owner, [])
 
@@ -654,7 +722,7 @@ async def validate_producer(
         "hasActiveFinalizerKeyTestNet": bool(testnet_finalizer_keys),
         "activeFinalizerKeysTestNet": testnet_finalizer_keys,
         "nodeosVersionTestNet": None,
-        "testnetUrl":           testnet_base_url or None,
+        "testnetUrl":           testnet_base_url or (testnet_override_nodes[0]["ssl_endpoint"] if testnet_override_nodes else None),
         "missedBlocksPerRotation": producer.get("missed_blocks_per_rotation", 0),
         "lifetimeMissedBlocks":    producer.get("lifetime_missed_blocks", 0),
         "lifetimeProducedBlocks":  producer.get("lifetime_produced_blocks", 0),
@@ -670,82 +738,71 @@ async def validate_producer(
         "checkedAt":            datetime.now(timezone.utc).isoformat(),
     }
 
-    if not base_url:
+    if testnet_override_nodes:
+        result["org"] = {
+            "candidate_name": owner,
+            "website": "https://validators.telos.net",
+            "code_of_conduct": "https://validators.telos.net",
+        }
+
+    if not base_url and not testnet_override_nodes:
         result["validationErrors"] = ["No URL registered on chain"]
         return result
 
-    bp_json, errors, testnet_path = await resolve_bp_json(session, base_url)
+    if not base_url:
+        bp_json, errors, testnet_path = None, result["validationErrors"], None
+    else:
+        bp_json, errors, testnet_path = await resolve_bp_json(session, base_url)
 
-    if not bp_json:
+    if base_url and not bp_json and not testnet_override_nodes:
         result["validationErrors"] = errors
         return result
 
-    result["org"] = bp_json.get("org", {})
-    nodes         = bp_json.get("nodes", [])
-    result["apiEndpoints"] = all_ssl_endpoints(nodes)
-    result["p2pEndpoints"] = all_p2p_endpoints(nodes)
-    result["apiEndpointChecks"], result["p2pEndpointChecks"] = await asyncio.gather(
-        check_api_endpoints(session, result["apiEndpoints"], MAINNET_CHAIN_ID),
-        check_p2p_endpoints(result["p2pEndpoints"], MAINNET_CHAIN_ID),
-    )
+    if bp_json:
+        result["org"] = bp_json.get("org", {})
+        nodes         = bp_json.get("nodes", [])
+        result["apiEndpoints"] = all_ssl_endpoints(nodes)
+        result["p2pEndpoints"] = all_p2p_endpoints(nodes)
+        result["apiEndpointChecks"], result["p2pEndpointChecks"] = await asyncio.gather(
+            check_api_endpoints(session, result["apiEndpoints"], MAINNET_CHAIN_ID),
+            check_p2p_endpoints(result["p2pEndpoints"], MAINNET_CHAIN_ID),
+        )
 
-    p2p_check = select_p2p_endpoint_check(nodes, result["p2pEndpointChecks"])
-    if p2p_check:
-        result["p2pEndpoint"] = p2p_check["endpoint"]
-        result["p2pVerified"] = bool(p2p_check["verified"])
-        if not result["p2pVerified"]:
-            errors.append(f"P2P handshake failed: {result['p2pEndpoint']}")
-    else:
-        errors.append("No p2p_endpoint found in bp.json nodes")
+        p2p_check = select_p2p_endpoint_check(nodes, result["p2pEndpointChecks"])
+        if p2p_check:
+            result["p2pEndpoint"] = p2p_check["endpoint"]
+            result["p2pVerified"] = bool(p2p_check["verified"])
+            if not result["p2pVerified"]:
+                errors.append(f"P2P handshake failed: {result['p2pEndpoint']}")
+        else:
+            errors.append("No p2p_endpoint found in bp.json nodes")
 
-    api_check = select_api_endpoint_check(nodes, result["apiEndpointChecks"])
-    if api_check:
-        result["apiEndpoint"] = api_check["endpoint"]
-        result["sslVerified"]   = bool(api_check["sslVerified"])
-        result["apiVerified"]   = bool(api_check["apiVerified"])
-        result["apiResponseMs"] = api_check["apiResponseMs"]
-        result["nodeosVersion"] = api_check["nodeosVersion"]
-        if not result["sslVerified"]:
-            errors.append(f"SSL failed: {result['apiEndpoint']}")
-        if not result["apiVerified"]:
-            errors.append(f"API failed: {result['apiEndpoint']}/v1/chain/get_info")
-    else:
-        errors.append("No ssl_endpoint found in bp.json nodes")
+        api_check = select_api_endpoint_check(nodes, result["apiEndpointChecks"])
+        if api_check:
+            result["apiEndpoint"] = api_check["endpoint"]
+            result["sslVerified"]   = bool(api_check["sslVerified"])
+            result["apiVerified"]   = bool(api_check["apiVerified"])
+            result["apiResponseMs"] = api_check["apiResponseMs"]
+            result["nodeosVersion"] = api_check["nodeosVersion"]
+            if not result["sslVerified"]:
+                errors.append(f"SSL failed: {result['apiEndpoint']}")
+            if not result["apiVerified"]:
+                errors.append(f"API failed: {result['apiEndpoint']}/v1/chain/get_info")
+        else:
+            errors.append("No ssl_endpoint found in bp.json nodes")
 
-    if testnet_base_url:
+    testnet_json = None
+
+    if testnet_override_nodes:
+        await apply_testnet_nodes(session, result, testnet_override_nodes, errors)
+    elif testnet_base_url:
         testnet_json, testnet_errors = await resolve_testnet_bp_json(session, testnet_base_url)
         errors.extend(testnet_errors)
     elif testnet_path:
         testnet_json = await fetch_json(session, metadata_url(base_url, testnet_path))
         if testnet_json:
             testnet_nodes = testnet_json.get("nodes", [])
-            result["apiEndpointsTestNet"] = all_ssl_endpoints(testnet_nodes)
-            result["p2pEndpointsTestNet"] = all_p2p_endpoints(testnet_nodes)
-            result["apiEndpointChecksTestNet"], result["p2pEndpointChecksTestNet"] = await asyncio.gather(
-                check_api_endpoints(session, result["apiEndpointsTestNet"], TESTNET_CHAIN_ID),
-                check_p2p_endpoints(result["p2pEndpointsTestNet"], TESTNET_CHAIN_ID),
-            )
-
-            testnet_p2p_check = select_p2p_endpoint_check(testnet_nodes, result["p2pEndpointChecksTestNet"])
-            if testnet_p2p_check:
-                result["p2pEndpointTestNet"] = testnet_p2p_check["endpoint"]
-                result["p2pVerifiedTestNet"] = bool(testnet_p2p_check["verified"])
-                if not result["p2pVerifiedTestNet"]:
-                    errors.append(f"Testnet P2P handshake failed: {result['p2pEndpointTestNet']}")
-            else:
-                errors.append("No testnet p2p_endpoint found in bp.json nodes")
-
-            testnet_api_check = select_api_endpoint_check(testnet_nodes, result["apiEndpointChecksTestNet"])
-            if testnet_api_check:
-                result["apiEndpointTestNet"] = testnet_api_check["endpoint"]
-                result["sslVerifiedTestNet"]    = bool(testnet_api_check["sslVerified"])
-                result["apiVerifiedTestNet"]    = bool(testnet_api_check["apiVerified"])
-                result["apiResponseMsTestNet"]  = testnet_api_check["apiResponseMs"]
-                result["nodeosVersionTestNet"]  = testnet_api_check["nodeosVersion"]
-                if not result["sslVerifiedTestNet"]:
-                    errors.append(f"Testnet SSL failed: {result['apiEndpointTestNet']}")
-                if not result["apiVerifiedTestNet"]:
-                    errors.append(f"Testnet API failed: {result['apiEndpointTestNet']}")
+            await apply_testnet_nodes(session, result, testnet_nodes, errors)
         else:
             errors.append("Testnet bp.json missing or unreachable")
     else:
@@ -753,35 +810,7 @@ async def validate_producer(
 
     if testnet_base_url and testnet_json:
         testnet_nodes = testnet_json.get("nodes", [])
-        result["apiEndpointsTestNet"] = all_ssl_endpoints(testnet_nodes)
-        result["p2pEndpointsTestNet"] = all_p2p_endpoints(testnet_nodes)
-        result["apiEndpointChecksTestNet"], result["p2pEndpointChecksTestNet"] = await asyncio.gather(
-            check_api_endpoints(session, result["apiEndpointsTestNet"], TESTNET_CHAIN_ID),
-            check_p2p_endpoints(result["p2pEndpointsTestNet"], TESTNET_CHAIN_ID),
-        )
-
-        testnet_p2p_check = select_p2p_endpoint_check(testnet_nodes, result["p2pEndpointChecksTestNet"])
-        if testnet_p2p_check:
-            result["p2pEndpointTestNet"] = testnet_p2p_check["endpoint"]
-            result["p2pVerifiedTestNet"] = bool(testnet_p2p_check["verified"])
-            if not result["p2pVerifiedTestNet"]:
-                errors.append(f"Testnet P2P handshake failed: {result['p2pEndpointTestNet']}")
-        else:
-            errors.append("No testnet p2p_endpoint found in bp.json nodes")
-
-        testnet_api_check = select_api_endpoint_check(testnet_nodes, result["apiEndpointChecksTestNet"])
-        if testnet_api_check:
-            result["apiEndpointTestNet"] = testnet_api_check["endpoint"]
-            result["sslVerifiedTestNet"]    = bool(testnet_api_check["sslVerified"])
-            result["apiVerifiedTestNet"]    = bool(testnet_api_check["apiVerified"])
-            result["apiResponseMsTestNet"]  = testnet_api_check["apiResponseMs"]
-            result["nodeosVersionTestNet"]  = testnet_api_check["nodeosVersion"]
-            if not result["sslVerifiedTestNet"]:
-                errors.append(f"Testnet SSL failed: {result['apiEndpointTestNet']}")
-            if not result["apiVerifiedTestNet"]:
-                errors.append(f"Testnet API failed: {result['apiEndpointTestNet']}")
-        else:
-            errors.append("No testnet ssl_endpoint found in bp.json nodes")
+        await apply_testnet_nodes(session, result, testnet_nodes, errors)
 
     result["validationErrors"] = errors
     return result
@@ -910,17 +939,28 @@ async def main():
         )
         testnet_by_owner = {p["owner"]: p for p in testnet_active}
 
+    mainnet_owner_set = {p["owner"] for p in all_active}
+    temp_testnet_only = [
+        {**testnet_by_owner[owner], "url": "", "is_active": 0}
+        for owner in TEMP_TESTNET_ENDPOINTS
+        if owner in testnet_by_owner and owner not in mainnet_owner_set
+    ]
+    validation_producers = [*all_active, *temp_testnet_only]
+
     print(f"Active schedule: {len(active_schedule)} | Total is_active=1: {len(all_active)}",
           file=sys.stderr)
     print(f"Testnet active schedule: {len(testnet_active_schedule)} | Testnet is_active=1: {len(testnet_active)}",
           file=sys.stderr)
+    if temp_testnet_only:
+        print(f"Temporary testnet-only producers included: {len(temp_testnet_only)}",
+              file=sys.stderr)
 
     connector = aiohttp.TCPConnector(limit=30, ssl=False)
     async with aiohttp.ClientSession(connector=connector, headers=REQUEST_HEADERS) as session:
         results = await asyncio.gather(
             *[
                 validate_producer(session, p, active_schedule, testnet_by_owner, testnet_active_schedule)
-                for p in all_active
+                for p in validation_producers
             ]
         )
 

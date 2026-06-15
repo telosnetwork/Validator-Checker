@@ -12,7 +12,7 @@ const NETWORKS = {
   testnet: {
     key: "testnet",
     label: "Testnet",
-    rpc: process.env.TELOS_TESTNET_RPC || "https://testnet.telos.net",
+    rpc: process.env.TELOS_TESTNET_RPC || "https://testnet.telos.caleos.io",
     chainId: "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
   },
   mainnet: {
@@ -59,6 +59,17 @@ const NET_VERSION_MAX = 12;
 const HANDSHAKE_MESSAGE_TYPE = 0;
 const GO_AWAY_MESSAGE_TYPE = 2;
 const MAX_P2P_MESSAGE_SIZE = 16 * 1024 * 1024;
+const TEMP_TESTNET_ENDPOINTS = {
+  tempbpfill11: { api: "http://38.49.217.195:8889", p2p: "38.49.217.195:9878" },
+  tempbpfill22: { api: "http://38.49.217.195:8890", p2p: "38.49.217.195:9879" },
+  tempbpfill33: { api: "http://38.49.217.195:8891", p2p: "38.49.217.195:9880" },
+  tempbpfill44: { api: "http://38.49.217.195:8892", p2p: "38.49.217.195:9881" },
+  tempbpfill55: { api: "http://38.49.217.195:8893", p2p: "38.49.217.195:9882" },
+  tempbpfillaa: { api: "http://38.49.217.195:8894", p2p: "38.49.217.195:9883" },
+  tempbpfillbb: { api: "http://38.49.217.195:8895", p2p: "38.49.217.195:9884" },
+  tempbpfillcc: { api: "http://38.49.217.195:8896", p2p: "38.49.217.195:9885" },
+  tempbpfilldd: { api: "http://38.49.217.195:8897", p2p: "38.49.217.195:9886" }
+};
 
 function jsonResponse(res, statusCode, payload) {
   const body = JSON.stringify(payload);
@@ -251,6 +262,11 @@ function addP2pCandidate(candidates, rawValue) {
   if (endpoint && !candidates.includes(endpoint)) candidates.push(endpoint);
 }
 
+function tempTestnetEndpointOverride(network, producerName) {
+  if (network.key !== "testnet") return null;
+  return TEMP_TESTNET_ENDPOINTS[producerName] || null;
+}
+
 function endpointNetworkMismatch(endpoint, network) {
   const { host } = parseP2pEndpoint(endpoint);
   const value = `${host || endpoint}`.toLowerCase();
@@ -434,6 +450,8 @@ async function fetchBpApiStatus(network, producer, metadataOverride = null) {
     attempts: []
   };
   const candidates = [];
+  const tempOverride = tempTestnetEndpointOverride(network, producer.name);
+  if (tempOverride) addCandidate(candidates, tempOverride.api);
   const metadata = metadataOverride || await resolveBpMetadata(network, producer.url);
   result.bpJsonUrl = metadata.url;
   result.bpJsonSource = metadata.source;
@@ -695,17 +713,22 @@ async function fetchBpP2pStatus(network, producer, metadataOverride = null) {
     endpoints: [],
     attempts: []
   };
+  const tempOverride = tempTestnetEndpointOverride(network, producer.name);
   const metadata = metadataOverride || await resolveBpMetadata(network, producer.url);
   result.bpJsonUrl = metadata.url;
   result.bpJsonSource = metadata.source;
+  if (tempOverride) addP2pCandidate(result.endpoints, tempOverride.p2p);
   if (metadata.ok) {
     result.bpJsonStatus = "ok";
-    result.endpoints = p2pEndpointsFromBpJson(metadata.json).slice(0, 8);
+    for (const endpoint of p2pEndpointsFromBpJson(metadata.json)) addP2pCandidate(result.endpoints, endpoint);
+    result.endpoints = result.endpoints.slice(0, 8);
   } else {
     result.bpJsonStatus = "error";
     result.bpJsonError = metadata.errors.join(" | ");
-    result.label = "BP metadata unavailable";
-    return result;
+    if (!result.endpoints.length) {
+      result.label = "BP metadata unavailable";
+      return result;
+    }
   }
 
   if (!result.endpoints.length) return result;
@@ -1095,6 +1118,7 @@ async function evaluateReadiness(networkKey) {
     })),
     producers,
     sourceNotes: [
+      "Temporary testnet tempbpfill API/P2P endpoints are explicitly configured while they are used as schedule-fill validators.",
       "Published BP API checks come from BP metadata and public API endpoints, not private producer hosts.",
       "Public live P2P checks require a BP metadata p2p_endpoint that completes a peer handshake on the expected chain; failures are review items because private peering can still be healthy.",
       "Exact vote-threads configuration and private producer-host settings cannot be proven from public RPC."

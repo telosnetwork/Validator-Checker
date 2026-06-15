@@ -879,7 +879,7 @@ function getProducerEndpointRows(producer, kind, network) {
         kind,
         network,
         producer,
-        passing: getEndpointCheckStatus(check, kind),
+        passing: getEndpointCheckStatus(check, kind, network),
       }))
       .filter((row) => row.endpoint);
   }
@@ -915,9 +915,9 @@ function getProducerEndpointValues(producer, kind, network) {
   return Array.from(new Set([...endpoints, ...fallback].filter(Boolean).map((endpoint) => String(endpoint).trim()).filter(Boolean)));
 }
 
-function getEndpointCheckStatus(check, kind) {
+function getEndpointCheckStatus(check, kind, network) {
   if (kind === "api") {
-    return Boolean(check.sslVerified && check.apiVerified);
+    return Boolean(check.apiVerified && (check.sslVerified || isTemporaryTestnetApiEndpoint(check.endpoint, network)));
   }
   return Boolean(check.verified);
 }
@@ -928,11 +928,15 @@ function getEndpointStatus(producer, kind, network, endpoint) {
     const selected = isTestnet ? producer.apiEndpointTestNet : producer.apiEndpoint;
     const verified = isTestnet ? producer.apiVerifiedTestNet : producer.apiVerified;
     const sslVerified = isTestnet ? producer.sslVerifiedTestNet : producer.sslVerified;
-    return Boolean(verified && sslVerified && (!selected || selected === endpoint));
+    return Boolean(verified && (sslVerified || isTemporaryTestnetApiEndpoint(endpoint, network)) && (!selected || selected === endpoint));
   }
   const selected = isTestnet ? producer.p2pEndpointTestNet : producer.p2pEndpoint;
   const verified = isTestnet ? producer.p2pVerifiedTestNet : producer.p2pVerified;
   return Boolean(verified && (!selected || selected === endpoint));
+}
+
+function isTemporaryTestnetApiEndpoint(endpoint, network) {
+  return network === "testnet" && /^http:\/\/38\.49\.217\.195:88(?:89|9[0-7])$/i.test(String(endpoint || "").replace(/\/+$/, ""));
 }
 
 function renderEndpointRow(row) {
