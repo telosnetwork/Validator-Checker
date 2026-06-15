@@ -236,11 +236,11 @@ function render() {
 }
 
 function renderStatus(data) {
-  const overall = data.overallStatus;
+  const overall = getBannerStatus(data);
   elements.statusBand.innerHTML = `
     <div>
       <p class="label">${escapeHtml(data.network.label)}</p>
-      <div class="status-title ${overall}">${escapeHtml(statusText[overall] || overall)}</div>
+      <div class="status-title ${overall.tone}">${escapeHtml(overall.label)}</div>
     </div>
     <div class="status-meta" id="status-meta">
       <div>${escapeHtml(data.network.rpc)}</div>
@@ -250,6 +250,22 @@ function renderStatus(data) {
     </div>
   `;
   elements.statusMeta = document.querySelector("#status-meta");
+}
+
+function getBannerStatus(data) {
+  const savannaGate = data.gates?.find((gate) => gate.key === "savanna");
+  if (savannaGate?.status === "ok") {
+    return {
+      label: "Live",
+      tone: "ok"
+    };
+  }
+
+  const status = data.overallStatus;
+  return {
+    label: statusText[status] || status,
+    tone: status
+  };
 }
 
 function metric(label, value, tone = "") {
