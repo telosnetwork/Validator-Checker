@@ -1305,6 +1305,15 @@ function getFinalizerStatus(producer) {
   }
 
   const row = networkData?.producers?.find((item) => item.name === producer.owner);
+  if (!scheduled) {
+    return {
+      status: "none",
+      detail: row?.finalizer?.active
+        ? "Standby BP has an active finalizer row, but is not part of the scheduled gate"
+        : "Standby BP - finalizer is not part of the scheduled gate",
+    };
+  }
+
   if (row?.finalizer) {
     if (row.finalizer.active) {
       return {
@@ -1312,15 +1321,9 @@ function getFinalizerStatus(producer) {
         detail: row.finalizer.keys?.length ? row.finalizer.keys.join(", ") : "Active finalizer row found",
       };
     }
-    if (scheduled) {
-      return {
-        status: "fail",
-        detail: row.finalizer.registered ? "Finalizer row is registered but not active" : "No active finalizer row found",
-      };
-    }
     return {
-      status: "none",
-      detail: "Standby BP - finalizer is not part of the scheduled gate",
+      status: "fail",
+      detail: row.finalizer.registered ? "Finalizer row is registered but not active" : "No active finalizer row found",
     };
   }
 
