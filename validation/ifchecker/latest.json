@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-15T18:41:01.355Z",
+  "generatedAt": "2026-06-15T20:00:50.578Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,14 +8,14 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-15T18:41:01.354Z",
-      "durationMs": 21907,
+      "generatedAt": "2026-06-15T20:00:50.574Z",
+      "durationMs": 22730,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 429317419,
-        "lastIrreversibleBlockNum": 429317417,
+        "headBlockNum": 429326995,
+        "lastIrreversibleBlockNum": 429326993,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-15T18:40:40.000",
+        "headBlockTime": "2026-06-15T20:00:28.000",
         "headBlockProducer": "tempbpfill33",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
@@ -2249,14 +2249,14 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-15T18:41:01.355Z",
-      "durationMs": 21824,
+      "generatedAt": "2026-06-15T20:00:50.578Z",
+      "durationMs": 22698,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 473073198,
-        "lastIrreversibleBlockNum": 473072865,
+        "headBlockNum": 473082774,
+        "lastIrreversibleBlockNum": 473082441,
         "libLagBlocks": 333,
-        "headBlockTime": "2026-06-15T18:40:40.000",
+        "headBlockTime": "2026-06-15T20:00:28.000",
         "headBlockProducer": "bigironbptex",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
@@ -2274,14 +2274,14 @@
         "blockedRows": 24,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 12,
-        "springCompatible": 12,
-        "bpApiSpring": 12,
+        "activeSpringCompatible": 13,
+        "springCompatible": 13,
+        "bpApiSpring": 13,
         "bpApiReview": 0,
-        "bpApiUnknown": 4,
+        "bpApiUnknown": 3,
         "bpApiBlocked": 5,
-        "publicP2pOk": 13,
-        "publicP2pReview": 8,
+        "publicP2pOk": 14,
+        "publicP2pReview": 7,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2318,15 +2318,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "blocker",
-          "value": "12/21 Spring",
-          "detail": "0 review, 4 unknown, 5 blocked"
+          "value": "13/21 Spring",
+          "detail": "0 review, 3 unknown, 5 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "13/21 reachable",
-          "detail": "8 review, 0 unknown"
+          "value": "14/21 reachable",
+          "detail": "7 review, 0 unknown"
         },
         {
           "key": "savanna",
@@ -3346,10 +3346,10 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://api.bigironbp.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://bigironbp.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3362,24 +3362,16 @@
             "attempts": [
               {
                 "endpoint": "https://api.bigironbp.io",
-                "ok": false,
-                "error": "fetch failed"
-              },
-              {
-                "endpoint": "http://api.bigironbp.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://bigironbp.io",
-                "ok": false,
-                "error": "404 Not Found"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p.bigironbp.io:9876",
             "bpJsonUrl": "https://bigironbp.io/telos.json",
             "bpJsonSource": "chains.json",
@@ -3391,9 +3383,10 @@
             "attempts": [
               {
                 "endpoint": "p2p.bigironbp.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
@@ -3402,10 +3395,7 @@
             "Savanna finalizer actions missing from eosio ABI",
             "Finalizer tables are not readable"
           ],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "telosindiabp",
