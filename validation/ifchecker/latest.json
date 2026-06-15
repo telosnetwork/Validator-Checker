@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-15T01:37:23.070Z",
+  "generatedAt": "2026-06-15T02:44:20.272Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-15T01:36:49.121Z",
-      "durationMs": 20059,
+      "generatedAt": "2026-06-15T02:44:17.201Z",
+      "durationMs": 20691,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 429194530,
-        "lastIrreversibleBlockNum": 429194528,
+        "headBlockNum": 429202625,
+        "lastIrreversibleBlockNum": 429202623,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-15T01:36:29.500",
-        "headBlockProducer": "eosphereiobp",
+        "headBlockTime": "2026-06-15T02:43:57.000",
+        "headBlockProducer": "eosiodetroit",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2185,15 +2185,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-15T01:37:23.070Z",
-      "durationMs": 53978,
+      "generatedAt": "2026-06-15T02:44:20.272Z",
+      "durationMs": 23653,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 472950310,
-        "lastIrreversibleBlockNum": 472949974,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-06-15T01:36:29.500",
-        "headBlockProducer": "caleosblocks",
+        "headBlockNum": 472958404,
+        "lastIrreversibleBlockNum": 472958074,
+        "libLagBlocks": 330,
+        "headBlockTime": "2026-06-15T02:43:56.500",
+        "headBlockProducer": "amsterdam",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2214,10 +2214,10 @@
         "springCompatible": 11,
         "bpApiSpring": 11,
         "bpApiReview": 0,
-        "bpApiUnknown": 5,
-        "bpApiBlocked": 5,
-        "publicP2pOk": 11,
-        "publicP2pReview": 10,
+        "bpApiUnknown": 4,
+        "bpApiBlocked": 6,
+        "publicP2pOk": 12,
+        "publicP2pReview": 9,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2255,14 +2255,14 @@
           "label": "Spring-compatible active BPs",
           "status": "blocker",
           "value": "11/21 Spring",
-          "detail": "0 review, 5 unknown, 5 blocked"
+          "detail": "0 review, 4 unknown, 6 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "11/21 reachable",
-          "detail": "10 review, 0 unknown"
+          "value": "12/21 reachable",
+          "detail": "9 review, 0 unknown"
         },
         {
           "key": "savanna",
@@ -3441,7 +3441,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: fetch failed | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
@@ -3460,7 +3460,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: fetch failed | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [],
             "attempts": []
           },
@@ -3765,45 +3765,57 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telos.blocksindia.com/chains.json: fetch failed | https://telos.blocksindia.com/bp.json: fetch failed | https://telos.blocksindia.com/mainnet.json: fetch failed | https://telos.blocksindia.com/telos.json: fetch failed",
+            "status": "blocker",
+            "label": "Leap or non-Spring",
+            "endpoint": "https://api.telos.blocksindia.com",
+            "version": "v5.0.3",
+            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://api.telos.blocksindia.com",
+              "http://api.telos.blocksindia.com",
               "https://telos.blocksindia.com"
             ],
             "attempts": [
               {
-                "endpoint": "https://telos.blocksindia.com",
-                "ok": false,
-                "error": "This operation was aborted"
+                "endpoint": "https://api.telos.blocksindia.com",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v5.0.3",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telos.blocksindia.com/chains.json: fetch failed | https://telos.blocksindia.com/bp.json: fetch failed | https://telos.blocksindia.com/mainnet.json: fetch failed | https://telos.blocksindia.com/telos.json: fetch failed",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "p2p.telos.blocksindia.com:7776",
+            "bpJsonUrl": "https://telos.blocksindia.com/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "p2p.telos.blocksindia.com:7776"
+            ],
+            "attempts": [
+              {
+                "endpoint": "p2p.telos.blocksindia.com:7776",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "Finalizer tables are not readable",
+            "Published API is not Spring compatible"
           ],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "warnings": []
         },
         {
           "name": "eosphereiobp",
