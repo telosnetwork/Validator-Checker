@@ -11,6 +11,9 @@ const DATA_SOURCES = {
   legacyCpuHistory: [
     "https://infinitybloc.io/validation/history.json",
   ],
+  ifchecker: [
+    "validation/ifchecker/latest.json",
+  ],
 };
 
 const MAX_MERGED_HISTORY_RUNS = 112;
@@ -73,6 +76,7 @@ const ENDPOINT_COPY_FORMATS = {
 
 const state = {
   latest: null,
+  ifchecker: null,
   producers: [],
   historyRuns: [],
   network: "mainnet",
@@ -279,6 +283,7 @@ async function loadData() {
 
   const history = await fetchOptionalJsonFromSources(DATA_SOURCES.history);
   const legacyCpuHistory = await fetchOptionalJsonFromSources(DATA_SOURCES.legacyCpuHistory);
+  state.ifchecker = await fetchOptionalJsonFromSources(DATA_SOURCES.ifchecker);
   state.historyRuns = mergeHistoryRuns(
     Array.isArray(history && history.runs) ? history.runs : [],
     Array.isArray(legacyCpuHistory && legacyCpuHistory.runs) ? legacyCpuHistory.runs : [],
@@ -363,7 +368,7 @@ function renderMetrics() {
   const total = producers.length;
   const passing = producers.filter(isNetworkPassing).length;
   const p2pPassing = producers.filter((producer) => getNetworkBoolean(producer, "p2pVerified")).length;
-  const finalizerPassing = producers.filter((producer) => getNetworkBoolean(producer, "hasActiveFinalizerKey")).length;
+  const finalizerSummary = getFinalizerSummary(producers);
   const active = producers.filter((producer) => getNetworkScheduleType(producer) === "active").length;
   const nodeosSeen = producers.filter((producer) => getNetworkValue(producer, "nodeosVersion")).length;
   const validCpuTimes = state.network === "mainnet" ? producers
@@ -379,7 +384,7 @@ function renderMetrics() {
     { label: `${networkLabel} Passing`, value: passing, tone: "good" },
     { label: `${networkLabel} Failing`, value: total - passing, tone: "bad" },
     { label: "P2P Passing", value: p2pPassing, tone: "" },
-    { label: "Finalizer Passing", value: finalizerPassing, tone: finalizerPassing >= active ? "good" : "bad" },
+    finalizerSummary,
     state.network === "mainnet"
       ? { label: "Avg CPU Time", value: averageCpuTime === null ? "N/A" : `${averageCpuTime} us`, tone: "info" }
       : { label: "Nodeos Seen", value: nodeosSeen, tone: "info" },
@@ -1159,7 +1164,7 @@ function renderProducerRow(producer, index) {
     `<td>${statusPill(getNetworkBoolean(producer, "sslVerified"), true)}</td>`,
     `<td>${statusPill(getNetworkBoolean(producer, "apiVerified"), true)}</td>`,
     `<td>${statusPill(getNetworkBoolean(producer, "p2pVerified"), Boolean(getNetworkValue(producer, "p2pEndpoint")), getNetworkValue(producer, "p2pEndpoint"))}</td>`,
-    `<td>${statusPill(getNetworkBoolean(producer, "hasActiveFinalizerKey"), true, formatFinalizerKeys(producer))}</td>`,
+    `<td>${finalizerPill(producer)}</td>`,
     `<td>${versionText(getNetworkValue(producer, "nodeosVersion"))}</td>`,
   ];
 
@@ -1264,10 +1269,97 @@ function statusPill(value, available, label) {
     : `<span class="status-pill fail"${title}>Fail</span>`;
 }
 
+function statePill(status, text, label) {
+  const title = label ? ` title="${escapeAttribute(String(label))}"` : "";
+  return `<span class="status-pill ${escapeAttribute(status || "none")}"${title}>${escapeHtml(text || "Unknown")}</span>`;
+}
+
 function formatFinalizerKeys(producer) {
   const keys = getNetworkValue(producer, "activeFinalizerKeys");
   if (!Array.isArray(keys) || !keys.length) return "";
   return keys.join(", ");
+}
+
+function finalizerPill(producer) {
+  const status = getFinalizerStatus(producer);
+  if (status.status === "pass") return statePill("pass", "Pass", status.detail);
+  if (status.status === "fail") return statePill("fail", "Fail", status.detail);
+  if (status.status === "review") return statePill("review", "Pending", status.detail);
+  return statePill("none", "N/A", status.detail);
+}
+
+function getFinalizerStatus(producer) {
+  const networkData = state.ifchecker?.networks?.[state.network];
+  const networkLabel = getNetworkLabel();
+  const scheduleType = getNetworkScheduleType(producer);
+  const scheduled = scheduleType === "active";
+  const finalizerGate = networkData?.gates?.find((gate) => gate.key === "finalizers");
+  const tableGate = networkData?.gates?.find((gate) => gate.key === "tables");
+  const contractGate = networkData?.gates?.find((gate) => gate.key === "contract");
+
+  if (networkData && scheduled && (contractGate?.status !== "ok" || tableGate?.status !== "ok")) {
+    return {
+      status: "review",
+      detail: `${networkLabel} finalizer registration cannot be checked yet: ${contractGate?.detail || tableGate?.detail || "finalizer tables unavailable"}`,
+    };
+  }
+
+  const row = networkData?.producers?.find((item) => item.name === producer.owner);
+  if (row?.finalizer) {
+    if (row.finalizer.active) {
+      return {
+        status: "pass",
+        detail: row.finalizer.keys?.length ? row.finalizer.keys.join(", ") : "Active finalizer row found",
+      };
+    }
+    if (scheduled) {
+      return {
+        status: "fail",
+        detail: row.finalizer.registered ? "Finalizer row is registered but not active" : "No active finalizer row found",
+      };
+    }
+    return {
+      status: "none",
+      detail: "Standby BP - finalizer is not part of the scheduled gate",
+    };
+  }
+
+  if (finalizerGate?.status === "blocker" && scheduled) {
+    return {
+      status: "review",
+      detail: finalizerGate.detail || "Finalizer status is pending",
+    };
+  }
+
+  if (getNetworkBoolean(producer, "hasActiveFinalizerKey")) {
+    return {
+      status: "review",
+      detail: `Schedule authority key present, but ${networkLabel} finalizer table status was not available in this snapshot`,
+    };
+  }
+
+  return {
+    status: scheduled ? "review" : "none",
+    detail: scheduled ? "Finalizer table status was not available in this snapshot" : "Standby BP - finalizer is not part of the scheduled gate",
+  };
+}
+
+function getFinalizerSummary(producers) {
+  const scheduled = producers.filter((producer) => getNetworkScheduleType(producer) === "active");
+  const statuses = scheduled.map((producer) => getFinalizerStatus(producer));
+  const passing = statuses.filter((status) => status.status === "pass").length;
+  const failing = statuses.filter((status) => status.status === "fail").length;
+  const pending = statuses.filter((status) => status.status === "review").length;
+
+  if (pending > 0) {
+    return { label: "Finalizer Status", value: "Pending", tone: "review" };
+  }
+
+  return {
+    label: "Finalizer Passing",
+    value: `${passing}/${scheduled.length}`,
+    tone: failing === 0 && passing === scheduled.length ? "good" : "bad",
+  };
 }
 
 function latency(value) {
