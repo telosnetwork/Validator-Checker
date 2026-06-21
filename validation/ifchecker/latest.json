@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T11:48:54.540Z",
+  "generatedAt": "2026-06-21T12:50:31.564Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-21T11:48:54.539Z",
-      "durationMs": 22762,
+      "generatedAt": "2026-06-21T12:50:31.564Z",
+      "durationMs": 23138,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 430304574,
-        "lastIrreversibleBlockNum": 430304572,
+        "headBlockNum": 430311967,
+        "lastIrreversibleBlockNum": 430311965,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-21T11:48:32.000",
-        "headBlockProducer": "tempbpfill11",
+        "headBlockTime": "2026-06-21T12:50:08.500",
+        "headBlockProducer": "telosunlimit",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -33,11 +33,11 @@
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 20,
-        "springCompatible": 20,
-        "bpApiSpring": 20,
+        "activeSpringCompatible": 21,
+        "springCompatible": 21,
+        "bpApiSpring": 21,
         "bpApiReview": 0,
-        "bpApiUnknown": 1,
+        "bpApiUnknown": 0,
         "bpApiBlocked": 0,
         "publicP2pOk": 17,
         "publicP2pReview": 4,
@@ -45,13 +45,6 @@
         "publicP2pBlocked": 0
       },
       "gates": [
-        {
-          "key": "bp-apis",
-          "label": "Spring-compatible active BPs",
-          "status": "review",
-          "value": "20/21 Spring",
-          "detail": "0 review, 1 unknown, 0 blocked"
-        },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
@@ -114,6 +107,13 @@
           "status": "ok",
           "value": "21/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
+        },
+        {
+          "key": "bp-apis",
+          "label": "Spring-compatible active BPs",
+          "status": "ok",
+          "value": "21/21 Spring",
+          "detail": "0 review, 0 unknown, 0 blocked"
         },
         {
           "key": "savanna",
@@ -370,8 +370,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "p2p-telos-testnet.a-dex.xyz:9876",
             "bpJsonUrl": "https://telos.a-dex.io/telos-testnet.json",
             "bpJsonSource": "chains.json",
@@ -383,16 +383,17 @@
             "attempts": [
               {
                 "endpoint": "p2p-telos-testnet.a-dex.xyz:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection closed before P2P handshake"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "votetelosusa",
@@ -562,10 +563,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telosgermany-testnet.genereos.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://genereos.io/telos/bp-testnet.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -578,24 +579,16 @@
             "attempts": [
               {
                 "endpoint": "https://telosgermany-testnet.genereos.io",
-                "ok": false,
-                "error": "502 Bad Gateway"
-              },
-              {
-                "endpoint": "http://telosgermany-testnet.genereos.io:8888",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://genereos.io",
-                "ok": false,
-                "error": "404 Not Found"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "telosgermany-testnet.genereos.io:9876",
             "bpJsonUrl": "https://genereos.io/telos/bp-testnet.json",
             "bpJsonSource": "chains.json",
@@ -607,18 +600,16 @@
             "attempts": [
               {
                 "endpoint": "telosgermany-testnet.genereos.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connect ECONNREFUSED 87.98.175.154:9876"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "telosarabia1",
@@ -2330,15 +2321,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-21T11:48:54.540Z",
-      "durationMs": 22731,
+      "generatedAt": "2026-06-21T12:50:31.564Z",
+      "durationMs": 23107,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 474059144,
-        "lastIrreversibleBlockNum": 474058815,
-        "libLagBlocks": 329,
-        "headBlockTime": "2026-06-21T11:48:32.000",
-        "headBlockProducer": "theteloscope",
+        "headBlockNum": 474066537,
+        "lastIrreversibleBlockNum": 474066207,
+        "libLagBlocks": 330,
+        "headBlockTime": "2026-06-21T12:50:08.500",
+        "headBlockProducer": "infinitybloc",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
