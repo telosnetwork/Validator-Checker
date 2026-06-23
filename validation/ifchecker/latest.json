@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T16:38:17.803Z",
+  "generatedAt": "2026-06-23T17:27:06.316Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-23T16:38:17.802Z",
-      "durationMs": 22638,
+      "generatedAt": "2026-06-23T17:27:03.243Z",
+      "durationMs": 20607,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 430684900,
-        "lastIrreversibleBlockNum": 430684898,
+        "headBlockNum": 430690742,
+        "lastIrreversibleBlockNum": 430690740,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-23T16:37:55.500",
-        "headBlockProducer": "eosiodetroit",
+        "headBlockTime": "2026-06-23T17:26:42.500",
+        "headBlockProducer": "votetelosusa",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -406,7 +406,7 @@
           "url": "https://eosusa.io/bp/telos/test/",
           "isActive": true,
           "lifetimeMissedBlocks": 30149,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 12,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2321,15 +2321,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-23T16:38:17.803Z",
-      "durationMs": 22549,
+      "generatedAt": "2026-06-23T17:27:06.316Z",
+      "durationMs": 23642,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 474439456,
-        "lastIrreversibleBlockNum": 474439128,
-        "libLagBlocks": 328,
-        "headBlockTime": "2026-06-23T16:37:55.500",
-        "headBlockProducer": "infinitybloc",
+        "headBlockNum": 474445287,
+        "lastIrreversibleBlockNum": 474444960,
+        "libLagBlocks": 327,
+        "headBlockTime": "2026-06-23T17:26:43.000",
+        "headBlockProducer": "telosgermany",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2346,11 +2346,11 @@
         "blockedRows": 23,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 13,
-        "springCompatible": 13,
-        "bpApiSpring": 13,
+        "activeSpringCompatible": 12,
+        "springCompatible": 12,
+        "bpApiSpring": 12,
         "bpApiReview": 0,
-        "bpApiUnknown": 3,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 5,
         "publicP2pOk": 14,
         "publicP2pReview": 7,
@@ -2390,8 +2390,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "blocker",
-          "value": "13/21 Spring",
-          "detail": "0 review, 3 unknown, 5 blocked"
+          "value": "12/21 Spring",
+          "detail": "0 review, 4 unknown, 5 blocked"
         },
         {
           "key": "public-p2p",
@@ -3769,10 +3769,10 @@
             "tables": []
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://bp-telos.y-knot.io",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://y-knot.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3785,10 +3785,18 @@
             "attempts": [
               {
                 "endpoint": "https://bp-telos.y-knot.io",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "http://bp-telos.y-knot.io",
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "https://y-knot.io",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
@@ -3818,6 +3826,7 @@
             "Finalizer tables are not readable"
           ],
           "warnings": [
+            "No matching public API",
             "P2P endpoint missing port"
           ]
         },
@@ -4623,7 +4632,7 @@
           "url": "https://eosusa.io/bp/telos/",
           "isActive": true,
           "lifetimeMissedBlocks": 12,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 12,
           "finalizer": {
             "registered": false,
             "active": false,
