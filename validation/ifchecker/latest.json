@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T17:27:06.316Z",
+  "generatedAt": "2026-06-23T18:15:46.971Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-23T17:27:03.243Z",
-      "durationMs": 20607,
+      "generatedAt": "2026-06-23T18:15:43.895Z",
+      "durationMs": 22986,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 430690742,
-        "lastIrreversibleBlockNum": 430690740,
+        "headBlockNum": 430696579,
+        "lastIrreversibleBlockNum": 430696577,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-23T17:26:42.500",
-        "headBlockProducer": "votetelosusa",
+        "headBlockTime": "2026-06-23T18:15:21.000",
+        "headBlockProducer": "telosarabia1",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2321,16 +2321,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-23T17:27:06.316Z",
-      "durationMs": 23642,
+      "generatedAt": "2026-06-23T18:15:46.971Z",
+      "durationMs": 26030,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 474445287,
-        "lastIrreversibleBlockNum": 474444960,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-06-23T17:26:43.000",
-        "headBlockProducer": "telosgermany",
-        "serverVersion": "v1.2.2",
+        "headBlockNum": 474451123,
+        "lastIrreversibleBlockNum": 474450792,
+        "libLagBlocks": 331,
+        "headBlockTime": "2026-06-23T18:15:21.000",
+        "headBlockProducer": "persiantelos",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2346,11 +2346,11 @@
         "blockedRows": 23,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
-        "activeSpringCompatible": 12,
-        "springCompatible": 12,
-        "bpApiSpring": 12,
+        "activeSpringCompatible": 13,
+        "springCompatible": 13,
+        "bpApiSpring": 13,
         "bpApiReview": 0,
-        "bpApiUnknown": 4,
+        "bpApiUnknown": 3,
         "bpApiBlocked": 5,
         "publicP2pOk": 14,
         "publicP2pReview": 7,
@@ -2390,8 +2390,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "blocker",
-          "value": "12/21 Spring",
-          "detail": "0 review, 4 unknown, 5 blocked"
+          "value": "13/21 Spring",
+          "detail": "0 review, 3 unknown, 5 blocked"
         },
         {
           "key": "public-p2p",
@@ -2418,7 +2418,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3717,7 +3717,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
@@ -3736,7 +3736,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [],
             "attempts": []
           },
@@ -3769,10 +3769,10 @@
             "tables": []
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://bp-telos.y-knot.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://y-knot.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3785,18 +3785,10 @@
             "attempts": [
               {
                 "endpoint": "https://bp-telos.y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://bp-telos.y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://y-knot.io",
-                "ok": false,
-                "error": "404 Not Found"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -3826,7 +3818,6 @@
             "Finalizer tables are not readable"
           ],
           "warnings": [
-            "No matching public API",
             "P2P endpoint missing port"
           ]
         },
