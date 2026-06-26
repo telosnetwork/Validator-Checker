@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T11:07:44.140Z",
+  "generatedAt": "2026-06-26T12:03:44.784Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-26T11:07:44.138Z",
-      "durationMs": 22858,
+      "generatedAt": "2026-06-26T12:03:44.783Z",
+      "durationMs": 21873,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 431163619,
-        "lastIrreversibleBlockNum": 431163617,
+        "headBlockNum": 431168842,
+        "lastIrreversibleBlockNum": 431168840,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-26T11:07:21.500",
-        "headBlockProducer": "tempbpfill22",
+        "headBlockTime": "2026-06-26T12:03:23.000",
+        "headBlockProducer": "telosarabia1",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,32 +25,39 @@
         "scheduled": 21,
         "standby": 8,
         "producerRowsActive": 29,
-        "ready": 17,
-        "review": 4,
+        "ready": 15,
+        "review": 6,
         "blocked": 0,
-        "readyRows": 23,
-        "reviewRows": 6,
+        "readyRows": 16,
+        "reviewRows": 13,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 21,
-        "springCompatible": 21,
-        "bpApiSpring": 21,
+        "activeSpringCompatible": 17,
+        "springCompatible": 17,
+        "bpApiSpring": 17,
         "bpApiReview": 0,
-        "bpApiUnknown": 0,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 0,
-        "publicP2pOk": 17,
-        "publicP2pReview": 4,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
       "gates": [
         {
+          "key": "bp-apis",
+          "label": "Spring-compatible active BPs",
+          "status": "review",
+          "value": "17/21 Spring",
+          "detail": "0 review, 4 unknown, 0 blocked"
+        },
+        {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "17/21 reachable",
-          "detail": "4 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -107,13 +114,6 @@
           "status": "ok",
           "value": "21/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
-        },
-        {
-          "key": "bp-apis",
-          "label": "Spring-compatible active BPs",
-          "status": "ok",
-          "value": "21/21 Spring",
-          "detail": "0 review, 0 unknown, 0 blocked"
         },
         {
           "key": "savanna",
@@ -370,8 +370,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p-telos-testnet.a-dex.xyz:9876",
             "bpJsonUrl": "https://telos.a-dex.io/telos-testnet.json",
             "bpJsonSource": "chains.json",
@@ -383,17 +383,16 @@
             "attempts": [
               {
                 "endpoint": "p2p-telos-testnet.a-dex.xyz:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection closed before P2P handshake"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "votetelosusa",
@@ -838,7 +837,7 @@
           "url": "https://infinitybloc.io",
           "isActive": true,
           "lifetimeMissedBlocks": 22767,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 300,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1018,8 +1017,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
             "bpJsonUrl": "https://www.orbitalblock.com/testnet-bp.json",
             "bpJsonSource": "chains.json",
@@ -1031,17 +1030,16 @@
             "attempts": [
               {
                 "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection closed before P2P handshake"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "cryptolions1",
@@ -1560,7 +1558,7 @@
           "url": "http://38.49.217.195:8889",
           "isActive": true,
           "lifetimeMissedBlocks": 0,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 300,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1573,51 +1571,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8889",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8889/chains.json: 404 Not Found | http://38.49.217.195:8889/testnet.json: 404 Not Found | http://38.49.217.195:8889/bp.json: 404 Not Found | http://38.49.217.195:8889/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8889/chains.json: fetch failed | http://38.49.217.195:8889/testnet.json: fetch failed | http://38.49.217.195:8889/bp.json: fetch failed | http://38.49.217.195:8889/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8889"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8889",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9878",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8889/chains.json: 404 Not Found | http://38.49.217.195:8889/testnet.json: 404 Not Found | http://38.49.217.195:8889/bp.json: 404 Not Found | http://38.49.217.195:8889/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8889/chains.json: fetch failed | http://38.49.217.195:8889/testnet.json: fetch failed | http://38.49.217.195:8889/bp.json: fetch failed | http://38.49.217.195:8889/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9878"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9878",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9878"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfill22",
@@ -1630,7 +1628,7 @@
           "url": "http://38.49.217.195:8890",
           "isActive": true,
           "lifetimeMissedBlocks": 0,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 300,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1643,51 +1641,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8890",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8890/chains.json: 404 Not Found | http://38.49.217.195:8890/testnet.json: 404 Not Found | http://38.49.217.195:8890/bp.json: 404 Not Found | http://38.49.217.195:8890/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8890/chains.json: fetch failed | http://38.49.217.195:8890/testnet.json: fetch failed | http://38.49.217.195:8890/bp.json: fetch failed | http://38.49.217.195:8890/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8890"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8890",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9879",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8890/chains.json: 404 Not Found | http://38.49.217.195:8890/testnet.json: 404 Not Found | http://38.49.217.195:8890/bp.json: 404 Not Found | http://38.49.217.195:8890/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8890/chains.json: fetch failed | http://38.49.217.195:8890/testnet.json: fetch failed | http://38.49.217.195:8890/bp.json: fetch failed | http://38.49.217.195:8890/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9879"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9879",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9879"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfill33",
@@ -1700,7 +1698,7 @@
           "url": "http://38.49.217.195:8891",
           "isActive": true,
           "lifetimeMissedBlocks": 0,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 300,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1713,51 +1711,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8891",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8891/chains.json: 404 Not Found | http://38.49.217.195:8891/testnet.json: 404 Not Found | http://38.49.217.195:8891/bp.json: 404 Not Found | http://38.49.217.195:8891/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8891/chains.json: fetch failed | http://38.49.217.195:8891/testnet.json: fetch failed | http://38.49.217.195:8891/bp.json: fetch failed | http://38.49.217.195:8891/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8891"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8891",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9880",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8891/chains.json: 404 Not Found | http://38.49.217.195:8891/testnet.json: 404 Not Found | http://38.49.217.195:8891/bp.json: 404 Not Found | http://38.49.217.195:8891/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8891/chains.json: fetch failed | http://38.49.217.195:8891/testnet.json: fetch failed | http://38.49.217.195:8891/bp.json: fetch failed | http://38.49.217.195:8891/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9880"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9880",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9880"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfill44",
@@ -1783,51 +1781,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8892",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8892/chains.json: 404 Not Found | http://38.49.217.195:8892/testnet.json: 404 Not Found | http://38.49.217.195:8892/bp.json: 404 Not Found | http://38.49.217.195:8892/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8892/chains.json: fetch failed | http://38.49.217.195:8892/testnet.json: fetch failed | http://38.49.217.195:8892/bp.json: fetch failed | http://38.49.217.195:8892/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8892"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8892",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9881",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8892/chains.json: 404 Not Found | http://38.49.217.195:8892/testnet.json: 404 Not Found | http://38.49.217.195:8892/bp.json: 404 Not Found | http://38.49.217.195:8892/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8892/chains.json: fetch failed | http://38.49.217.195:8892/testnet.json: fetch failed | http://38.49.217.195:8892/bp.json: fetch failed | http://38.49.217.195:8892/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9881"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9881",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9881"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfill55",
@@ -1853,51 +1851,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8893",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8893/chains.json: 404 Not Found | http://38.49.217.195:8893/testnet.json: 404 Not Found | http://38.49.217.195:8893/bp.json: 404 Not Found | http://38.49.217.195:8893/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8893/chains.json: fetch failed | http://38.49.217.195:8893/testnet.json: fetch failed | http://38.49.217.195:8893/bp.json: fetch failed | http://38.49.217.195:8893/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8893"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8893",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9882",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8893/chains.json: 404 Not Found | http://38.49.217.195:8893/testnet.json: 404 Not Found | http://38.49.217.195:8893/bp.json: 404 Not Found | http://38.49.217.195:8893/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8893/chains.json: fetch failed | http://38.49.217.195:8893/testnet.json: fetch failed | http://38.49.217.195:8893/bp.json: fetch failed | http://38.49.217.195:8893/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9882"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9882",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9882"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfillaa",
@@ -1923,51 +1921,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8894",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8894/chains.json: 404 Not Found | http://38.49.217.195:8894/testnet.json: 404 Not Found | http://38.49.217.195:8894/bp.json: 404 Not Found | http://38.49.217.195:8894/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8894/chains.json: fetch failed | http://38.49.217.195:8894/testnet.json: fetch failed | http://38.49.217.195:8894/bp.json: fetch failed | http://38.49.217.195:8894/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8894"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8894",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9883",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8894/chains.json: 404 Not Found | http://38.49.217.195:8894/testnet.json: 404 Not Found | http://38.49.217.195:8894/bp.json: 404 Not Found | http://38.49.217.195:8894/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8894/chains.json: fetch failed | http://38.49.217.195:8894/testnet.json: fetch failed | http://38.49.217.195:8894/bp.json: fetch failed | http://38.49.217.195:8894/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9883"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9883",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9883"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfillbb",
@@ -1993,51 +1991,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8895",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8895/chains.json: 404 Not Found | http://38.49.217.195:8895/testnet.json: 404 Not Found | http://38.49.217.195:8895/bp.json: 404 Not Found | http://38.49.217.195:8895/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8895/chains.json: fetch failed | http://38.49.217.195:8895/testnet.json: fetch failed | http://38.49.217.195:8895/bp.json: fetch failed | http://38.49.217.195:8895/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8895"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8895",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9884",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8895/chains.json: 404 Not Found | http://38.49.217.195:8895/testnet.json: 404 Not Found | http://38.49.217.195:8895/bp.json: 404 Not Found | http://38.49.217.195:8895/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8895/chains.json: fetch failed | http://38.49.217.195:8895/testnet.json: fetch failed | http://38.49.217.195:8895/bp.json: fetch failed | http://38.49.217.195:8895/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9884"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9884",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9884"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfillcc",
@@ -2063,51 +2061,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8896",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8896/chains.json: 404 Not Found | http://38.49.217.195:8896/testnet.json: 404 Not Found | http://38.49.217.195:8896/bp.json: 404 Not Found | http://38.49.217.195:8896/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8896/chains.json: fetch failed | http://38.49.217.195:8896/testnet.json: fetch failed | http://38.49.217.195:8896/bp.json: fetch failed | http://38.49.217.195:8896/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8896"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8896",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9885",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8896/chains.json: 404 Not Found | http://38.49.217.195:8896/testnet.json: 404 Not Found | http://38.49.217.195:8896/bp.json: 404 Not Found | http://38.49.217.195:8896/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8896/chains.json: fetch failed | http://38.49.217.195:8896/testnet.json: fetch failed | http://38.49.217.195:8896/bp.json: fetch failed | http://38.49.217.195:8896/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9885"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9885",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9885"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfilldd",
@@ -2120,7 +2118,7 @@
           "url": "http://38.49.217.195:8897",
           "isActive": true,
           "lifetimeMissedBlocks": 0,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 300,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2133,51 +2131,51 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://38.49.217.195:8897",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8897/chains.json: 404 Not Found | http://38.49.217.195:8897/testnet.json: 404 Not Found | http://38.49.217.195:8897/bp.json: 404 Not Found | http://38.49.217.195:8897/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8897/chains.json: fetch failed | http://38.49.217.195:8897/testnet.json: fetch failed | http://38.49.217.195:8897/bp.json: fetch failed | http://38.49.217.195:8897/telos.json: fetch failed",
             "endpoints": [
               "http://38.49.217.195:8897"
             ],
             "attempts": [
               {
                 "endpoint": "http://38.49.217.195:8897",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "fetch failed"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "38.49.217.195:9886",
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "http://38.49.217.195:8897/chains.json: 404 Not Found | http://38.49.217.195:8897/testnet.json: 404 Not Found | http://38.49.217.195:8897/bp.json: 404 Not Found | http://38.49.217.195:8897/telos.json: 404 Not Found",
+            "bpJsonError": "http://38.49.217.195:8897/chains.json: fetch failed | http://38.49.217.195:8897/testnet.json: fetch failed | http://38.49.217.195:8897/bp.json: fetch failed | http://38.49.217.195:8897/telos.json: fetch failed",
             "endpoints": [
               "38.49.217.195:9886"
             ],
             "attempts": [
               {
                 "endpoint": "38.49.217.195:9886",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 38.49.217.195:9886"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "bp.any",
@@ -2321,15 +2319,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-26T11:07:44.140Z",
-      "durationMs": 22828,
+      "generatedAt": "2026-06-26T12:03:44.784Z",
+      "durationMs": 21852,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 474918089,
-        "lastIrreversibleBlockNum": 474917756,
-        "libLagBlocks": 333,
-        "headBlockTime": "2026-06-26T11:07:22.000",
-        "headBlockProducer": "teloskitchen",
+        "headBlockNum": 474924500,
+        "lastIrreversibleBlockNum": 474924164,
+        "libLagBlocks": 336,
+        "headBlockTime": "2026-06-26T12:03:23.500",
+        "headBlockProducer": "persiantelos",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2644,7 +2642,7 @@
           "url": "https://infinitybloc.io",
           "isActive": true,
           "lifetimeMissedBlocks": 22477,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 300,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -3713,7 +3711,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [
               "https://eosza.io"
             ],
@@ -3732,7 +3730,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://eosza.io/chains.json: response was not valid JSON | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://eosza.io/chains.json: fetch failed | https://eosza.io/bp.json: response was not valid JSON | https://eosza.io/mainnet.json: response was not valid JSON | https://eosza.io/telos.json: response was not valid JSON",
             "endpoints": [],
             "attempts": []
           },
