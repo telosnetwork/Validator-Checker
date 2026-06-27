@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T18:13:24.205Z",
+  "generatedAt": "2026-06-27T18:46:53.803Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-27T18:13:21.132Z",
-      "durationMs": 20928,
+      "generatedAt": "2026-06-27T18:46:41.103Z",
+      "durationMs": 24751,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 431383737,
-        "lastIrreversibleBlockNum": 431383735,
+        "headBlockNum": 431387731,
+        "lastIrreversibleBlockNum": 431387729,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-27T18:13:00.000",
-        "headBlockProducer": "telosunlimit",
+        "headBlockTime": "2026-06-27T18:46:17.000",
+        "headBlockProducer": "eosphereiobp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,11 +25,11 @@
         "scheduled": 21,
         "standby": 3,
         "producerRowsActive": 24,
-        "ready": 17,
-        "review": 4,
+        "ready": 15,
+        "review": 6,
         "blocked": 0,
-        "readyRows": 18,
-        "reviewRows": 6,
+        "readyRows": 15,
+        "reviewRows": 9,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -39,8 +39,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 0,
         "bpApiBlocked": 0,
-        "publicP2pOk": 17,
-        "publicP2pReview": 4,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -49,8 +49,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "17/21 reachable",
-          "detail": "4 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -385,7 +385,7 @@
                 "endpoint": "p2p-telos-testnet.a-dex.xyz:9876",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection closed before P2P handshake"
+                "error": "connection timed out"
               }
             ]
           },
@@ -635,53 +635,67 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet2api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
+            "status": "review",
+            "label": "Published endpoint is not Testnet",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://testnet2api.telosarabia.net",
-              "http://testnet2api.telosarabia.net",
+              "https://api.telosarabia.net",
+              "http://api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://testnet2api.telosarabia.net",
+                "endpoint": "https://api.telosarabia.net",
                 "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
                 "version": "v1.2.2",
-                "chainMatches": true
+                "chainMatches": false
+              },
+              {
+                "endpoint": "http://api.telosarabia.net",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": false
+              },
+              {
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "403 Forbidden"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
-            "endpoint": "testnet2p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
+            "status": "review",
+            "label": "P2P handshake failed",
+            "endpoint": "p2p.telosarabia.net:9876",
+            "bpJsonUrl": "https://eosarabia.net/telos.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "testnet2p2p.telosarabia.net:9876"
+              "p2p.telosarabia.net:9876"
             ],
             "attempts": [
               {
-                "endpoint": "testnet2p2p.telosarabia.net:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "endpoint": "p2p.telosarabia.net:9876",
+                "ok": false,
+                "chainMatches": false,
+                "error": "peer sent go_away"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "Published endpoint is not Testnet",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "telosgreenbp",
@@ -1019,8 +1033,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "telos-testnet.cryptolions.io:9872",
             "bpJsonUrl": "https://cryptolions.io/telos-test.json",
             "bpJsonSource": "chains.json",
@@ -1032,16 +1046,17 @@
             "attempts": [
               {
                 "endpoint": "telos-testnet.cryptolions.io:9872",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection timed out"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "amsterdam",
@@ -1091,8 +1106,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "telostest.eu.eosamsterdam.net:9907",
             "bpJsonUrl": "https://telostestweb.eosams.xeos.me/bp.json",
             "bpJsonSource": "chains.json",
@@ -1104,16 +1119,17 @@
             "attempts": [
               {
                 "endpoint": "telostest.eu.eosamsterdam.net:9907",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection timed out"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "eosriobrazil",
@@ -1969,15 +1985,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-27T18:13:24.205Z",
-      "durationMs": 23926,
+      "generatedAt": "2026-06-27T18:46:53.803Z",
+      "durationMs": 37353,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 475141269,
-        "lastIrreversibleBlockNum": 475140943,
-        "libLagBlocks": 326,
-        "headBlockTime": "2026-06-27T18:13:00.500",
-        "headBlockProducer": "votetelosusa",
+        "headBlockNum": 475145263,
+        "lastIrreversibleBlockNum": 475144927,
+        "libLagBlocks": 336,
+        "headBlockTime": "2026-06-27T18:46:17.500",
+        "headBlockProducer": "telosunlimit",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -1998,8 +2014,8 @@
         "springCompatible": 13,
         "bpApiSpring": 13,
         "bpApiReview": 0,
-        "bpApiUnknown": 3,
-        "bpApiBlocked": 5,
+        "bpApiUnknown": 4,
+        "bpApiBlocked": 4,
         "publicP2pOk": 14,
         "publicP2pReview": 7,
         "publicP2pUnknown": 0,
@@ -2039,7 +2055,7 @@
           "label": "Spring-compatible active BPs",
           "status": "blocker",
           "value": "13/21 Spring",
-          "detail": "0 review, 3 unknown, 5 blocked"
+          "detail": "0 review, 4 unknown, 4 blocked"
         },
         {
           "key": "public-p2p",
@@ -2818,7 +2834,7 @@
               {
                 "endpoint": "https://www.katalyo.com",
                 "ok": false,
-                "error": "fetch failed"
+                "error": "This operation was aborted"
               }
             ]
           },
@@ -3614,10 +3630,10 @@
             "tables": []
           },
           "api": {
-            "status": "blocker",
-            "label": "Leap or non-Spring",
-            "endpoint": "https://telos.cryptolions.io",
-            "version": "v5.0.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://cryptolions.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3630,10 +3646,18 @@
             "attempts": [
               {
                 "endpoint": "https://telos.cryptolions.io",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "http://telos.cryptolions.io",
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "https://cryptolions.io",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
@@ -3653,17 +3677,17 @@
                 "endpoint": "telos.cryptolions.io:9871",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection closed before P2P handshake"
+                "error": "timed out waiting for P2P handshake"
               }
             ]
           },
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "Published API is not Spring compatible"
+            "Finalizer tables are not readable"
           ],
           "warnings": [
+            "No matching public API",
             "P2P handshake failed"
           ]
         },
