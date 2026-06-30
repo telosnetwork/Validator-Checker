@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T20:49:37.905Z",
+  "generatedAt": "2026-06-30T21:24:49.199Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-06-30T20:49:37.405Z",
-      "durationMs": 51483,
+      "generatedAt": "2026-06-30T21:24:48.199Z",
+      "durationMs": 52164,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 431920084,
-        "lastIrreversibleBlockNum": 431920082,
+        "headBlockNum": 431924305,
+        "lastIrreversibleBlockNum": 431924303,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-06-30T20:48:46.000",
-        "headBlockProducer": "telosarabia1",
+        "headBlockTime": "2026-06-30T21:23:56.500",
+        "headBlockProducer": "orbitalblock",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -1960,15 +1960,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-06-30T20:49:37.905Z",
-      "durationMs": 51964,
+      "generatedAt": "2026-06-30T21:24:49.199Z",
+      "durationMs": 53030,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 475677919,
-        "lastIrreversibleBlockNum": 475677585,
-        "libLagBlocks": 334,
-        "headBlockTime": "2026-06-30T20:48:46.500",
-        "headBlockProducer": "persiantelos",
+        "headBlockNum": 475682139,
+        "lastIrreversibleBlockNum": 475681809,
+        "libLagBlocks": 330,
+        "headBlockTime": "2026-06-30T21:23:56.500",
+        "headBlockProducer": "telosusa2222",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -1980,8 +1980,8 @@
         "ready": 0,
         "review": 0,
         "blocked": 21,
-        "readyRows": 4,
-        "reviewRows": 5,
+        "readyRows": 5,
+        "reviewRows": 4,
         "blockedRows": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
@@ -1989,10 +1989,10 @@
         "springCompatible": 14,
         "bpApiSpring": 14,
         "bpApiReview": 0,
-        "bpApiUnknown": 2,
-        "bpApiBlocked": 5,
-        "publicP2pOk": 15,
-        "publicP2pReview": 6,
+        "bpApiUnknown": 4,
+        "bpApiBlocked": 3,
+        "publicP2pOk": 14,
+        "publicP2pReview": 7,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2030,14 +2030,14 @@
           "label": "Spring-compatible active BPs",
           "status": "blocker",
           "value": "14/21 Spring",
-          "detail": "0 review, 2 unknown, 5 blocked"
+          "detail": "0 review, 4 unknown, 3 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "15/21 reachable",
-          "detail": "6 review, 0 unknown"
+          "value": "14/21 reachable",
+          "detail": "7 review, 0 unknown"
         },
         {
           "key": "savanna",
@@ -2065,7 +2065,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 7665"
+          "detail": "Schedule version 7666"
         },
         {
           "key": "bls",
@@ -2345,7 +2345,7 @@
         {
           "name": "telosmadrid1",
           "scheduleType": "active",
-          "schedulePosition": 19,
+          "schedulePosition": 18,
           "rank": 3,
           "blockSigningKey": "EOS8LSnCvd5CaN6sa5wbsFtJ2ZyPfyvXDcP5jBhxvnn33xAracDh8",
           "votes": "814281626416.73400878906250000",
@@ -2431,10 +2431,10 @@
             "tables": []
           },
           "api": {
-            "status": "blocker",
-            "label": "Leap or non-Spring",
-            "endpoint": "https://hyperion.telosunlimited.com",
-            "version": "v5.0.3",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://telosunlimited.com/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -2442,8 +2442,6 @@
             "endpoints": [
               "https://api.telosunlimited.com",
               "http://api.telosunlimited.com",
-              "https://hyperion.telosunlimited.com",
-              "http://hyperion.telosunlimited.com",
               "https://telosunlimited.com"
             ],
             "attempts": [
@@ -2458,11 +2456,9 @@
                 "error": "502 Bad Gateway"
               },
               {
-                "endpoint": "https://hyperion.telosunlimited.com",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
-                "chainMatches": true
+                "endpoint": "https://telosunlimited.com",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
@@ -2490,10 +2486,11 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "Published API is not Spring compatible"
+            "Finalizer tables are not readable"
           ],
-          "warnings": []
+          "warnings": [
+            "No matching public API"
+          ]
         },
         {
           "name": "votetelosusa",
@@ -2709,7 +2706,7 @@
         {
           "name": "telosarabia1",
           "scheduleType": "active",
-          "schedulePosition": 20,
+          "schedulePosition": 19,
           "rank": 8,
           "blockSigningKey": "EOS7vQ1XAecSFoBk83ku14FK2HGNvDM3GLC1VARELwLngnQL5be91",
           "votes": "583352340428.49084472656250000",
@@ -2779,7 +2776,7 @@
         {
           "name": "persiantelos",
           "scheduleType": "active",
-          "schedulePosition": 17,
+          "schedulePosition": 16,
           "rank": 9,
           "blockSigningKey": "EOS7rGBxBAGkbAKd7BWuKNQ1LXVHuEHZcVKsRj2fYtCjqZtNYW1VU",
           "votes": "547736154562.63073730468750000",
@@ -2851,7 +2848,7 @@
         {
           "name": "katalyotelos",
           "scheduleType": "active",
-          "schedulePosition": 18,
+          "schedulePosition": 17,
           "rank": 10,
           "blockSigningKey": "EOS5pubcyjH8iecNrMtnz7QpPJLTqqWv7Zf9QWifPhRpA54YfB6yy",
           "votes": "464524330507.29846191406250000",
@@ -2910,7 +2907,7 @@
         {
           "name": "telosgermany",
           "scheduleType": "active",
-          "schedulePosition": 15,
+          "schedulePosition": 14,
           "rank": 11,
           "blockSigningKey": "EOS7NVXQ1fqNLZqhYkyVjb5jrQSFWbQyLwQnVZ8zapPCdnBNDVH1w",
           "votes": "434424124204.32147216796875000",
@@ -3050,10 +3047,10 @@
         },
         {
           "name": "telosindiabp",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 20,
           "rank": 13,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS7k8QZs762JNxq8xRZ3ur2CWcNr2sKctsiffGbwsizsJnizYqkE",
           "votes": "391623787519.39331054687500000",
           "votesCompact": "391.6B",
           "url": "https://telos.blocksindia.com/",
@@ -3097,8 +3094,11 @@
             "endpoints": [],
             "attempts": []
           },
-          "status": "review",
-          "blockers": [],
+          "status": "blocker",
+          "blockers": [
+            "Savanna finalizer actions missing from eosio ABI",
+            "Finalizer tables are not readable"
+          ],
           "warnings": [
             "No matching public API",
             "BP metadata unavailable"
@@ -3106,10 +3106,10 @@
         },
         {
           "name": "amsterdam",
-          "scheduleType": "active",
-          "schedulePosition": 13,
+          "scheduleType": "standby",
+          "schedulePosition": null,
           "rank": 14,
-          "blockSigningKey": "EOS7FuLHve4xezeRyVMyGedMTg3uD6exwUA9dr8vQrCQtQrrzm1uK",
+          "blockSigningKey": "",
           "votes": "387590890444.33892822265625000",
           "votesCompact": "387.6B",
           "url": "https://telos.eosamsterdam.net",
@@ -3167,11 +3167,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
-          ],
+          "status": "ok",
+          "blockers": [],
           "warnings": []
         },
         {
@@ -3247,7 +3244,7 @@
         {
           "name": "eosauthority",
           "scheduleType": "active",
-          "schedulePosition": 14,
+          "schedulePosition": 13,
           "rank": 16,
           "blockSigningKey": "EOS6potyADvdFHQFseUsgrkZbsv6wzu8Vej7AGwFer5JncMFryyb1",
           "votes": "351231555425.28948974609375000",
@@ -3318,7 +3315,7 @@
         {
           "name": "bp.yknot",
           "scheduleType": "active",
-          "schedulePosition": 16,
+          "schedulePosition": 15,
           "rank": 17,
           "blockSigningKey": "EOS7vjN5aHuRjg5q8kfWLsFGcZu2s8tnAAPq84pLPQiAz5uav9aHL",
           "votes": "299144497908.23822021484375000",
@@ -3606,10 +3603,10 @@
             "tables": []
           },
           "api": {
-            "status": "blocker",
-            "label": "Leap or non-Spring",
+            "status": "ok",
+            "label": "Spring",
             "endpoint": "https://hyperion.telos.detroitledger.tech",
-            "version": "v5.0.3",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://detroitledger.tech/chains/telos/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3624,7 +3621,7 @@
                 "endpoint": "https://hyperion.telos.detroitledger.tech",
                 "ok": true,
                 "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.3",
+                "version": "v1.2.2",
                 "chainMatches": true
               }
             ]
@@ -3653,8 +3650,7 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "Published API is not Spring compatible"
+            "Finalizer tables are not readable"
           ],
           "warnings": []
         },
