@@ -373,18 +373,6 @@ function nodeTypes(node) {
   return Array.isArray(rawType) ? rawType : [rawType];
 }
 
-function nodeFeatures(node) {
-  const rawFeatures = node?.features || [];
-  return (Array.isArray(rawFeatures) ? rawFeatures : [rawFeatures])
-    .map((feature) => String(feature || "").trim().toLowerCase())
-    .filter(Boolean);
-}
-
-function isHyperionNode(node) {
-  return nodeTypes(node).some((type) => String(type || "").toLowerCase().includes("hyperion"))
-    || nodeFeatures(node).some((feature) => feature.includes("hyperion"));
-}
-
 function isLikelyHyperionEndpoint(endpoint) {
   try {
     const parsed = new URL(endpoint);
@@ -399,7 +387,6 @@ function endpointsFromBpJson(bpJson) {
   const nodes = Array.isArray(bpJson?.nodes) ? bpJson.nodes : [];
 
   function addFromNode(node) {
-    if (isHyperionNode(node)) return;
     for (const key of ["ssl_endpoint", "api_endpoint"]) {
       const value = node?.[key];
       if (typeof value === "string" && /^https?:\/\//i.test(value)) {
