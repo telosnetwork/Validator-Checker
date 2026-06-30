@@ -54,6 +54,8 @@ The IF checker table also shows active standby BPs below a divider for operator 
 
 The IF checker banner shows `Live` once the network's `SAVANNA` feature is active, while the readiness metrics and gates continue to show any remaining review items.
 
+For Spring/nodeos API version checks, Hyperion endpoints are ignored because their `/v1/chain/get_info` response can report the Hyperion service version instead of the BP's nodeos/Spring version.
+
 For Netlify-parity local testing:
 
 ```sh
