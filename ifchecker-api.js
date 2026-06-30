@@ -373,15 +373,6 @@ function nodeTypes(node) {
   return Array.isArray(rawType) ? rawType : [rawType];
 }
 
-function isLikelyHyperionEndpoint(endpoint) {
-  try {
-    const parsed = new URL(endpoint);
-    return parsed.hostname.toLowerCase().includes("hyperion");
-  } catch {
-    return /hyperion/i.test(String(endpoint || ""));
-  }
-}
-
 function endpointsFromBpJson(bpJson) {
   const endpoints = [];
   const nodes = Array.isArray(bpJson?.nodes) ? bpJson.nodes : [];
@@ -475,16 +466,6 @@ async function fetchBpApiStatus(network, producer, metadataOverride = null) {
   result.endpoints = candidates.slice(0, 8);
 
   for (const endpoint of candidates.slice(0, 8)) {
-    if (isLikelyHyperionEndpoint(endpoint)) {
-      result.attempts.push({
-        endpoint,
-        ok: false,
-        skipped: true,
-        error: "Hyperion endpoint is not used for nodeos version checks"
-      });
-      continue;
-    }
-
     try {
       const info = await getInfoFromEndpoint(endpoint);
       const version = classifyVersion(info);
