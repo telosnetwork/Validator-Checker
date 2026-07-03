@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-03T17:06:00.683Z",
+  "generatedAt": "2026-07-03T18:41:18.448Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,36 +8,36 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-03T17:05:43.253Z",
-      "durationMs": 6023,
+      "generatedAt": "2026-07-03T18:41:18.447Z",
+      "durationMs": 20203,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 432411621,
-        "lastIrreversibleBlockNum": 432411619,
+        "headBlockNum": 432423053,
+        "lastIrreversibleBlockNum": 432423051,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-03T17:05:37.000",
-        "headBlockProducer": "telosgermany",
+        "headBlockTime": "2026-07-03T18:40:58.500",
+        "headBlockProducer": "bigironbptex",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
-        "totalRows": 22,
+        "totalRows": 24,
         "scheduled": 21,
-        "standby": 1,
-        "producerRowsActive": 22,
+        "standby": 3,
+        "producerRowsActive": 24,
         "ready": 18,
         "review": 3,
         "blocked": 0,
         "readyRows": 19,
-        "reviewRows": 3,
+        "reviewRows": 5,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 21,
-        "springCompatible": 21,
-        "bpApiSpring": 21,
+        "activeSpringCompatible": 20,
+        "springCompatible": 20,
+        "bpApiSpring": 20,
         "bpApiReview": 0,
-        "bpApiUnknown": 0,
+        "bpApiUnknown": 1,
         "bpApiBlocked": 0,
         "publicP2pOk": 18,
         "publicP2pReview": 3,
@@ -45,6 +45,13 @@
         "publicP2pBlocked": 0
       },
       "gates": [
+        {
+          "key": "bp-apis",
+          "label": "Spring-compatible active BPs",
+          "status": "review",
+          "value": "20/21 Spring",
+          "detail": "0 review, 1 unknown, 0 blocked"
+        },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
@@ -71,7 +78,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 55651"
+          "detail": "Schedule version 55652"
         },
         {
           "key": "features",
@@ -107,13 +114,6 @@
           "status": "ok",
           "value": "21/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
-        },
-        {
-          "key": "bp-apis",
-          "label": "Spring-compatible active BPs",
-          "status": "ok",
-          "value": "21/21 Spring",
-          "detail": "0 review, 0 unknown, 0 blocked"
         },
         {
           "key": "savanna",
@@ -477,7 +477,7 @@
           "url": "https://genereos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 25902,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 11,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1682,11 +1682,72 @@
           "warnings": []
         },
         {
-          "name": "bp.adex",
+          "name": "bp.any",
           "scheduleType": "active",
           "schedulePosition": 20,
           "rank": 21,
-          "blockSigningKey": "EOS52tCjiD2vgwwrBe3vgsTZLE3WAcFufHWtCM4dMdswy6k6uErDb",
+          "blockSigningKey": "EOS62saF5TC5r3z3tWJnkGD2ytCeVGbpSNRU9Q7rq868C1F6kxgqu",
+          "votes": "238168105400.92141723632812500",
+          "votesCompact": "238.2B",
+          "url": "https://anypot.io",
+          "isActive": true,
+          "lifetimeMissedBlocks": 0,
+          "missedBlocksPerRotation": 72,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_BQvpT4l-y-APp952SHIzENkb0vRhlCDtTSGEU7lHxIesG7o5cBsTw9C6EBQ7XT8Q-s7n_hCHr2aZ4YLljnAIzaeFvR2dTyMZ0CqXawgI5ZraQfqkKq8BqqFk7HBWnFQZJ9MA_w"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://anypot.io/chains.json: 502 Bad Gateway | https://anypot.io/testnet.json: 502 Bad Gateway | https://anypot.io/bp.json: 502 Bad Gateway | https://anypot.io/telos.json: 502 Bad Gateway",
+            "endpoints": [
+              "https://anypot.io"
+            ],
+            "attempts": [
+              {
+                "endpoint": "https://anypot.io",
+                "ok": false,
+                "error": "502 Bad Gateway"
+              }
+            ]
+          },
+          "p2p": {
+            "status": "review",
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://anypot.io/chains.json: 502 Bad Gateway | https://anypot.io/testnet.json: 502 Bad Gateway | https://anypot.io/bp.json: 502 Bad Gateway | https://anypot.io/telos.json: 502 Bad Gateway",
+            "endpoints": [],
+            "attempts": []
+          },
+          "status": "review",
+          "blockers": [],
+          "warnings": [
+            "No matching public API",
+            "BP metadata unavailable"
+          ]
+        },
+        {
+          "name": "bp.adex",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 22,
+          "blockSigningKey": "",
           "votes": "140646276148.10238647460937500",
           "votesCompact": "140.6B",
           "url": "https://telos.a-dex.io",
@@ -1758,7 +1819,7 @@
           "name": "cryptolions1",
           "scheduleType": "active",
           "schedulePosition": 19,
-          "rank": 22,
+          "rank": 23,
           "blockSigningKey": "EOS7bLioNJeJWTcpXdcK7rLSv54AuQ3wyYHcwi647hBNkZs933NHa",
           "votes": "113019524643.08523559570312500",
           "votesCompact": "113.0B",
@@ -1825,6 +1886,77 @@
           "status": "ok",
           "blockers": [],
           "warnings": []
+        },
+        {
+          "name": "smartelos",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 24,
+          "blockSigningKey": "",
+          "votes": "12034420068.99998664855957031",
+          "votesCompact": "12.0B",
+          "url": "https://smartelos.com",
+          "isActive": true,
+          "lifetimeMissedBlocks": 2968,
+          "missedBlocksPerRotation": 0,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_PIrl8eS_eJxZvAGafoXZO0JypBe7De9JBHUVMFQQCZDPnJ8dlJviv8osxQLStiEFnKvJkR4imUwtpqz432JEmBhde_ptmZw3mLgypRjOIaqnC7rPWxz0kPPc071QDD0AqzFRng"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://smartelos.com/bp.json",
+            "bpJsonSource": "fallback",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "https://smartelos.com"
+            ],
+            "attempts": [
+              {
+                "endpoint": "https://smartelos.com",
+                "ok": false,
+                "error": "Unexpected token '<', \"<!doctype \"... is not valid JSON"
+              }
+            ]
+          },
+          "p2p": {
+            "status": "review",
+            "label": "P2P endpoint is not Testnet",
+            "endpoint": "mainnet.smartelos.com:8880",
+            "bpJsonUrl": "https://smartelos.com/bp.json",
+            "bpJsonSource": "fallback",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "mainnet.smartelos.com:8880"
+            ],
+            "attempts": [
+              {
+                "endpoint": "mainnet.smartelos.com:8880",
+                "ok": false,
+                "chainMatches": false,
+                "chainMismatch": true,
+                "error": "endpoint hostname looks like Mainnet"
+              }
+            ]
+          },
+          "status": "review",
+          "blockers": [],
+          "warnings": [
+            "No matching public API",
+            "P2P endpoint is not Testnet"
+          ]
         }
       ],
       "sourceNotes": [
@@ -1841,16 +1973,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-03T17:06:00.683Z",
-      "durationMs": 23424,
+      "generatedAt": "2026-07-03T18:41:18.448Z",
+      "durationMs": 20173,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 476169485,
-        "lastIrreversibleBlockNum": 476169158,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-07-03T17:05:37.000",
-        "headBlockProducer": "bp.yknot",
-        "serverVersion": "v1.2.2",
+        "headBlockNum": 476180928,
+        "lastIrreversibleBlockNum": 476180594,
+        "libLagBlocks": 334,
+        "headBlockTime": "2026-07-03T18:40:58.500",
+        "headBlockProducer": "theteloscope",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -1938,7 +2070,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
