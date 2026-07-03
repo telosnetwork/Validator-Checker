@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-03T22:44:16.614Z",
+  "generatedAt": "2026-07-03T23:48:01.634Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,28 +8,28 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-03T22:44:16.613Z",
-      "durationMs": 21204,
+      "generatedAt": "2026-07-03T23:48:01.634Z",
+      "durationMs": 22142,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 432452207,
-        "lastIrreversibleBlockNum": 432452205,
+        "headBlockNum": 432459856,
+        "lastIrreversibleBlockNum": 432459854,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-03T22:43:55.500",
-        "headBlockProducer": "telosarabia1",
+        "headBlockTime": "2026-07-03T23:47:40.000",
+        "headBlockProducer": "tempbpfill44",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
-        "totalRows": 25,
+        "totalRows": 26,
         "scheduled": 21,
-        "standby": 4,
-        "producerRowsActive": 25,
+        "standby": 5,
+        "producerRowsActive": 26,
         "ready": 18,
         "review": 3,
         "blocked": 0,
         "readyRows": 19,
-        "reviewRows": 6,
+        "reviewRows": 7,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -2040,6 +2040,76 @@
             "No matching public API",
             "P2P endpoint is not Testnet"
           ]
+        },
+        {
+          "name": "telosamigoss",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 26,
+          "blockSigningKey": "",
+          "votes": "0.00000000000000000",
+          "votesCompact": "0",
+          "url": "https://www.tlos.news",
+          "isActive": true,
+          "lifetimeMissedBlocks": 4253,
+          "missedBlocksPerRotation": 0,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_oiF3nEgwLbXaB6--vJ68HAkNg_2goj-ncxkqD6pYE5GgBaW6HCuI54AW-_FmijcZacAlfQjY-IQzbbYooQgIrf9GbHazkYj1hfmqsLPo3Hb6xWN8xftB4NWM_S5-OAEPI0cWww"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://www.tlos.news/test-bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "https://www.tlos.news"
+            ],
+            "attempts": [
+              {
+                "endpoint": "https://www.tlos.news",
+                "ok": false,
+                "error": "404 Not Found"
+              }
+            ]
+          },
+          "p2p": {
+            "status": "review",
+            "label": "P2P handshake failed",
+            "endpoint": "p2p-testnet.tlos.news:9876",
+            "bpJsonUrl": "https://www.tlos.news/test-bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "p2p-testnet.tlos.news:9876"
+            ],
+            "attempts": [
+              {
+                "endpoint": "p2p-testnet.tlos.news:9876",
+                "ok": false,
+                "chainMatches": false,
+                "error": "getaddrinfo ENOTFOUND p2p-testnet.tlos.news"
+              }
+            ]
+          },
+          "status": "review",
+          "blockers": [],
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         }
       ],
       "sourceNotes": [
@@ -2056,16 +2126,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-03T22:44:16.614Z",
-      "durationMs": 21170,
+      "generatedAt": "2026-07-03T23:48:01.634Z",
+      "durationMs": 22061,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 476210070,
-        "lastIrreversibleBlockNum": 476209742,
-        "libLagBlocks": 328,
-        "headBlockTime": "2026-07-03T22:43:55.500",
-        "headBlockProducer": "telosmadrid1",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockNum": 476217719,
+        "lastIrreversibleBlockNum": 476217386,
+        "libLagBlocks": 333,
+        "headBlockTime": "2026-07-03T23:47:40.000",
+        "headBlockProducer": "theteloscope",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2153,7 +2223,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
