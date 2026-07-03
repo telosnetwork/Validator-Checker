@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-03T18:41:18.448Z",
+  "generatedAt": "2026-07-03T20:05:12.556Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,28 +8,28 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-03T18:41:18.447Z",
-      "durationMs": 20203,
+      "generatedAt": "2026-07-03T20:05:12.555Z",
+      "durationMs": 20843,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 432423053,
-        "lastIrreversibleBlockNum": 432423051,
+        "headBlockNum": 432433120,
+        "lastIrreversibleBlockNum": 432433118,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-03T18:40:58.500",
-        "headBlockProducer": "bigironbptex",
+        "headBlockTime": "2026-07-03T20:04:52.000",
+        "headBlockProducer": "tempbpfill55",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
-        "totalRows": 24,
+        "totalRows": 25,
         "scheduled": 21,
-        "standby": 3,
-        "producerRowsActive": 24,
+        "standby": 4,
+        "producerRowsActive": 25,
         "ready": 18,
         "review": 3,
         "blocked": 0,
         "readyRows": 19,
-        "reviewRows": 5,
+        "reviewRows": 6,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -106,7 +106,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 32 rows | finalizers: 32 rows"
+          "detail": "finkeys: 33 rows | finalizers: 33 rows"
         },
         {
           "key": "finalizers",
@@ -239,13 +239,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 32,
+          "rows": 33,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 32,
+          "rows": 33,
           "error": ""
         }
       ],
@@ -1888,10 +1888,93 @@
           "warnings": []
         },
         {
-          "name": "smartelos",
+          "name": "persiantelos",
           "scheduleType": "standby",
           "schedulePosition": null,
           "rank": 24,
+          "blockSigningKey": "",
+          "votes": "83766491604.57254028320312500",
+          "votesCompact": "83.8B",
+          "url": "https://persiantelos.com",
+          "isActive": true,
+          "lifetimeMissedBlocks": 7548,
+          "missedBlocksPerRotation": 444,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_6I0lkIeEYHCBTdbdSpUPT5tq1rnrFXO9kXn1dLD2x9Fva-5Nn9QllVo0BA7BHZMOVgIkOCfPDuzv-znEqnORPvBBlM4-oUyN34_LKL_VcfXohUIYEp0KjWhQEXPRg2cEp0cBHg"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://persiantelos.com/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "https://mainnet.persiantelos.com",
+              "http://mainnet.persiantelos.com",
+              "https://persiantelos.com"
+            ],
+            "attempts": [
+              {
+                "endpoint": "https://mainnet.persiantelos.com",
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "http://mainnet.persiantelos.com",
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "https://persiantelos.com",
+                "ok": false,
+                "error": "404 Not Found"
+              }
+            ]
+          },
+          "p2p": {
+            "status": "review",
+            "label": "P2P endpoint is not Testnet",
+            "endpoint": "mainnet.persiantelos.com:8880",
+            "bpJsonUrl": "https://persiantelos.com/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "mainnet.persiantelos.com:8880"
+            ],
+            "attempts": [
+              {
+                "endpoint": "mainnet.persiantelos.com:8880",
+                "ok": false,
+                "chainMatches": false,
+                "chainMismatch": true,
+                "error": "endpoint hostname looks like Mainnet"
+              }
+            ]
+          },
+          "status": "review",
+          "blockers": [],
+          "warnings": [
+            "No matching public API",
+            "P2P endpoint is not Testnet"
+          ]
+        },
+        {
+          "name": "smartelos",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 25,
           "blockSigningKey": "",
           "votes": "12034420068.99998664855957031",
           "votesCompact": "12.0B",
@@ -1973,16 +2056,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-03T18:41:18.448Z",
-      "durationMs": 20173,
+      "generatedAt": "2026-07-03T20:05:12.556Z",
+      "durationMs": 20813,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 476180928,
-        "lastIrreversibleBlockNum": 476180594,
-        "libLagBlocks": 334,
-        "headBlockTime": "2026-07-03T18:40:58.500",
-        "headBlockProducer": "theteloscope",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockNum": 476190983,
+        "lastIrreversibleBlockNum": 476190650,
+        "libLagBlocks": 333,
+        "headBlockTime": "2026-07-03T20:04:52.000",
+        "headBlockProducer": "bigironbptex",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2002,8 +2085,8 @@
         "springCompatible": 16,
         "bpApiSpring": 16,
         "bpApiReview": 0,
-        "bpApiUnknown": 3,
-        "bpApiBlocked": 2,
+        "bpApiUnknown": 4,
+        "bpApiBlocked": 1,
         "publicP2pOk": 15,
         "publicP2pReview": 6,
         "publicP2pUnknown": 0,
@@ -2043,7 +2126,7 @@
           "label": "Spring-compatible active BPs",
           "status": "blocker",
           "value": "16/21 Spring",
-          "detail": "0 review, 3 unknown, 2 blocked"
+          "detail": "0 review, 4 unknown, 1 blocked"
         },
         {
           "key": "public-p2p",
@@ -2070,7 +2153,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2787,7 +2870,7 @@
           "url": "https://persiantelos.com",
           "isActive": true,
           "lifetimeMissedBlocks": 10487,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 12,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -2795,10 +2878,10 @@
             "tables": []
           },
           "api": {
-            "status": "blocker",
-            "label": "Leap or non-Spring",
-            "endpoint": "https://mainnet.persiantelos.com",
-            "version": "v5.0.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://persiantelos.com/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -2811,10 +2894,18 @@
             "attempts": [
               {
                 "endpoint": "https://mainnet.persiantelos.com",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v5.0.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "http://mainnet.persiantelos.com",
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "https://persiantelos.com",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
@@ -2841,10 +2932,10 @@
           "status": "blocker",
           "blockers": [
             "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable",
-            "Published API is not Spring compatible"
+            "Finalizer tables are not readable"
           ],
           "warnings": [
+            "No matching public API",
             "P2P handshake failed"
           ]
         },
