@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T05:13:32.932Z",
+  "generatedAt": "2026-07-10T08:46:32.342Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-10T05:13:32.932Z",
-      "durationMs": 51994,
+      "generatedAt": "2026-07-10T08:46:31.842Z",
+      "durationMs": 51762,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 433532402,
-        "lastIrreversibleBlockNum": 433532400,
+        "headBlockNum": 433557960,
+        "lastIrreversibleBlockNum": 433557958,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-10T05:12:41.500",
-        "headBlockProducer": "tempbpfillaa",
+        "headBlockTime": "2026-07-10T08:45:40.500",
+        "headBlockProducer": "eosriobrazil",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,11 +25,11 @@
         "scheduled": 21,
         "standby": 10,
         "producerRowsActive": 31,
-        "ready": 16,
-        "review": 5,
+        "ready": 15,
+        "review": 6,
         "blocked": 0,
-        "readyRows": 22,
-        "reviewRows": 9,
+        "readyRows": 21,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -39,8 +39,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 3,
         "bpApiBlocked": 0,
-        "publicP2pOk": 16,
-        "publicP2pReview": 5,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -56,8 +56,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "16/21 reachable",
-          "detail": "5 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -1019,8 +1019,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "peer1-telos-testnet.eosphere.io:9876",
             "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
             "bpJsonSource": "chains.json",
@@ -1032,16 +1032,17 @@
             "attempts": [
               {
                 "endpoint": "peer1-telos-testnet.eosphere.io:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection closed before P2P handshake"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "telosindiabp",
@@ -2457,15 +2458,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-10T05:13:32.932Z",
-      "durationMs": 51973,
+      "generatedAt": "2026-07-10T08:46:32.342Z",
+      "durationMs": 52021,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 477291660,
-        "lastIrreversibleBlockNum": 477291324,
-        "libLagBlocks": 336,
-        "headBlockTime": "2026-07-10T05:12:41.500",
-        "headBlockProducer": "cryptolions1",
+        "headBlockNum": 477317218,
+        "lastIrreversibleBlockNum": 477316883,
+        "libLagBlocks": 335,
+        "headBlockTime": "2026-07-10T08:45:41.000",
+        "headBlockProducer": "eosauthority",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -3131,7 +3132,7 @@
           "url": "https://telosgreen.com",
           "isActive": true,
           "lifetimeMissedBlocks": 24888,
-          "missedBlocksPerRotation": 2,
+          "missedBlocksPerRotation": 3,
           "finalizer": {
             "registered": false,
             "active": false,
