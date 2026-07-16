@@ -253,6 +253,29 @@ function renderStatus(data) {
 }
 
 function getBannerStatus(data) {
+  const finalizerGate = data.gates?.find((gate) => gate.key === "finalizers");
+  const finalizerTablesReadable = data.finalizerTables?.every((table) => table.ok) === true;
+  const scheduled = Number(data.counts?.scheduled);
+  const registered = Number(data.counts?.finalizersRegistered);
+  const active = Number(data.counts?.finalizersActive);
+
+  if (finalizerGate?.status !== "ok") {
+    if (finalizerTablesReadable && Number.isFinite(scheduled) && scheduled > 0) {
+      if (Number.isFinite(registered) && registered < scheduled) {
+        return { label: "Registration pending", tone: "blocker" };
+      }
+      if (Number.isFinite(active) && active < scheduled) {
+        return { label: "Activation pending", tone: "blocker" };
+      }
+    }
+
+    const status = finalizerGate?.status || data.overallStatus || "unknown";
+    return {
+      label: statusText[status] || status,
+      tone: status
+    };
+  }
+
   const savannaGate = data.gates?.find((gate) => gate.key === "savanna");
   if (savannaGate?.status === "ok") {
     return {
