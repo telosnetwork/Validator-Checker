@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Track the Telos Lightspeed upgrade from network preparation through instant finality activation.">
+    <meta name="theme-color" content="#111419">
+    <meta property="og:title" content="Telos Lightspeed Upgrade Tracker">
+    <meta property="og:description" content="Follow the live mainnet rollout toward Telos instant finality.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://validators.telos.net/lightspeed/">
+    <meta property="og:image" content="https://validators.telos.net/lightspeed/assets/lightspeed-network.webp">
+    <title>Telos Lightspeed Upgrade Tracker</title>
+    <link rel="preload" href="assets/lightspeed-network.webp" as="image" type="image/webp">
+    <link rel="stylesheet" href="styles.css?v=20260716b">
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="brand" href="/lightspeed/" aria-label="Telos Lightspeed home">
+          <span class="brand-wordmark" aria-hidden="true">tel<span>o</span>s</span>
+          <span class="brand-product" aria-hidden="true">Lightspeed</span>
+        </a>
+        <div class="nav-actions">
+          <span class="data-state" id="dataState">
+            <span class="data-dot" aria-hidden="true"></span>
+            <span id="dataStateText">Connecting to mainnet</span>
+          </span>
+          <a class="nav-link" href="/ifchecker/">Validator details</a>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <p class="eyebrow">Telos Lightspeed mainnet upgrade</p>
+        <h1>Instant Finality</h1>
+        <div class="light-axis" aria-hidden="true"><span></span></div>
+        <p class="hero-copy">A staged mainnet rollout bringing near-instant finality to Telos. Follow each verified milestone as the network moves toward the final switch.</p>
+
+        <div class="hero-progress" aria-live="polite">
+          <div class="progress-heading">
+            <span id="heroPhase">Loading rollout status</span>
+            <strong><span id="progressPercent">--</span>%</strong>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Lightspeed rollout progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+            <span class="progress-fill" id="progressFill"></span>
+          </div>
+          <div class="progress-meta">
+            <span><strong id="stepsComplete">--</strong> of 4 steps complete</span>
+            <span id="updatedAt">Loading latest checkpoint</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="steps-section" aria-labelledby="steps-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">The upgrade path</p>
+            <h2 id="steps-title">Four steps to instant finality</h2>
+          </div>
+          <p>Each stage is verified on mainnet before the rollout moves forward.</p>
+        </div>
+
+        <ol class="milestone-list">
+          <li class="milestone" id="step-foundation">
+            <div class="milestone-topline">
+              <span class="step-number">01</span>
+              <span class="step-status" id="foundationStatus">Checking</span>
+            </div>
+            <h3>Foundation enabled</h3>
+            <p>Compatible network software and the required protocol features are active.</p>
+            <span class="step-evidence" id="foundationEvidence">Reading chain features</span>
+          </li>
+
+          <li class="milestone" id="step-contract">
+            <div class="milestone-topline">
+              <span class="step-number">02</span>
+              <span class="step-status" id="contractStatus">Checking</span>
+            </div>
+            <h3>System contract upgraded</h3>
+            <p>Mainnet has the finalizer registration tools required for Lightspeed.</p>
+            <span class="step-evidence" id="contractEvidence">Checking the deployed contract</span>
+          </li>
+
+          <li class="milestone" id="step-finalizer">
+            <div class="milestone-topline">
+              <span class="step-number">03</span>
+              <span class="step-status" id="finalizerStatus">Checking</span>
+            </div>
+            <h3>Finalizers coming online</h3>
+            <p>Scheduled block producers register and activate their finalizer keys.</p>
+            <span class="step-evidence" id="finalizerEvidence">Loading finalizer progress</span>
+          </li>
+
+          <li class="milestone" id="step-activation">
+            <div class="milestone-topline">
+              <span class="step-number">04</span>
+              <span class="step-status" id="activationStatus">Checking</span>
+            </div>
+            <h3>Lightspeed goes live</h3>
+            <p>The final governance action moves mainnet to Savanna instant finality.</p>
+            <span class="step-evidence" id="activationEvidence">Waiting for readiness</span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="finalizer-band" aria-labelledby="finalizer-title">
+        <div class="finalizer-inner">
+          <div class="finalizer-heading">
+            <p class="section-label">Live mainnet checkpoint</p>
+            <h2 id="finalizer-title">Finalizers coming online</h2>
+            <p id="finalizerSummary">Every scheduled producer needs an active finalizer before the final switch.</p>
+          </div>
+
+          <div class="finalizer-count" aria-live="polite">
+            <div><strong id="activeCount">--</strong><span>/</span><span id="scheduledCount">--</span></div>
+            <p>active finalizers</p>
+          </div>
+
+          <div class="finalizer-meter" id="finalizerMeter" aria-label="Scheduled finalizer progress"></div>
+
+          <div class="checkpoint-stats">
+            <div>
+              <strong id="registeredCount">--</strong>
+              <span>Registered</span>
+            </div>
+            <div>
+              <strong id="activeStatCount">--</strong>
+              <span>Active</span>
+            </div>
+            <div>
+              <strong id="networkState">Checking</strong>
+              <span>Mainnet</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="impact-section" aria-labelledby="impact-title">
+        <div class="section-heading impact-heading">
+          <div>
+            <p class="section-label">What it means</p>
+            <h2 id="impact-title">A faster certainty layer for Telos</h2>
+          </div>
+          <p>Lightspeed changes how quickly the network can treat blocks as final. The rollout does not require a token migration.</p>
+        </div>
+
+        <div class="impact-grid">
+          <article>
+            <span class="impact-index">01</span>
+            <h3>No wallet action</h3>
+            <p>TLOS holders and everyday users do not need to move tokens or change wallets.</p>
+          </article>
+          <article>
+            <span class="impact-index">02</span>
+            <h3>Faster confirmation</h3>
+            <p>Applications can respond to near-instant finality once the final switch is complete.</p>
+          </article>
+          <article>
+            <span class="impact-index">03</span>
+            <h3>Verified rollout</h3>
+            <p>Every stage is checked against live chain state before activation proceeds.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="follow-band" aria-labelledby="follow-title">
+        <div>
+          <p class="section-label">Go deeper</p>
+          <h2 id="follow-title">Follow the validator evidence</h2>
+          <p>The detailed readiness checker shows finalizer status, protocol features, BP software and public endpoint health.</p>
+        </div>
+        <div class="follow-actions">
+          <a class="primary-link" href="/ifchecker/">Open validator readiness</a>
+          <a class="secondary-link" href="https://explorer.telos.net/?network=telos" target="_blank" rel="noreferrer">Open block explorer</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Telos Lightspeed mainnet rollout</span>
+      <span id="footerUpdate">Live data refreshes automatically</span>
+    </footer>
+
+    <script src="app.js?v=20260716b"></script>
+  </body>
+</html>
