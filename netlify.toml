@@ -9,8 +9,15 @@
 
 [[redirects]]
   from = "/lightspeed"
-  to = "/lightspeed/"
+  to = "https://telos.net/lightspeed/"
   status = 301
+  force = true
+
+[[redirects]]
+  from = "/lightspeed/*"
+  to = "https://telos.net/lightspeed/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/api/networks"
