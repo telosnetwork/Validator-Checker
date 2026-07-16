@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T19:20:27.519Z",
+  "generatedAt": "2026-07-16T20:30:46.638Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-16T19:20:27.519Z",
-      "durationMs": 51512,
+      "generatedAt": "2026-07-16T20:30:46.139Z",
+      "durationMs": 51509,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 434670069,
-        "lastIrreversibleBlockNum": 434670067,
+        "headBlockNum": 434678506,
+        "lastIrreversibleBlockNum": 434678504,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-16T19:19:36.000",
-        "headBlockProducer": "telosarabia1",
+        "headBlockTime": "2026-07-16T20:29:54.500",
+        "headBlockProducer": "eosphereiobp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2447,28 +2447,28 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-16T19:20:27.519Z",
-      "durationMs": 51480,
+      "generatedAt": "2026-07-16T20:30:46.638Z",
+      "durationMs": 51979,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 478428532,
-        "lastIrreversibleBlockNum": 478428207,
-        "libLagBlocks": 325,
-        "headBlockTime": "2026-07-16T19:19:36.000",
-        "headBlockProducer": "telosarabia1",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockNum": 478436224,
+        "lastIrreversibleBlockNum": 478435898,
+        "libLagBlocks": 326,
+        "headBlockTime": "2026-07-16T20:29:54.500",
+        "headBlockProducer": "telosunlimit",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
-        "totalRows": 27,
+        "totalRows": 26,
         "scheduled": 21,
-        "standby": 6,
-        "producerRowsActive": 27,
+        "standby": 5,
+        "producerRowsActive": 26,
         "ready": 0,
         "review": 0,
         "blocked": 21,
-        "readyRows": 3,
-        "reviewRows": 3,
+        "readyRows": 0,
+        "reviewRows": 5,
         "blockedRows": 21,
         "finalizersRegistered": 0,
         "finalizersActive": 0,
@@ -2485,32 +2485,11 @@
       },
       "gates": [
         {
-          "key": "features",
-          "label": "Pre-Savanna features",
-          "status": "blocker",
-          "value": "2 missing",
-          "detail": "DISABLE_DEFERRED_TRXS_STAGE_1, DISABLE_DEFERRED_TRXS_STAGE_2"
-        },
-        {
-          "key": "contract",
-          "label": "Finalizer contract ABI",
-          "status": "blocker",
-          "value": "4 actions missing",
-          "detail": "regfinkey, actfinkey, delfinkey, switchtosvnn, finkeys table, finalizers table"
-        },
-        {
-          "key": "tables",
-          "label": "Finalizer key tables",
-          "status": "blocker",
-          "value": "Unavailable",
-          "detail": "finkeys: Table finkeys is not specified in the ABI | finalizers: Table finalizers is not specified in the ABI"
-        },
-        {
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
           "value": "0/21 active",
-          "detail": "Waiting on finalizer table availability"
+          "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
           "key": "bp-apis",
@@ -2527,13 +2506,6 @@
           "detail": "6 review, 0 unknown"
         },
         {
-          "key": "savanna",
-          "label": "SAVANNA feature",
-          "status": "manual",
-          "value": "Pending",
-          "detail": "Expected to remain pending until the activation action"
-        },
-        {
           "key": "operator-private",
           "label": "Operator host checks",
           "status": "manual",
@@ -2544,7 +2516,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2552,7 +2524,14 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 7708"
+          "detail": "Schedule version 7709"
+        },
+        {
+          "key": "features",
+          "label": "Pre-Savanna features",
+          "status": "ok",
+          "value": "Complete",
+          "detail": "All listed dependencies except SAVANNA are active"
         },
         {
           "key": "bls",
@@ -2560,18 +2539,39 @@
           "status": "ok",
           "value": "Active",
           "detail": "Required before finalizer key registration"
+        },
+        {
+          "key": "contract",
+          "label": "Finalizer contract ABI",
+          "status": "ok",
+          "value": "Actions present",
+          "detail": "Finalizer actions and tables are present"
+        },
+        {
+          "key": "tables",
+          "label": "Finalizer key tables",
+          "status": "ok",
+          "value": "Readable",
+          "detail": "finkeys: 0 rows | finalizers: 0 rows"
+        },
+        {
+          "key": "savanna",
+          "label": "SAVANNA feature",
+          "status": "ok",
+          "value": "Active",
+          "detail": "Savanna is already active"
         }
       ],
       "features": [
         {
           "name": "DISABLE_DEFERRED_TRXS_STAGE_1",
-          "active": false,
-          "activationBlock": null
+          "active": true,
+          "activationBlock": 478429234
         },
         {
           "name": "DISABLE_DEFERRED_TRXS_STAGE_2",
-          "active": false,
-          "activationBlock": null
+          "active": true,
+          "activationBlock": 478429234
         },
         {
           "name": "WTMSIG_BLOCK_SIGNATURES",
@@ -2670,22 +2670,22 @@
         },
         {
           "name": "SAVANNA",
-          "active": false,
-          "activationBlock": null
+          "active": true,
+          "activationBlock": 478429234
         }
       ],
       "finalizerTables": [
         {
           "table": "finkeys",
-          "ok": false,
+          "ok": true,
           "rows": 0,
-          "error": "Table finkeys is not specified in the ABI"
+          "error": ""
         },
         {
           "table": "finalizers",
-          "ok": false,
+          "ok": true,
           "rows": 0,
-          "error": "Table finalizers is not specified in the ABI"
+          "error": ""
         }
       ],
       "producers": [
@@ -2754,8 +2754,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -2824,8 +2823,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -2881,6 +2879,7 @@
           "status": "review",
           "blockers": [],
           "warnings": [
+            "No finalizer key row found",
             "No matching public API",
             "BP metadata unavailable"
           ]
@@ -2950,15 +2949,14 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
         {
           "name": "votetelosusa",
           "scheduleType": "active",
-          "schedulePosition": 11,
+          "schedulePosition": 12,
           "rank": 5,
           "blockSigningKey": "EOS5D2Xfg39dfiXYs84FvvEccLD23d1PPmkv8SoU3EgYCjhRtWbzb",
           "votes": "734865818639.52868652343750000",
@@ -3020,15 +3018,14 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
         {
           "name": "eosphereiobp",
           "scheduleType": "active",
-          "schedulePosition": 21,
+          "schedulePosition": 20,
           "rank": 6,
           "blockSigningKey": "EOS5fNhSCnuesLTDz61gMGqeZHrANx3mujc4Es7BaVyqarWVuUNza",
           "votes": "731241735080.82800292968750000",
@@ -3091,8 +3088,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -3161,8 +3157,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -3231,8 +3226,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -3247,7 +3241,7 @@
           "url": "https://persiantelos.com",
           "isActive": true,
           "lifetimeMissedBlocks": 10499,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 324,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -3308,8 +3302,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": [
             "No matching public API",
@@ -3327,7 +3320,7 @@
           "url": "https://genereos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 5586,
-          "missedBlocksPerRotation": 2,
+          "missedBlocksPerRotation": 3,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -3380,8 +3373,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": [
             "P2P handshake failed"
@@ -3460,8 +3452,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": [
             "No matching public API"
@@ -3470,7 +3461,7 @@
         {
           "name": "telosindiabp",
           "scheduleType": "active",
-          "schedulePosition": 20,
+          "schedulePosition": 19,
           "rank": 12,
           "blockSigningKey": "EOS7k8QZs762JNxq8xRZ3ur2CWcNr2sKctsiffGbwsizsJnizYqkE",
           "votes": "389569712216.05285644531250000",
@@ -3518,8 +3509,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": [
             "No matching public API",
@@ -3591,8 +3581,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -3661,8 +3650,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -3730,8 +3718,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": [
             "P2P endpoint missing port"
@@ -3802,8 +3789,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -3871,8 +3857,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": [
             "P2P handshake failed"
@@ -3943,15 +3928,14 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
         {
           "name": "bp.adex",
           "scheduleType": "active",
-          "schedulePosition": 19,
+          "schedulePosition": 18,
           "rank": 19,
           "blockSigningKey": "EOS52tCjiD2vgwwrBe3vgsTZLE3WAcFufHWtCM4dMdswy6k6uErDb",
           "votes": "238486431793.43295288085937500",
@@ -4013,8 +3997,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -4079,84 +4062,24 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": [
             "No matching public API"
           ]
         },
         {
-          "name": "bp.any",
-          "scheduleType": "active",
-          "schedulePosition": 18,
-          "rank": 21,
-          "blockSigningKey": "EOS55hj3pBb59y5R92K2LfWxVdNhAmPobDjHRfGNS7CtkrVVhFLXx",
-          "votes": "142126176175.25634765625000000",
-          "votesCompact": "142.1B",
-          "url": "https://anypot.io",
-          "isActive": true,
-          "lifetimeMissedBlocks": 1536,
-          "missedBlocksPerRotation": 0,
-          "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
-          },
-          "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://anypot.io/chains.json: 502 Bad Gateway | https://anypot.io/bp.json: 502 Bad Gateway | https://anypot.io/mainnet.json: 502 Bad Gateway | https://anypot.io/telos.json: 502 Bad Gateway",
-            "endpoints": [
-              "https://anypot.io"
-            ],
-            "attempts": [
-              {
-                "endpoint": "https://anypot.io",
-                "ok": false,
-                "error": "502 Bad Gateway"
-              }
-            ]
-          },
-          "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://anypot.io/chains.json: 502 Bad Gateway | https://anypot.io/bp.json: 502 Bad Gateway | https://anypot.io/mainnet.json: 502 Bad Gateway | https://anypot.io/telos.json: 502 Bad Gateway",
-            "endpoints": [],
-            "attempts": []
-          },
-          "status": "blocker",
-          "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
-          ],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
-        },
-        {
           "name": "smartelos",
-          "scheduleType": "standby",
-          "schedulePosition": null,
-          "rank": 22,
-          "blockSigningKey": "",
+          "scheduleType": "active",
+          "schedulePosition": 21,
+          "rank": 21,
+          "blockSigningKey": "EOS6rYgFtqJWgcyneomQiQwpim9cK9sTDr5PmYJR28zrwtWY26ZCv",
           "votes": "98976104450.60089111328125000",
           "votesCompact": "99.0B",
           "url": "https://smartelos.com",
           "isActive": true,
           "lifetimeMissedBlocks": 852,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 96,
           "finalizer": {
             "registered": false,
             "active": false,
@@ -4203,8 +4126,10 @@
               }
             ]
           },
-          "status": "review",
-          "blockers": [],
+          "status": "blocker",
+          "blockers": [
+            "No finalizer key row found"
+          ],
           "warnings": [
             "No matching public API",
             "P2P handshake failed"
@@ -4214,7 +4139,7 @@
           "name": "telosamigoss",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 23,
+          "rank": 22,
           "blockSigningKey": "",
           "votes": "29404120484.20740127563476562",
           "votesCompact": "29.4B",
@@ -4271,6 +4196,7 @@
           "status": "review",
           "blockers": [],
           "warnings": [
+            "No finalizer key row found",
             "No matching public API",
             "P2P handshake failed"
           ]
@@ -4279,7 +4205,7 @@
           "name": "telosusa2222",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 24,
+          "rank": 23,
           "blockSigningKey": "",
           "votes": "15738737119.47982597351074219",
           "votesCompact": "15.7B",
@@ -4338,15 +4264,17 @@
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No finalizer key row found"
+          ]
         },
         {
           "name": "telosusa1111",
           "scheduleType": "active",
-          "schedulePosition": 12,
-          "rank": 25,
+          "schedulePosition": 11,
+          "rank": 24,
           "blockSigningKey": "EOS5D2Xfg39dfiXYs84FvvEccLD23d1PPmkv8SoU3EgYCjhRtWbzb",
           "votes": "15738422278.47982597351074219",
           "votesCompact": "15.7B",
@@ -4407,8 +4335,7 @@
           },
           "status": "blocker",
           "blockers": [
-            "Savanna finalizer actions missing from eosio ABI",
-            "Finalizer tables are not readable"
+            "No finalizer key row found"
           ],
           "warnings": []
         },
@@ -4416,7 +4343,7 @@
           "name": "telosusa4444",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 26,
+          "rank": 25,
           "blockSigningKey": "",
           "votes": "15737322277.47982597351074219",
           "votesCompact": "15.7B",
@@ -4475,15 +4402,17 @@
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No finalizer key row found"
+          ]
         },
         {
           "name": "telosusa3333",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 27,
+          "rank": 26,
           "blockSigningKey": "",
           "votes": "15719397015.47982597351074219",
           "votesCompact": "15.7B",
@@ -4542,9 +4471,11 @@
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No finalizer key row found"
+          ]
         }
       ],
       "sourceNotes": [
