@@ -52,7 +52,7 @@ Readiness includes a public live P2P gate for scheduled BPs. A BP passes that ga
 
 The IF checker table also shows active standby BPs below a divider for operator visibility, with each section ordered by vote rank. Standby rows are checked for published API/P2P health and can still show their finalizer table state, but scheduled finalizer readiness gates and top-level pass counts are based on the active schedule only. Being standby does not by itself make a row `Review`.
 
-The IF checker banner shows `Live` once the network's `SAVANNA` feature is active, while the readiness metrics and gates continue to show any remaining review items.
+The IF checker banner shows `Live` only once the network's `SAVANNA` feature is active and every scheduled BP has an active finalizer. Before that, it distinguishes pending finalizer registration from pending activation; other readiness metrics and review gates remain visible independently.
 
 For Spring/nodeos API version checks, any published endpoint that answers `/v1/chain/get_info` with the expected chain id is classified by its `server_version_string`/`server_full_version_string`, even if the hostname includes `hyperion`.
 
