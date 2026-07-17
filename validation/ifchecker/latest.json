@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T06:42:02.600Z",
+  "generatedAt": "2026-07-17T09:00:42.953Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,14 +8,14 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-17T06:42:02.600Z",
-      "durationMs": 21915,
+      "generatedAt": "2026-07-17T09:00:42.953Z",
+      "durationMs": 30207,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 434751918,
-        "lastIrreversibleBlockNum": 434751916,
+        "headBlockNum": 434768541,
+        "lastIrreversibleBlockNum": 434768539,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-17T06:41:41.000",
+        "headBlockTime": "2026-07-17T09:00:12.500",
         "headBlockProducer": "caleosblocks",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
@@ -2457,16 +2457,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-17T06:41:47.017Z",
-      "durationMs": 6299,
+      "generatedAt": "2026-07-17T09:00:35.940Z",
+      "durationMs": 23179,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 478507549,
-        "lastIrreversibleBlockNum": 478507214,
-        "libLagBlocks": 335,
-        "headBlockTime": "2026-07-17T06:41:41.000",
+        "headBlockNum": 478524172,
+        "lastIrreversibleBlockNum": 478523846,
+        "libLagBlocks": 326,
+        "headBlockTime": "2026-07-17T09:00:12.500",
         "headBlockProducer": "votetelosusa",
-        "serverVersion": "v1.2.2",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2475,21 +2475,21 @@
         "standby": 4,
         "producerRowsActive": 25,
         "ready": 1,
-        "review": 2,
-        "blocked": 18,
+        "review": 3,
+        "blocked": 17,
         "readyRows": 1,
-        "reviewRows": 6,
-        "blockedRows": 18,
-        "finalizersRegistered": 3,
-        "finalizersActive": 3,
-        "activeSpringCompatible": 16,
-        "springCompatible": 16,
-        "bpApiSpring": 16,
+        "reviewRows": 7,
+        "blockedRows": 17,
+        "finalizersRegistered": 4,
+        "finalizersActive": 4,
+        "activeSpringCompatible": 15,
+        "springCompatible": 15,
+        "bpApiSpring": 15,
         "bpApiReview": 0,
-        "bpApiUnknown": 5,
+        "bpApiUnknown": 6,
         "bpApiBlocked": 0,
-        "publicP2pOk": 15,
-        "publicP2pReview": 6,
+        "publicP2pOk": 14,
+        "publicP2pReview": 7,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2498,22 +2498,22 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "3/21 active",
+          "value": "4/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "16/21 Spring",
-          "detail": "0 review, 5 unknown, 0 blocked"
+          "value": "15/21 Spring",
+          "detail": "0 review, 6 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "15/21 reachable",
-          "detail": "6 review, 0 unknown"
+          "value": "14/21 reachable",
+          "detail": "7 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -2526,7 +2526,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2562,7 +2562,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 5 rows | finalizers: 5 rows"
+          "detail": "finkeys: 6 rows | finalizers: 6 rows"
         },
         {
           "key": "savanna",
@@ -2688,13 +2688,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 5,
+          "rows": 6,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 5,
+          "rows": 6,
           "error": ""
         }
       ],
@@ -3188,61 +3188,74 @@
           "lifetimeMissedBlocks": 9600,
           "missedBlocksPerRotation": 0,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_XRow57VIdbm5wot6odkhcfu0yrkYITrYmKCV7jTXGNDiIDh2P6_B7hhQKnfQfa0BmoI4kLohGC7Ie6mdoq-S0iQggKY6Pi_4-5z8TZwM-K-OjopFTLIgRlUxw6EX7moENy_6RA"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://eosarabia.net/bp.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://api.telosarabia.net",
-              "http://api.telosarabia.net",
+              "https://api.eosarabia.net",
+              "http://api.eosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.telosarabia.net",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "https://api.eosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "http://api.eosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
-            "endpoint": "p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
+            "status": "review",
+            "label": "P2P handshake failed",
+            "endpoint": "mainnet.eosarabia.net:3571",
+            "bpJsonUrl": "https://eosarabia.net/bp.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "p2p.telosarabia.net:9876"
+              "mainnet.eosarabia.net:3571"
             ],
             "attempts": [
               {
-                "endpoint": "p2p.telosarabia.net:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "endpoint": "mainnet.eosarabia.net:3571",
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 142.132.135.86:3571"
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
-          "warnings": []
+          "status": "review",
+          "blockers": [],
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "telosgermany",
@@ -3307,7 +3320,7 @@
                 "endpoint": "p2p.telosgermany.genereos.io:9876",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection timed out"
+                "error": "connection closed before P2P handshake"
               }
             ]
           },
