@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T19:34:54.673Z",
+  "generatedAt": "2026-07-17T20:35:45.291Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-17T19:34:54.672Z",
-      "durationMs": 20564,
+      "generatedAt": "2026-07-17T20:35:45.291Z",
+      "durationMs": 21811,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 434844641,
-        "lastIrreversibleBlockNum": 434844639,
+        "headBlockNum": 434851939,
+        "lastIrreversibleBlockNum": 434851937,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-17T19:34:34.500",
-        "headBlockProducer": "caleosblocks",
+        "headBlockTime": "2026-07-17T20:35:23.500",
+        "headBlockProducer": "eosriobrazil",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2457,15 +2457,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-17T19:34:54.673Z",
-      "durationMs": 20535,
+      "generatedAt": "2026-07-17T20:35:45.291Z",
+      "durationMs": 21780,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 478600295,
-        "lastIrreversibleBlockNum": 478599961,
-        "libLagBlocks": 334,
-        "headBlockTime": "2026-07-17T19:34:34.500",
-        "headBlockProducer": "telosgermany",
+        "headBlockNum": 478607593,
+        "lastIrreversibleBlockNum": 478607257,
+        "libLagBlocks": 336,
+        "headBlockTime": "2026-07-17T20:35:23.500",
+        "headBlockProducer": "amsterdam",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2474,11 +2474,11 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 5,
-        "review": 3,
+        "ready": 4,
+        "review": 4,
         "blocked": 13,
-        "readyRows": 5,
-        "reviewRows": 9,
+        "readyRows": 4,
+        "reviewRows": 10,
         "blockedRows": 13,
         "finalizersRegistered": 8,
         "finalizersActive": 8,
@@ -2488,8 +2488,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 5,
         "bpApiBlocked": 0,
-        "publicP2pOk": 15,
-        "publicP2pReview": 6,
+        "publicP2pOk": 14,
+        "publicP2pReview": 7,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2512,8 +2512,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "15/21 reachable",
-          "detail": "6 review, 0 unknown"
+          "value": "14/21 reachable",
+          "detail": "7 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -3226,8 +3226,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "p2p.telosarabia.net:9876",
             "bpJsonUrl": "https://eosarabia.net/telos.json",
             "bpJsonSource": "chains.json",
@@ -3239,16 +3239,17 @@
             "attempts": [
               {
                 "endpoint": "p2p.telosarabia.net:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 136.243.248.194:9876"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "persiantelos",
