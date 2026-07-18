@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T18:12:47.686Z",
+  "generatedAt": "2026-07-18T19:34:44.457Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,14 +8,14 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-18T18:12:47.685Z",
-      "durationMs": 21857,
+      "generatedAt": "2026-07-18T19:34:42.990Z",
+      "durationMs": 20388,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 435007583,
-        "lastIrreversibleBlockNum": 435007581,
+        "headBlockNum": 435017417,
+        "lastIrreversibleBlockNum": 435017415,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-18T18:12:26.000",
+        "headBlockTime": "2026-07-18T19:34:23.000",
         "headBlockProducer": "tempbpfillcc",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
@@ -28,8 +28,8 @@
         "ready": 16,
         "review": 5,
         "blocked": 0,
-        "readyRows": 21,
-        "reviewRows": 10,
+        "readyRows": 22,
+        "reviewRows": 9,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -258,7 +258,7 @@
           "blockSigningKey": "",
           "votes": "470044517896.88244628906250000",
           "votesCompact": "470.0B",
-          "url": "https://telosmadrid.io/testnet",
+          "url": "https://eosiomadrid.io/telos/testnet",
           "isActive": true,
           "lifetimeMissedBlocks": 23181,
           "missedBlocksPerRotation": 0,
@@ -274,42 +274,53 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telosmadrid.io/testnet/chains.json: fetch failed | https://telosmadrid.io/testnet/testnet.json: fetch failed | https://telosmadrid.io/testnet/bp.json: fetch failed | https://telosmadrid.io/testnet/telos.json: fetch failed",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://hyperion-testnet.eosiomadrid.io",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://eosiomadrid.io/telos/testnet/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
-              "https://telosmadrid.io/testnet"
+              "https://hyperion-testnet.eosiomadrid.io",
+              "http://hyperion-testnet.eosiomadrid.io",
+              "https://eosiomadrid.io/telos/testnet"
             ],
             "attempts": [
               {
-                "endpoint": "https://telosmadrid.io/testnet",
-                "ok": false,
-                "error": "fetch failed"
+                "endpoint": "https://hyperion-testnet.eosiomadrid.io",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telosmadrid.io/testnet/chains.json: fetch failed | https://telosmadrid.io/testnet/testnet.json: fetch failed | https://telosmadrid.io/testnet/bp.json: fetch failed | https://telosmadrid.io/testnet/telos.json: fetch failed",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "seed-testnet.eosiomadrid.io:9899",
+            "bpJsonUrl": "https://eosiomadrid.io/telos/testnet/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "seed-testnet.eosiomadrid.io:9899"
+            ],
+            "attempts": [
+              {
+                "endpoint": "seed-testnet.eosiomadrid.io:9899",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "warnings": []
         },
         {
           "name": "votetelosusa",
@@ -2457,14 +2468,14 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-18T18:12:47.686Z",
-      "durationMs": 21826,
+      "generatedAt": "2026-07-18T19:34:44.457Z",
+      "durationMs": 21823,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 478763197,
-        "lastIrreversibleBlockNum": 478762869,
-        "libLagBlocks": 328,
-        "headBlockTime": "2026-07-18T18:12:26.000",
+        "headBlockNum": 478773031,
+        "lastIrreversibleBlockNum": 478772696,
+        "libLagBlocks": 335,
+        "headBlockTime": "2026-07-18T19:34:23.000",
         "headBlockProducer": "telosunlimit",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
@@ -2474,22 +2485,22 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 6,
+        "ready": 7,
         "review": 3,
-        "blocked": 12,
-        "readyRows": 6,
+        "blocked": 11,
+        "readyRows": 7,
         "reviewRows": 9,
-        "blockedRows": 12,
-        "finalizersRegistered": 9,
-        "finalizersActive": 9,
-        "activeSpringCompatible": 16,
-        "springCompatible": 16,
-        "bpApiSpring": 16,
+        "blockedRows": 11,
+        "finalizersRegistered": 10,
+        "finalizersActive": 10,
+        "activeSpringCompatible": 17,
+        "springCompatible": 17,
+        "bpApiSpring": 17,
         "bpApiReview": 0,
-        "bpApiUnknown": 5,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 0,
-        "publicP2pOk": 15,
-        "publicP2pReview": 6,
+        "publicP2pOk": 16,
+        "publicP2pReview": 5,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2498,22 +2509,22 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "9/21 active",
+          "value": "10/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "16/21 Spring",
-          "detail": "0 review, 5 unknown, 0 blocked"
+          "value": "17/21 Spring",
+          "detail": "0 review, 4 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "15/21 reachable",
-          "detail": "6 review, 0 unknown"
+          "value": "16/21 reachable",
+          "detail": "5 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -2562,7 +2573,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 11 rows | finalizers: 11 rows"
+          "detail": "finkeys: 12 rows | finalizers: 12 rows"
         },
         {
           "key": "savanna",
@@ -2688,13 +2699,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 11,
+          "rows": 12,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 11,
+          "rows": 12,
           "error": ""
         }
       ],
@@ -2851,55 +2862,69 @@
           "blockSigningKey": "EOS8LSnCvd5CaN6sa5wbsFtJ2ZyPfyvXDcP5jBhxvnn33xAracDh8",
           "votes": "808730957442.39978027343750000",
           "votesCompact": "808.7B",
-          "url": "https://telosmadrid.io",
+          "url": "https://eosiomadrid.io/telos",
           "isActive": true,
           "lifetimeMissedBlocks": 14915,
           "missedBlocksPerRotation": 0,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_BEx1_0AaTxa19IDoOxNuId4NsFVe67jRot7jDhP1KpYsMN4ynYhHRIozZStzZOEMtKEy2PjtdW8nxtbomKEdga_btrsnP5O4wVKEOyefjcPUrgjKTpTeOkKk_kgjPgAB4jz9TA"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telosmadrid.io/chains.json: fetch failed | https://telosmadrid.io/bp.json: fetch failed | https://telosmadrid.io/mainnet.json: fetch failed | https://telosmadrid.io/telos.json: fetch failed",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://hyperion.eosiomadrid.io",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://eosiomadrid.io/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
-              "https://telosmadrid.io"
+              "https://hyperion.eosiomadrid.io",
+              "http://hyperion.eosiomadrid.io",
+              "https://eosiomadrid.io/telos"
             ],
             "attempts": [
               {
-                "endpoint": "https://telosmadrid.io",
-                "ok": false,
-                "error": "fetch failed"
+                "endpoint": "https://hyperion.eosiomadrid.io",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://telosmadrid.io/chains.json: fetch failed | https://telosmadrid.io/bp.json: fetch failed | https://telosmadrid.io/mainnet.json: fetch failed | https://telosmadrid.io/telos.json: fetch failed",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "seed.eosiomadrid.io:9870",
+            "bpJsonUrl": "https://eosiomadrid.io/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "seed.eosiomadrid.io:9870"
+            ],
+            "attempts": [
+              {
+                "endpoint": "seed.eosiomadrid.io:9870",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "status": "ok",
+          "blockers": [],
+          "warnings": []
         },
         {
           "name": "telosunlimit",
