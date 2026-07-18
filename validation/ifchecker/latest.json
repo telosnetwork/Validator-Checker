@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T09:59:37.514Z",
+  "generatedAt": "2026-07-18T11:13:49.834Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-18T09:59:37.513Z",
-      "durationMs": 21720,
+      "generatedAt": "2026-07-18T11:13:49.833Z",
+      "durationMs": 21480,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 434948404,
-        "lastIrreversibleBlockNum": 434948402,
+        "headBlockNum": 434957308,
+        "lastIrreversibleBlockNum": 434957306,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-18T09:59:16.000",
-        "headBlockProducer": "telosgreenbp",
+        "headBlockTime": "2026-07-18T11:13:28.500",
+        "headBlockProducer": "telosgermany",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -754,7 +754,7 @@
           "url": "https://eosrio.io",
           "isActive": true,
           "lifetimeMissedBlocks": 10767,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2457,16 +2457,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-18T09:59:37.514Z",
-      "durationMs": 21659,
+      "generatedAt": "2026-07-18T11:13:49.834Z",
+      "durationMs": 21443,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 478704057,
-        "lastIrreversibleBlockNum": 478703724,
-        "libLagBlocks": 333,
-        "headBlockTime": "2026-07-18T09:59:16.000",
-        "headBlockProducer": "caleosblocks",
-        "serverVersion": "v1.2.2",
+        "headBlockNum": 478712962,
+        "lastIrreversibleBlockNum": 478712628,
+        "libLagBlocks": 334,
+        "headBlockTime": "2026-07-18T11:13:28.500",
+        "headBlockProducer": "persiantelos",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2474,11 +2474,11 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 5,
-        "review": 4,
+        "ready": 6,
+        "review": 3,
         "blocked": 12,
-        "readyRows": 5,
-        "reviewRows": 10,
+        "readyRows": 6,
+        "reviewRows": 9,
         "blockedRows": 12,
         "finalizersRegistered": 9,
         "finalizersActive": 9,
@@ -2488,8 +2488,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 5,
         "bpApiBlocked": 0,
-        "publicP2pOk": 14,
-        "publicP2pReview": 7,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2512,8 +2512,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "14/21 reachable",
-          "detail": "7 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -2526,7 +2526,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3384,8 +3384,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p.telosgermany.genereos.io:9876",
             "bpJsonUrl": "https://genereos.io/telos/bp.json",
             "bpJsonSource": "chains.json",
@@ -3397,17 +3397,16 @@
             "attempts": [
               {
                 "endpoint": "p2p.telosgermany.genereos.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection closed before P2P handshake"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "telosindiabp",
