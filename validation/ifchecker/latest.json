@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T04:57:10.866Z",
+  "generatedAt": "2026-07-20T08:10:34.093Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-20T04:57:10.866Z",
-      "durationMs": 21499,
+      "generatedAt": "2026-07-20T08:10:34.092Z",
+      "durationMs": 21538,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 435257710,
-        "lastIrreversibleBlockNum": 435257708,
+        "headBlockNum": 435280916,
+        "lastIrreversibleBlockNum": 435280914,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-20T04:56:49.500",
-        "headBlockProducer": "telosarabia1",
+        "headBlockTime": "2026-07-20T08:10:12.500",
+        "headBlockProducer": "bp.any",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2468,16 +2468,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-20T04:57:10.865Z",
-      "durationMs": 21465,
+      "generatedAt": "2026-07-20T08:10:34.093Z",
+      "durationMs": 21479,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 479013291,
-        "lastIrreversibleBlockNum": 479012963,
-        "libLagBlocks": 328,
-        "headBlockTime": "2026-07-20T04:56:49.500",
-        "headBlockProducer": "bp.any",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockNum": 479036495,
+        "lastIrreversibleBlockNum": 479036169,
+        "libLagBlocks": 326,
+        "headBlockTime": "2026-07-20T08:10:12.500",
+        "headBlockProducer": "telosindiabp",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2485,14 +2485,14 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 6,
+        "ready": 7,
         "review": 4,
-        "blocked": 11,
-        "readyRows": 7,
+        "blocked": 10,
+        "readyRows": 8,
         "reviewRows": 9,
-        "blockedRows": 11,
-        "finalizersRegistered": 10,
-        "finalizersActive": 10,
+        "blockedRows": 10,
+        "finalizersRegistered": 11,
+        "finalizersActive": 11,
         "activeSpringCompatible": 16,
         "springCompatible": 16,
         "bpApiSpring": 16,
@@ -2509,7 +2509,7 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "10/21 active",
+          "value": "11/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
@@ -2537,7 +2537,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2573,7 +2573,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 12 rows | finalizers: 12 rows"
+          "detail": "finkeys: 13 rows | finalizers: 13 rows"
         },
         {
           "key": "savanna",
@@ -2699,13 +2699,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 12,
+          "rows": 13,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 12,
+          "rows": 13,
           "error": ""
         }
       ],
@@ -3446,10 +3446,15 @@
           "lifetimeMissedBlocks": 635,
           "missedBlocksPerRotation": 0,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_eDa8uP7XVVVN61hmuvz1HMkdalh4gFQTUIiETp-EkGmk2ezYo26KBePh7jatiHIUpnVcSN9c8jtWQjLNe7OTFYD8-P9D9BVHv_2itH_0qOlPQPYPu0pXUi4tw0qd_fITD5C9QQ"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -3496,10 +3501,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "ok",
+          "blockers": [],
           "warnings": []
         },
         {
@@ -3872,7 +3875,7 @@
           "url": "https://cryptolions.io",
           "isActive": true,
           "lifetimeMissedBlocks": 10640,
-          "missedBlocksPerRotation": 5,
+          "missedBlocksPerRotation": 7,
           "finalizer": {
             "registered": false,
             "active": false,
