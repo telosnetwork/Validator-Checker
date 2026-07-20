@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T11:15:13.326Z",
+  "generatedAt": "2026-07-20T13:20:44.097Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-20T11:15:13.326Z",
-      "durationMs": 21789,
+      "generatedAt": "2026-07-20T13:20:44.096Z",
+      "durationMs": 21743,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 435303074,
-        "lastIrreversibleBlockNum": 435303072,
+        "headBlockNum": 435318137,
+        "lastIrreversibleBlockNum": 435318135,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-20T11:14:51.500",
-        "headBlockProducer": "telosarabia1",
+        "headBlockTime": "2026-07-20T13:20:23.000",
+        "headBlockProducer": "orbitalblock",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2468,15 +2468,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-20T11:15:13.325Z",
-      "durationMs": 21755,
+      "generatedAt": "2026-07-20T13:20:44.097Z",
+      "durationMs": 21621,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 479058651,
-        "lastIrreversibleBlockNum": 479058318,
-        "libLagBlocks": 333,
-        "headBlockTime": "2026-07-20T11:14:52.000",
-        "headBlockProducer": "telosmadrid1",
+        "headBlockNum": 479073713,
+        "lastIrreversibleBlockNum": 479073378,
+        "libLagBlocks": 335,
+        "headBlockTime": "2026-07-20T13:20:23.000",
+        "headBlockProducer": "votetelosusa",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2485,14 +2485,14 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 7,
+        "ready": 8,
         "review": 4,
-        "blocked": 10,
-        "readyRows": 8,
+        "blocked": 9,
+        "readyRows": 9,
         "reviewRows": 9,
-        "blockedRows": 10,
-        "finalizersRegistered": 11,
-        "finalizersActive": 11,
+        "blockedRows": 9,
+        "finalizersRegistered": 12,
+        "finalizersActive": 12,
         "activeSpringCompatible": 16,
         "springCompatible": 16,
         "bpApiSpring": 16,
@@ -2509,7 +2509,7 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "11/21 active",
+          "value": "12/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
@@ -2573,7 +2573,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 13 rows | finalizers: 13 rows"
+          "detail": "finkeys: 14 rows | finalizers: 14 rows"
         },
         {
           "key": "savanna",
@@ -2699,13 +2699,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 13,
+          "rows": 14,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 13,
+          "rows": 14,
           "error": ""
         }
       ],
@@ -3008,10 +3008,15 @@
           "lifetimeMissedBlocks": 19541,
           "missedBlocksPerRotation": 0,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_V_GINjVUwhuWRLuuzpNtkVjg2mTTtAWqWzuKZbX9CTvxabb_blvvuJPS01eVR5ETlo3rFjixa8Cp1VJ3mVejOEFw4yyxzHJJM33eVFlmV_ImNHctcSjCgga24ZD0jDwK53E1Qg"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -3058,10 +3063,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "ok",
+          "blockers": [],
           "warnings": []
         },
         {
