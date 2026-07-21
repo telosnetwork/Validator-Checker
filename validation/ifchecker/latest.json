@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-21T15:07:11.096Z",
+  "generatedAt": "2026-07-21T16:43:36.072Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,38 +8,38 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-21T15:07:11.096Z",
-      "durationMs": 22150,
+      "generatedAt": "2026-07-21T16:43:36.072Z",
+      "durationMs": 21249,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 435503541,
-        "lastIrreversibleBlockNum": 435503539,
+        "headBlockNum": 435515113,
+        "lastIrreversibleBlockNum": 435515111,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-21T15:06:49.000",
-        "headBlockProducer": "telosindiabp",
+        "headBlockTime": "2026-07-21T16:43:15.000",
+        "headBlockProducer": "bp.adex",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
       "counts": {
-        "totalRows": 30,
-        "scheduled": 20,
+        "totalRows": 31,
+        "scheduled": 21,
         "standby": 10,
-        "producerRowsActive": 30,
-        "ready": 16,
+        "producerRowsActive": 31,
+        "ready": 17,
         "review": 4,
         "blocked": 0,
-        "readyRows": 21,
+        "readyRows": 22,
         "reviewRows": 9,
         "blockedRows": 0,
-        "finalizersRegistered": 20,
-        "finalizersActive": 20,
-        "activeSpringCompatible": 19,
-        "springCompatible": 19,
-        "bpApiSpring": 19,
+        "finalizersRegistered": 21,
+        "finalizersActive": 21,
+        "activeSpringCompatible": 20,
+        "springCompatible": 20,
+        "bpApiSpring": 20,
         "bpApiReview": 0,
         "bpApiUnknown": 1,
         "bpApiBlocked": 0,
-        "publicP2pOk": 16,
+        "publicP2pOk": 17,
         "publicP2pReview": 4,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
@@ -49,14 +49,14 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "19/20 Spring",
+          "value": "20/21 Spring",
           "detail": "0 review, 1 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "16/20 reachable",
+          "value": "17/21 reachable",
           "detail": "4 review, 0 unknown"
         },
         {
@@ -78,7 +78,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 55691"
+          "detail": "Schedule version 55693"
         },
         {
           "key": "features",
@@ -112,7 +112,7 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "ok",
-          "value": "20/20 active",
+          "value": "21/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
@@ -684,10 +684,10 @@
         },
         {
           "name": "telosgreenbp",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 7,
           "rank": 7,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS7ZpSQ5i8XNiVbAg9gjWjD3jNKMMtDhQRWQzdQyMg9owQLCTSLA",
           "votes": "326556662173.80310058593750000",
           "votesCompact": "326.6B",
           "url": "https://telosgreen.com",
@@ -972,10 +972,82 @@
           ]
         },
         {
-          "name": "telosindiabp",
+          "name": "eosphereiobp",
           "scheduleType": "active",
           "schedulePosition": 21,
           "rank": 11,
+          "blockSigningKey": "EOS7aJLknepv59ZBsEbLLyEDE2nKcjxMZqAtajVjT8gyDt96Db9kb",
+          "votes": "263802348908.20925903320312500",
+          "votesCompact": "263.8B",
+          "url": "https://www.eosphere.io",
+          "isActive": true,
+          "lifetimeMissedBlocks": 7873,
+          "missedBlocksPerRotation": 168,
+          "finalizer": {
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_jz2XXirz6xhPPMHbOAOCT5jhOXQWcZVFXLb3IRtYFE73xvkg6W_X9IuCnb4gwtkSTw49Cp2YIg4wUtcWDfrT4Mt0ndvhUazBIPUoIZViYbp-VpRdkAlaqW0_KVrv-GQSII87Cg"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
+          },
+          "api": {
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos-testnet.eosphere.io",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "https://telos-testnet.eosphere.io",
+              "http://telos-testnet.eosphere.io",
+              "https://www.eosphere.io"
+            ],
+            "attempts": [
+              {
+                "endpoint": "https://telos-testnet.eosphere.io",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
+              }
+            ]
+          },
+          "p2p": {
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "peer1-telos-testnet.eosphere.io:9876",
+            "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "peer1-telos-testnet.eosphere.io:9876"
+            ],
+            "attempts": [
+              {
+                "endpoint": "peer1-telos-testnet.eosphere.io:9876",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
+          },
+          "status": "ok",
+          "blockers": [],
+          "warnings": []
+        },
+        {
+          "name": "telosindiabp",
+          "scheduleType": "active",
+          "schedulePosition": 20,
+          "rank": 12,
           "blockSigningKey": "EOS7JxMFPmNEULcRtZLSoD8Sst86p137JiWd7xVaoo5JVs8LGkvbD",
           "votes": "250727946862.70339965820312500",
           "votesCompact": "250.7B",
@@ -1046,7 +1118,7 @@
           "name": "orbitalblock",
           "scheduleType": "active",
           "schedulePosition": 10,
-          "rank": 12,
+          "rank": 13,
           "blockSigningKey": "EOS5WR8sX6hGHDiMcttB7ZBhRrRjRayM1E5o9H5Yh3rYVaLRXX97n",
           "votes": "250168125400.92141723632812500",
           "votesCompact": "250.2B",
@@ -1118,8 +1190,8 @@
         {
           "name": "ledgerwisete",
           "scheduleType": "active",
-          "schedulePosition": 7,
-          "rank": 13,
+          "schedulePosition": 6,
+          "rank": 14,
           "blockSigningKey": "EOS5BwhM81kTHp1v3QFAa9bWTrcMQjb78QiVXH9X59TYxc59Sazwg",
           "votes": "238590376387.92141723632812500",
           "votesCompact": "238.6B",
@@ -1190,8 +1262,8 @@
         {
           "name": "tempbpfill44",
           "scheduleType": "active",
-          "schedulePosition": 1,
-          "rank": 14,
+          "schedulePosition": 4,
+          "rank": 15,
           "blockSigningKey": "EOS5uZcKp83AXcs8Pjt5o5v7mtemBh9BRgqQXvasvQA9FGFrEbqts",
           "votes": "238168266164.67303466796875000",
           "votesCompact": "238.2B",
@@ -1260,8 +1332,8 @@
         {
           "name": "tempbpfill55",
           "scheduleType": "active",
-          "schedulePosition": 2,
-          "rank": 15,
+          "schedulePosition": 3,
+          "rank": 16,
           "blockSigningKey": "EOS6LZNTmGYbxjrAgd4hVGBdnh4cVhCpSvacmrmqTeq3SSuZZVHZF",
           "votes": "238168266164.67303466796875000",
           "votesCompact": "238.2B",
@@ -1330,8 +1402,8 @@
         {
           "name": "tempbpfillaa",
           "scheduleType": "active",
-          "schedulePosition": 3,
-          "rank": 16,
+          "schedulePosition": 2,
+          "rank": 17,
           "blockSigningKey": "EOS6bbRevbDs6g6TTnTDuuMCGgfYdGh9Zh3upSvdo3HRWvFpZkkY6",
           "votes": "238168266164.67303466796875000",
           "votesCompact": "238.2B",
@@ -1400,8 +1472,8 @@
         {
           "name": "tempbpfillbb",
           "scheduleType": "active",
-          "schedulePosition": 5,
-          "rank": 17,
+          "schedulePosition": 1,
+          "rank": 18,
           "blockSigningKey": "EOS6XXe2xf5PaVttWpizSfGZr8VngjZUCLXT4U1n948SAqVUFtU3V",
           "votes": "238168266164.67303466796875000",
           "votesCompact": "238.2B",
@@ -1470,8 +1542,8 @@
         {
           "name": "tempbpfillcc",
           "scheduleType": "active",
-          "schedulePosition": 4,
-          "rank": 18,
+          "schedulePosition": 5,
+          "rank": 19,
           "blockSigningKey": "EOS77KwHbW9VRvrFY58CgMHAGaPq96exGWqWUDY8WeRhrs8VqMEDD",
           "votes": "238168266164.67303466796875000",
           "votesCompact": "238.2B",
@@ -1540,8 +1612,8 @@
         {
           "name": "bp.any",
           "scheduleType": "active",
-          "schedulePosition": 19,
-          "rank": 19,
+          "schedulePosition": 18,
+          "rank": 20,
           "blockSigningKey": "EOS62saF5TC5r3z3tWJnkGD2ytCeVGbpSNRU9Q7rq868C1F6kxgqu",
           "votes": "238168105400.92141723632812500",
           "votesCompact": "238.2B",
@@ -1601,8 +1673,8 @@
         {
           "name": "bp.adex",
           "scheduleType": "active",
-          "schedulePosition": 20,
-          "rank": 20,
+          "schedulePosition": 19,
+          "rank": 21,
           "blockSigningKey": "EOS52tCjiD2vgwwrBe3vgsTZLE3WAcFufHWtCM4dMdswy6k6uErDb",
           "votes": "140646276148.10238647460937500",
           "votesCompact": "140.6B",
@@ -1673,10 +1745,10 @@
         },
         {
           "name": "cryptolions1",
-          "scheduleType": "active",
-          "schedulePosition": 18,
-          "rank": 21,
-          "blockSigningKey": "EOS7bLioNJeJWTcpXdcK7rLSv54AuQ3wyYHcwi647hBNkZs933NHa",
+          "scheduleType": "standby",
+          "schedulePosition": null,
+          "rank": 22,
+          "blockSigningKey": "",
           "votes": "113019524643.08523559570312500",
           "votesCompact": "113.0B",
           "url": "https://cryptolions.io",
@@ -1747,7 +1819,7 @@
           "name": "persiantelos",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 22,
+          "rank": 23,
           "blockSigningKey": "",
           "votes": "83766491604.57254028320312500",
           "votesCompact": "83.8B",
@@ -1830,7 +1902,7 @@
           "name": "infinitybloc",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 23,
+          "rank": 24,
           "blockSigningKey": "",
           "votes": "21710110993.44345092773437500",
           "votesCompact": "21.7B",
@@ -1891,7 +1963,7 @@
           "name": "bp.yknot",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 24,
+          "rank": 25,
           "blockSigningKey": "",
           "votes": "12597773346.33456420898437500",
           "votesCompact": "12.6B",
@@ -1964,7 +2036,7 @@
           "name": "smartelos",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 25,
+          "rank": 26,
           "blockSigningKey": "",
           "votes": "12034420068.99998664855957031",
           "votesCompact": "12.0B",
@@ -2035,7 +2107,7 @@
           "name": "tempbpfill11",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 26,
+          "rank": 27,
           "blockSigningKey": "",
           "votes": "160763.75160593548207544",
           "votesCompact": "160764",
@@ -2105,7 +2177,7 @@
           "name": "tempbpfill22",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 27,
+          "rank": 28,
           "blockSigningKey": "",
           "votes": "160763.75160593548207544",
           "votesCompact": "160764",
@@ -2175,7 +2247,7 @@
           "name": "tempbpfill33",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 28,
+          "rank": 29,
           "blockSigningKey": "",
           "votes": "160763.75160593548207544",
           "votesCompact": "160764",
@@ -2245,7 +2317,7 @@
           "name": "tempbpfilldd",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 29,
+          "rank": 30,
           "blockSigningKey": "",
           "votes": "160763.75160593548207544",
           "votesCompact": "160764",
@@ -2315,7 +2387,7 @@
           "name": "telosamigoss",
           "scheduleType": "standby",
           "schedulePosition": null,
-          "rank": 30,
+          "rank": 31,
           "blockSigningKey": "",
           "votes": "0.00000000000000000",
           "votesCompact": "0",
@@ -2396,15 +2468,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-21T15:07:11.096Z",
-      "durationMs": 22129,
+      "generatedAt": "2026-07-21T16:43:36.071Z",
+      "durationMs": 21212,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 479259208,
-        "lastIrreversibleBlockNum": 479258881,
-        "libLagBlocks": 327,
-        "headBlockTime": "2026-07-21T15:06:49.000",
-        "headBlockProducer": "eosphereiobp",
+        "headBlockNum": 479270780,
+        "lastIrreversibleBlockNum": 479270449,
+        "libLagBlocks": 331,
+        "headBlockTime": "2026-07-21T16:43:15.000",
+        "headBlockProducer": "bp.adex",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
