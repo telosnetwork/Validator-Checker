@@ -5,6 +5,10 @@ on:
     - cron: "*/15 * * * *"
   workflow_dispatch:
 
+concurrency:
+  group: validate-telos-block-producers
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -43,5 +47,11 @@ jobs:
           git config user.name "Telos BP Validator"
           git config user.email "validator@telos.net"
           git add validation/latest.json validation/history.json validation/ifchecker/latest.json
-          git diff --staged --quiet || git commit -m "chore: update BP validation results"
-          git push
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: update BP validation results"
+          for attempt in 1 2 3; do
+            git pull --rebase -X theirs origin main && git push && exit 0
+            git rebase --abort || true
+            sleep 5
+          done
+          exit 1

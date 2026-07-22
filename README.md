@@ -10,6 +10,7 @@ Standalone static rebuild of the validator dashboard shown at https://infinitybl
 - `netlify/functions/` exposes live IF checker API routes through Netlify Functions.
 - `validation/ifchecker/latest.json` stores the latest cached IF checker snapshot.
 - `scripts/validate_bps.py` generates `validation/latest.json` and `validation/history.json`.
+- `netlify/functions/validation-refresh.js` lets the dashboard trigger the validation workflow on demand.
 - The app tries local `validation/*.json` first, then local `data/*.json`.
 - CPU timing history is also merged from `https://infinitybloc.io/validation/history.json` so benchmark data can continue coming from the original repo while its GitHub secret remains there.
 - `.github/workflows/validate.yml` refreshes validation snapshots every 15 minutes and can also be run manually from GitHub Actions.
@@ -29,6 +30,15 @@ http://127.0.0.1:4173/
 ```
 
 The app fetches JSON files over HTTP, so opening `index.html` directly from the filesystem may not work in all browsers.
+
+## Manual Refresh Button
+
+The `Refresh Results` button calls `/api/validation-refresh`, which dispatches the `validate.yml` GitHub Actions workflow. The Netlify deployment must provide a `VALIDATION_WORKFLOW_TOKEN` environment variable with permission to dispatch workflows for this repository. Optional variables:
+
+- `VALIDATION_REPOSITORY`, default `telosnetwork/Validator-Checker`
+- `VALIDATION_WORKFLOW_ID`, default `validate.yml`
+- `VALIDATION_WORKFLOW_REF`, default `main`
+- `VALIDATION_REFRESH_MIN_INTERVAL_SECONDS`, default `300`
 
 ## Instant Finality Checker
 

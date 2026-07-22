@@ -14,6 +14,10 @@
         <h1>Validator Checker</h1>
       </div>
       <div class="header-actions">
+        <div class="refresh-control">
+          <button class="refresh-button" id="refreshResultsButton" type="button">Refresh Results</button>
+          <span class="refresh-status" id="refreshStatus" role="status" aria-live="polite"></span>
+        </div>
         <div class="network-switch" role="tablist" aria-label="Network">
           <button class="network-button is-active" type="button" data-network="mainnet" role="tab" aria-selected="true">Mainnet</button>
           <button class="network-button" type="button" data-network="testnet" role="tab" aria-selected="false">Testnet</button>

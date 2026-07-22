@@ -17,6 +17,11 @@ const DATA_SOURCES = {
 };
 
 const MAX_MERGED_HISTORY_RUNS = 112;
+const VALIDATION_REFRESH_ENDPOINT = "/api/validation-refresh";
+const REFRESH_POLL_INTERVAL_MS = 8000;
+const REFRESH_MAX_POLL_ATTEMPTS = 120;
+const SNAPSHOT_POLL_INTERVAL_MS = 5000;
+const SNAPSHOT_MAX_POLL_ATTEMPTS = 30;
 const UI_STATE_STORAGE_KEY = "telos-validator-checker-ui";
 const VALID_NETWORKS = ["mainnet", "testnet"];
 const VALID_TABS = ["producers", "endpoints", "performance"];
@@ -93,6 +98,10 @@ const state = {
     peers: "nodeos",
   },
   endpointPassingOnly: true,
+  refreshPollTimer: null,
+  refreshPollAttempts: 0,
+  refreshRunId: null,
+  refreshPreviousGeneratedAt: "",
 };
 
 const els = {};
@@ -127,12 +136,16 @@ function cacheElements() {
   els.endpointPassingOnly = document.getElementById("endpointPassingOnly");
   els.endpointCopyFormat = document.getElementById("endpointCopyFormat");
   els.copyEndpointListButton = document.getElementById("copyEndpointListButton");
+  els.refreshResultsButton = document.getElementById("refreshResultsButton");
+  els.refreshStatus = document.getElementById("refreshStatus");
 }
 
 function bindEvents() {
   document.querySelectorAll("[data-network]").forEach((button) => {
     button.addEventListener("click", () => setNetwork(button.dataset.network));
   });
+
+  els.refreshResultsButton.addEventListener("click", () => triggerValidationRefresh());
 
   document.querySelectorAll("[data-tab]").forEach((button) => {
     button.addEventListener("click", () => setTab(button.dataset.tab));
@@ -272,18 +285,19 @@ function saveUiState() {
   }
 }
 
-async function loadData() {
+async function loadData(options = {}) {
+  const { cacheBust = false } = options;
   try {
-    state.latest = await fetchJsonFromSources(DATA_SOURCES.latest, "latest snapshot");
+    state.latest = await fetchJsonFromSources(DATA_SOURCES.latest, "latest snapshot", { cacheBust });
     state.producers = Array.isArray(state.latest.producers) ? state.latest.producers : [];
   } catch (error) {
     renderLoadError(error);
     return;
   }
 
-  const history = await fetchOptionalJsonFromSources(DATA_SOURCES.history);
-  const legacyCpuHistory = await fetchOptionalJsonFromSources(DATA_SOURCES.legacyCpuHistory);
-  state.ifchecker = await fetchOptionalJsonFromSources(DATA_SOURCES.ifchecker);
+  const history = await fetchOptionalJsonFromSources(DATA_SOURCES.history, { cacheBust });
+  const legacyCpuHistory = await fetchOptionalJsonFromSources(DATA_SOURCES.legacyCpuHistory, { cacheBust });
+  state.ifchecker = await fetchOptionalJsonFromSources(DATA_SOURCES.ifchecker, { cacheBust });
   state.historyRuns = mergeHistoryRuns(
     Array.isArray(history && history.runs) ? history.runs : [],
     Array.isArray(legacyCpuHistory && legacyCpuHistory.runs) ? legacyCpuHistory.runs : [],
@@ -296,26 +310,160 @@ async function loadData() {
   renderEndpoints();
 }
 
-async function fetchJsonFromSources(urls, label) {
+async function fetchJsonFromSources(urls, label, options = {}) {
+  const { cacheBust = false } = options;
   const errors = [];
   for (const url of urls) {
+    const fetchUrl = cacheBustUrl(url, cacheBust);
     try {
-      const response = await fetch(url, { cache: "no-store" });
+      const response = await fetch(fetchUrl, { cache: "no-store" });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     } catch (error) {
-      errors.push(`${url}: ${error.message}`);
+      errors.push(`${fetchUrl}: ${error.message}`);
     }
   }
   throw new Error(`${label} could not be loaded (${errors.join("; ")})`);
 }
 
-async function fetchOptionalJsonFromSources(urls) {
+async function fetchOptionalJsonFromSources(urls, options = {}) {
   try {
-    return await fetchJsonFromSources(urls, "optional history snapshot");
+    return await fetchJsonFromSources(urls, "optional history snapshot", options);
   } catch (error) {
     return null;
   }
+}
+
+function cacheBustUrl(url, enabled) {
+  if (!enabled) return url;
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}refresh=${Date.now()}`;
+}
+
+async function triggerValidationRefresh() {
+  const previousGeneratedAt = state.latest && state.latest.generatedAt ? state.latest.generatedAt : "";
+  state.refreshPreviousGeneratedAt = previousGeneratedAt;
+  setRefreshUi({ busy: true, message: "Starting refresh..." });
+
+  try {
+    const payload = await fetchValidationRefresh("POST");
+    handleRefreshPayload(payload);
+  } catch (error) {
+    stopRefreshPolling();
+    setRefreshUi({ busy: false, message: error.message, tone: "bad" });
+  }
+}
+
+async function fetchValidationRefresh(method) {
+  const response = await fetch(VALIDATION_REFRESH_ENDPOINT, {
+    method,
+    headers: { accept: "application/json" },
+    cache: "no-store",
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.error || `Refresh request failed with HTTP ${response.status}`);
+  }
+  return payload;
+}
+
+function handleRefreshPayload(payload) {
+  const status = payload.status || "unknown";
+  const run = payload.run || null;
+  state.refreshRunId = run && run.id ? run.id : state.refreshRunId;
+
+  if (status === "queued" || status === "running") {
+    const label = status === "queued" ? "queued" : "running";
+    setRefreshUi({ busy: true, message: `Validation refresh ${label}...` });
+    startRefreshPolling();
+    return;
+  }
+
+  if (status === "recent") {
+    stopRefreshPolling();
+    setRefreshUi({ busy: true, message: "Reloading latest snapshot..." });
+    waitForUpdatedSnapshot({ allowCurrent: true });
+    return;
+  }
+
+  if (status === "completed") {
+    stopRefreshPolling();
+    setRefreshUi({ busy: true, message: "Workflow complete; waiting for snapshot..." });
+    waitForUpdatedSnapshot({ allowCurrent: false });
+    return;
+  }
+
+  if (status === "failed") {
+    stopRefreshPolling();
+    setRefreshUi({ busy: false, message: "Validation workflow failed.", tone: "bad" });
+    return;
+  }
+
+  stopRefreshPolling();
+  setRefreshUi({ busy: false, message: payload.message || "Refresh status is unknown.", tone: "bad" });
+}
+
+function startRefreshPolling() {
+  if (state.refreshPollTimer) return;
+  state.refreshPollAttempts = 0;
+  state.refreshPollTimer = window.setInterval(pollValidationRefresh, REFRESH_POLL_INTERVAL_MS);
+}
+
+function stopRefreshPolling() {
+  if (state.refreshPollTimer) {
+    window.clearInterval(state.refreshPollTimer);
+    state.refreshPollTimer = null;
+  }
+}
+
+async function pollValidationRefresh() {
+  state.refreshPollAttempts += 1;
+  if (state.refreshPollAttempts > REFRESH_MAX_POLL_ATTEMPTS) {
+    stopRefreshPolling();
+    setRefreshUi({ busy: false, message: "Refresh is still running; check again shortly.", tone: "bad" });
+    return;
+  }
+
+  try {
+    const payload = await fetchValidationRefresh("GET");
+    if (state.refreshRunId && payload.run && payload.run.id && payload.run.id !== state.refreshRunId && payload.status === "completed") {
+      return;
+    }
+    handleRefreshPayload(payload);
+  } catch (error) {
+    stopRefreshPolling();
+    setRefreshUi({ busy: false, message: error.message, tone: "bad" });
+  }
+}
+
+async function waitForUpdatedSnapshot(options = {}) {
+  const { allowCurrent = false } = options;
+  const previousGeneratedAt = state.refreshPreviousGeneratedAt;
+
+  for (let attempt = 0; attempt < SNAPSHOT_MAX_POLL_ATTEMPTS; attempt += 1) {
+    await loadData({ cacheBust: true });
+    const nextGeneratedAt = state.latest && state.latest.generatedAt ? state.latest.generatedAt : "";
+    if (allowCurrent || !previousGeneratedAt || nextGeneratedAt !== previousGeneratedAt) {
+      const updated = nextGeneratedAt ? `Updated ${formatDateTime(nextGeneratedAt)}.` : "Results updated.";
+      setRefreshUi({ busy: false, message: updated, tone: "good" });
+      return;
+    }
+    await delay(SNAPSHOT_POLL_INTERVAL_MS);
+  }
+
+  setRefreshUi({ busy: false, message: "Workflow completed; snapshot is still deploying.", tone: "bad" });
+}
+
+function setRefreshUi({ busy, message, tone = "" }) {
+  els.refreshResultsButton.disabled = Boolean(busy);
+  els.refreshResultsButton.setAttribute("aria-busy", String(Boolean(busy)));
+  els.refreshStatus.textContent = message || "";
+  els.refreshStatus.classList.toggle("is-good", tone === "good");
+  els.refreshStatus.classList.toggle("is-bad", tone === "bad");
+}
+
+function delay(ms) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
 }
 
 function mergeHistoryRuns(primaryRuns, legacyCpuRuns) {

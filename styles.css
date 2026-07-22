@@ -104,6 +104,53 @@ a:hover {
   background: var(--blue);
 }
 
+.refresh-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.refresh-button {
+  min-height: 36px;
+  padding: 0 14px;
+  color: #ffffff;
+  background: var(--text);
+  border: 1px solid var(--text);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.refresh-button:hover:not(:disabled) {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.refresh-button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.refresh-status {
+  max-width: 240px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.refresh-status.is-good {
+  color: var(--green);
+}
+
+.refresh-status.is-bad {
+  color: var(--red);
+}
+
 .eyebrow {
   margin: 0 0 4px;
   color: var(--muted);
@@ -863,6 +910,21 @@ tbody tr.schedule-divider:hover td,
   .status-line {
     width: 100%;
     text-align: left;
+  }
+
+  .refresh-control {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  .refresh-button {
+    width: 100%;
+  }
+
+  .refresh-status {
+    max-width: 100%;
   }
 
   .network-switch {
