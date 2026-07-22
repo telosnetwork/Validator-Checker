@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T16:48:49.959Z",
+  "generatedAt": "2026-07-22T17:43:19.632Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-22T16:48:49.958Z",
-      "durationMs": 22883,
+      "generatedAt": "2026-07-22T17:43:16.939Z",
+      "durationMs": 19112,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 435688533,
-        "lastIrreversibleBlockNum": 435688531,
+        "headBlockNum": 435695070,
+        "lastIrreversibleBlockNum": 435695068,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-22T16:48:27.500",
-        "headBlockProducer": "tempbpfillbb",
+        "headBlockTime": "2026-07-22T17:42:58.000",
+        "headBlockProducer": "tempbpfillaa",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -477,7 +477,7 @@
           "url": "https://genereos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 26002,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 4,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2468,15 +2468,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-22T16:48:49.959Z",
-      "durationMs": 22852,
+      "generatedAt": "2026-07-22T17:43:19.632Z",
+      "durationMs": 21775,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 479444171,
-        "lastIrreversibleBlockNum": 479443827,
-        "libLagBlocks": 344,
-        "headBlockTime": "2026-07-22T16:48:27.500",
-        "headBlockProducer": "ledgerwisete",
+        "headBlockNum": 479450712,
+        "lastIrreversibleBlockNum": 479450379,
+        "libLagBlocks": 333,
+        "headBlockTime": "2026-07-22T17:42:58.000",
+        "headBlockProducer": "bigironbptex",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2485,22 +2485,22 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 15,
-        "review": 4,
+        "ready": 17,
+        "review": 2,
         "blocked": 2,
-        "readyRows": 18,
-        "reviewRows": 7,
+        "readyRows": 20,
+        "reviewRows": 5,
         "blockedRows": 2,
         "finalizersRegistered": 19,
         "finalizersActive": 19,
-        "activeSpringCompatible": 17,
-        "springCompatible": 17,
-        "bpApiSpring": 17,
+        "activeSpringCompatible": 18,
+        "springCompatible": 18,
+        "bpApiSpring": 18,
         "bpApiReview": 0,
-        "bpApiUnknown": 4,
+        "bpApiUnknown": 3,
         "bpApiBlocked": 0,
-        "publicP2pOk": 17,
-        "publicP2pReview": 4,
+        "publicP2pOk": 18,
+        "publicP2pReview": 3,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2516,15 +2516,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "17/21 Spring",
-          "detail": "0 review, 4 unknown, 0 blocked"
+          "value": "18/21 Spring",
+          "detail": "0 review, 3 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "17/21 reachable",
-          "detail": "4 review, 0 unknown"
+          "value": "18/21 reachable",
+          "detail": "3 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -3263,8 +3263,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p.telosarabia.net:9876",
             "bpJsonUrl": "https://eosarabia.net/telos.json",
             "bpJsonSource": "chains.json",
@@ -3276,17 +3276,16 @@
             "attempts": [
               {
                 "endpoint": "p2p.telosarabia.net:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connect ECONNREFUSED 136.243.248.194:9876"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "persiantelos",
@@ -3538,10 +3537,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://api.bigironbp.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://bigironbp.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3554,18 +3553,10 @@
             "attempts": [
               {
                 "endpoint": "https://api.bigironbp.io",
-                "ok": false,
-                "error": "502 Bad Gateway"
-              },
-              {
-                "endpoint": "http://api.bigironbp.io",
-                "ok": false,
-                "error": "502 Bad Gateway"
-              },
-              {
-                "endpoint": "https://bigironbp.io",
-                "ok": false,
-                "error": "404 Not Found"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -3590,11 +3581,9 @@
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "amsterdam",
