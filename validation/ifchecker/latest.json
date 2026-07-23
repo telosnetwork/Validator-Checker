@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T14:26:04.208Z",
+  "generatedAt": "2026-07-23T16:05:23.153Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-23T14:26:04.207Z",
-      "durationMs": 21147,
+      "generatedAt": "2026-07-23T16:05:21.860Z",
+      "durationMs": 20699,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 435844172,
-        "lastIrreversibleBlockNum": 435844170,
+        "headBlockNum": 435856087,
+        "lastIrreversibleBlockNum": 435856085,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-23T14:25:43.000",
-        "headBlockProducer": "bp.any",
+        "headBlockTime": "2026-07-23T16:05:01.000",
+        "headBlockProducer": "tempbpfill55",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,8 +28,8 @@
         "ready": 16,
         "review": 5,
         "blocked": 0,
-        "readyRows": 22,
-        "reviewRows": 9,
+        "readyRows": 23,
+        "reviewRows": 8,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -405,7 +405,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 25702,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1906,7 +1906,7 @@
           "blockSigningKey": "",
           "votes": "21710110993.44345092773437500",
           "votesCompact": "21.7B",
-          "url": "https//infinitybloc.io",
+          "url": "https://infinitybloc.io",
           "isActive": true,
           "lifetimeMissedBlocks": 23439,
           "missedBlocksPerRotation": 0,
@@ -1922,42 +1922,53 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://https//infinitybloc.io/chains.json: fetch failed | https://https//infinitybloc.io/testnet.json: fetch failed | https://https//infinitybloc.io/bp.json: fetch failed | https://https//infinitybloc.io/telos.json: fetch failed",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos-testnet.infinitybloc.io",
+            "version": "v1.2.2",
+            "bpJsonUrl": "https://infinitybloc.io/telos-testnet.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
-              "https://https//infinitybloc.io"
+              "https://telos-testnet.infinitybloc.io",
+              "http://telos-testnet.infinitybloc.io",
+              "https://infinitybloc.io"
             ],
             "attempts": [
               {
-                "endpoint": "https://https//infinitybloc.io",
-                "ok": false,
-                "error": "fetch failed"
+                "endpoint": "https://telos-testnet.infinitybloc.io",
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://https//infinitybloc.io/chains.json: fetch failed | https://https//infinitybloc.io/testnet.json: fetch failed | https://https//infinitybloc.io/bp.json: fetch failed | https://https//infinitybloc.io/telos.json: fetch failed",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "peer-telos-testnet.infinitybloc.io:9877",
+            "bpJsonUrl": "https://infinitybloc.io/telos-testnet.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "peer-telos-testnet.infinitybloc.io:9877"
+            ],
+            "attempts": [
+              {
+                "endpoint": "peer-telos-testnet.infinitybloc.io:9877",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "warnings": []
         },
         {
           "name": "bp.yknot",
@@ -2468,15 +2479,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-23T14:26:04.207Z",
-      "durationMs": 21125,
+      "generatedAt": "2026-07-23T16:05:23.153Z",
+      "durationMs": 21972,
       "overallStatus": "blocker",
       "info": {
-        "headBlockNum": 479599827,
-        "lastIrreversibleBlockNum": 479599500,
+        "headBlockNum": 479611743,
+        "lastIrreversibleBlockNum": 479611416,
         "libLagBlocks": 327,
-        "headBlockTime": "2026-07-23T14:25:43.000",
-        "headBlockProducer": "bp.any",
+        "headBlockTime": "2026-07-23T16:05:01.000",
+        "headBlockProducer": "telosgreenbp",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2486,13 +2497,13 @@
         "standby": 6,
         "producerRowsActive": 27,
         "ready": 16,
-        "review": 3,
-        "blocked": 2,
+        "review": 4,
+        "blocked": 1,
         "readyRows": 20,
-        "reviewRows": 5,
-        "blockedRows": 2,
-        "finalizersRegistered": 19,
-        "finalizersActive": 19,
+        "reviewRows": 6,
+        "blockedRows": 1,
+        "finalizersRegistered": 20,
+        "finalizersActive": 20,
         "activeSpringCompatible": 17,
         "springCompatible": 17,
         "bpApiSpring": 17,
@@ -2509,7 +2520,7 @@
           "key": "finalizers",
           "label": "Scheduled BP finalizers",
           "status": "blocker",
-          "value": "19/21 active",
+          "value": "20/21 active",
           "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
@@ -2573,7 +2584,7 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 24 rows | finalizers: 24 rows"
+          "detail": "finkeys: 25 rows | finalizers: 25 rows"
         },
         {
           "key": "savanna",
@@ -2699,13 +2710,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 24,
+          "rows": 25,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 24,
+          "rows": 25,
           "error": ""
         }
       ],
@@ -3742,10 +3753,15 @@
           "lifetimeMissedBlocks": 11520,
           "missedBlocksPerRotation": 0,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_ccS8YzSpN4m321SMY6CbUMx8J31jGbUEHfUvy-_mfE7P64womAiOOXR0yeDVC-oTmAzXYz5JSdMqRCovf3PjTJqftV3_zAozoehM1R5oP5JcyfkTKspdg2X_yRV9uJUZxlcuUg"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -3791,10 +3807,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "P2P endpoint missing port"
           ]
