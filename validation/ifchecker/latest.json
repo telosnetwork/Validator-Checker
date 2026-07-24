@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T18:47:32.501Z",
+  "generatedAt": "2026-07-24T20:23:27.535Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-24T18:47:32.500Z",
-      "durationMs": 23127,
+      "generatedAt": "2026-07-24T20:23:27.535Z",
+      "durationMs": 20463,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 436048299,
-        "lastIrreversibleBlockNum": 436048297,
+        "headBlockNum": 436059809,
+        "lastIrreversibleBlockNum": 436059807,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-24T18:47:10.500",
-        "headBlockProducer": "tempbpfillbb",
+        "headBlockTime": "2026-07-24T20:23:07.000",
+        "headBlockProducer": "telosarabia1",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -261,7 +261,7 @@
           "url": "https://eosiomadrid.io/telos/testnet",
           "isActive": true,
           "lifetimeMissedBlocks": 23181,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -405,7 +405,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 25711,
-          "missedBlocksPerRotation": 1,
+          "missedBlocksPerRotation": 3,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2480,16 +2480,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-24T18:47:32.501Z",
-      "durationMs": 22774,
-      "overallStatus": "blocker",
+      "generatedAt": "2026-07-24T20:23:27.534Z",
+      "durationMs": 20429,
+      "overallStatus": "review",
       "info": {
-        "headBlockNum": 479803954,
-        "lastIrreversibleBlockNum": 479803620,
-        "libLagBlocks": 334,
-        "headBlockTime": "2026-07-24T18:47:10.500",
-        "headBlockProducer": "bigironbptex",
-        "serverVersion": "v1.2.2-lateblockfix",
+        "headBlockNum": 479815467,
+        "lastIrreversibleBlockNum": 479815140,
+        "libLagBlocks": 327,
+        "headBlockTime": "2026-07-24T20:23:07.000",
+        "headBlockProducer": "persiantelos",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2498,13 +2498,13 @@
         "standby": 6,
         "producerRowsActive": 27,
         "ready": 16,
-        "review": 4,
-        "blocked": 1,
+        "review": 5,
+        "blocked": 0,
         "readyRows": 20,
-        "reviewRows": 6,
-        "blockedRows": 1,
-        "finalizersRegistered": 20,
-        "finalizersActive": 20,
+        "reviewRows": 7,
+        "blockedRows": 0,
+        "finalizersRegistered": 21,
+        "finalizersActive": 21,
         "activeSpringCompatible": 18,
         "springCompatible": 18,
         "bpApiSpring": 18,
@@ -2517,13 +2517,6 @@
         "publicP2pBlocked": 0
       },
       "gates": [
-        {
-          "key": "finalizers",
-          "label": "Scheduled BP finalizers",
-          "status": "blocker",
-          "value": "20/21 active",
-          "detail": "Every scheduled BP needs an active finalizer key"
-        },
         {
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
@@ -2549,7 +2542,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2-lateblockfix",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2585,7 +2578,14 @@
           "label": "Finalizer key tables",
           "status": "ok",
           "value": "Readable",
-          "detail": "finkeys: 26 rows | finalizers: 26 rows"
+          "detail": "finkeys: 27 rows | finalizers: 27 rows"
+        },
+        {
+          "key": "finalizers",
+          "label": "Scheduled BP finalizers",
+          "status": "ok",
+          "value": "21/21 active",
+          "detail": "Every scheduled BP needs an active finalizer key"
         },
         {
           "key": "savanna",
@@ -2711,13 +2711,13 @@
         {
           "table": "finkeys",
           "ok": true,
-          "rows": 26,
+          "rows": 27,
           "error": ""
         },
         {
           "table": "finalizers",
           "ok": true,
-          "rows": 26,
+          "rows": 27,
           "error": ""
         }
       ],
@@ -3899,10 +3899,15 @@
           "lifetimeMissedBlocks": 10658,
           "missedBlocksPerRotation": 0,
           "finalizer": {
-            "registered": false,
-            "active": false,
-            "keys": [],
-            "tables": []
+            "registered": true,
+            "active": true,
+            "keys": [
+              "PUB_BLS_zVYddlUsTdc0Q7TXizkdvy49bODYwncpu99oBJU7MifIlVpmuw5lFI4qwlCkgvwNtKPYBgZs7vsc1KYqTtrQGOKdkqxI_CE3u8uthFbLviILCmfm3JEsw9XLRtmdnHUAfliTWg"
+            ],
+            "tables": [
+              "finkeys",
+              "finalizers"
+            ]
           },
           "api": {
             "status": "ok",
@@ -3948,10 +3953,8 @@
               }
             ]
           },
-          "status": "blocker",
-          "blockers": [
-            "No finalizer key row found"
-          ],
+          "status": "review",
+          "blockers": [],
           "warnings": [
             "P2P handshake failed"
           ]
