@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-29T07:32:25.939Z",
+  "generatedAt": "2026-07-29T10:19:22.541Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-29T07:32:24.033Z",
-      "durationMs": 19124,
+      "generatedAt": "2026-07-29T10:19:21.580Z",
+      "durationMs": 18474,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 436830487,
-        "lastIrreversibleBlockNum": 436830485,
+        "headBlockNum": 436850521,
+        "lastIrreversibleBlockNum": 436850519,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-29T07:32:05.500",
-        "headBlockProducer": "tempbpfillbb",
+        "headBlockTime": "2026-07-29T10:19:03.500",
+        "headBlockProducer": "telosgermany",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,11 +25,11 @@
         "scheduled": 21,
         "standby": 9,
         "producerRowsActive": 30,
-        "ready": 15,
-        "review": 6,
+        "ready": 16,
+        "review": 5,
         "blocked": 0,
-        "readyRows": 21,
-        "reviewRows": 9,
+        "readyRows": 22,
+        "reviewRows": 8,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -39,8 +39,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 2,
         "bpApiBlocked": 0,
-        "publicP2pOk": 15,
-        "publicP2pReview": 6,
+        "publicP2pOk": 16,
+        "publicP2pReview": 5,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -56,8 +56,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "15/21 reachable",
-          "detail": "6 review, 0 unknown"
+          "value": "16/21 reachable",
+          "detail": "5 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -1066,7 +1066,7 @@
           "url": "https://www.eosphere.io",
           "isActive": true,
           "lifetimeMissedBlocks": 8061,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 2,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1081,7 +1081,7 @@
           "api": {
             "status": "ok",
             "label": "Spring",
-            "endpoint": "http://telos-testnet.eosphere.io",
+            "endpoint": "https://telos-testnet.eosphere.io",
             "version": "v1.2.2",
             "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
             "bpJsonSource": "chains.json",
@@ -1095,11 +1095,6 @@
             "attempts": [
               {
                 "endpoint": "https://telos-testnet.eosphere.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telos-testnet.eosphere.io",
                 "ok": true,
                 "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
                 "version": "v1.2.2",
@@ -1108,8 +1103,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "peer1-telos-testnet.eosphere.io:9876",
             "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
             "bpJsonSource": "chains.json",
@@ -1121,17 +1116,16 @@
             "attempts": [
               {
                 "endpoint": "peer1-telos-testnet.eosphere.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "orbitalblock",
@@ -2414,15 +2408,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-29T07:32:25.939Z",
-      "durationMs": 20996,
+      "generatedAt": "2026-07-29T10:19:22.540Z",
+      "durationMs": 19330,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 480586723,
-        "lastIrreversibleBlockNum": 480586721,
+        "headBlockNum": 480606759,
+        "lastIrreversibleBlockNum": 480606757,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-29T07:32:05.500",
-        "headBlockProducer": "cryptolions1",
+        "headBlockTime": "2026-07-29T10:19:04.000",
+        "headBlockProducer": "telosgermany",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2434,8 +2428,8 @@
         "ready": 14,
         "review": 7,
         "blocked": 0,
-        "readyRows": 18,
-        "reviewRows": 9,
+        "readyRows": 19,
+        "reviewRows": 8,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -2484,7 +2478,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 7751"
+          "detail": "Schedule version 7752"
         },
         {
           "key": "features",
@@ -2659,7 +2653,7 @@
         {
           "name": "caleosblocks",
           "scheduleType": "active",
-          "schedulePosition": 8,
+          "schedulePosition": 10,
           "rank": 1,
           "blockSigningKey": "EOS5dE2h1zymNHqu9UFYj57F5qv8E3ghjSLxNSVoRjMCWeGZB4F6T",
           "votes": "926742100244.18798828125000000",
@@ -2731,7 +2725,7 @@
         {
           "name": "infinitybloc",
           "scheduleType": "active",
-          "schedulePosition": 9,
+          "schedulePosition": 11,
           "rank": 2,
           "blockSigningKey": "EOS7rkeZxB5Ex45tsYTtmoWogzZAnZCDSW1gFaja7xcUT7s17zSnV",
           "votes": "820975090015.07556152343750000",
@@ -2803,7 +2797,7 @@
         {
           "name": "telosmadrid1",
           "scheduleType": "active",
-          "schedulePosition": 15,
+          "schedulePosition": 17,
           "rank": 3,
           "blockSigningKey": "EOS8LSnCvd5CaN6sa5wbsFtJ2ZyPfyvXDcP5jBhxvnn33xAracDh8",
           "votes": "805613986730.32922363281250000",
@@ -2875,7 +2869,7 @@
         {
           "name": "telosunlimit",
           "scheduleType": "active",
-          "schedulePosition": 5,
+          "schedulePosition": 7,
           "rank": 4,
           "blockSigningKey": "EOS6eULtNmR8SpczkD1NQ8ufWwhh4W5mgPDNtUQwhTNFbqHMioZMc",
           "votes": "749036044488.38598632812500000",
@@ -2947,7 +2941,7 @@
         {
           "name": "votetelosusa",
           "scheduleType": "active",
-          "schedulePosition": 10,
+          "schedulePosition": 12,
           "rank": 5,
           "blockSigningKey": "EOS5D2Xfg39dfiXYs84FvvEccLD23d1PPmkv8SoU3EgYCjhRtWbzb",
           "votes": "726061270463.63806152343750000",
@@ -3019,7 +3013,7 @@
         {
           "name": "eosphereiobp",
           "scheduleType": "active",
-          "schedulePosition": 20,
+          "schedulePosition": 21,
           "rank": 6,
           "blockSigningKey": "EOS5fNhSCnuesLTDz61gMGqeZHrANx3mujc4Es7BaVyqarWVuUNza",
           "votes": "724753631171.37097167968750000",
@@ -3091,10 +3085,10 @@
         },
         {
           "name": "telosgreenbp",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 3,
           "rank": 7,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS71Jn2wt32tEru3xSaFjeMES2gXiXgGarmDeuotVUtM5Puf23b2",
           "votes": "703466741714.66687011718750000",
           "votesCompact": "703.5B",
           "url": "https://telosgreen.com",
@@ -3163,10 +3157,10 @@
         },
         {
           "name": "telosarabia1",
-          "scheduleType": "active",
-          "schedulePosition": 16,
+          "scheduleType": "standby",
+          "schedulePosition": null,
           "rank": 8,
-          "blockSigningKey": "EOS7vQ1XAecSFoBk83ku14FK2HGNvDM3GLC1VARELwLngnQL5be91",
+          "blockSigningKey": "",
           "votes": "574684700742.08605957031250000",
           "votesCompact": "574.7B",
           "url": "https://eosarabia.net",
@@ -3236,7 +3230,7 @@
         {
           "name": "persiantelos",
           "scheduleType": "active",
-          "schedulePosition": 14,
+          "schedulePosition": 16,
           "rank": 9,
           "blockSigningKey": "EOS7rGBxBAGkbAKd7BWuKNQ1LXVHuEHZcVKsRj2fYtCjqZtNYW1VU",
           "votes": "536878809259.86279296875000000",
@@ -3318,15 +3312,15 @@
         {
           "name": "telosgermany",
           "scheduleType": "active",
-          "schedulePosition": 12,
+          "schedulePosition": 14,
           "rank": 10,
           "blockSigningKey": "EOS7NVXQ1fqNLZqhYkyVjb5jrQSFWbQyLwQnVZ8zapPCdnBNDVH1w",
           "votes": "429241817800.08435058593750000",
           "votesCompact": "429.2B",
           "url": "https://genereos.io",
           "isActive": true,
-          "lifetimeMissedBlocks": 5605,
-          "missedBlocksPerRotation": 6,
+          "lifetimeMissedBlocks": 5611,
+          "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -3390,7 +3384,7 @@
         {
           "name": "telosindiabp",
           "scheduleType": "active",
-          "schedulePosition": 19,
+          "schedulePosition": 20,
           "rank": 11,
           "blockSigningKey": "EOS7k8QZs762JNxq8xRZ3ur2CWcNr2sKctsiffGbwsizsJnizYqkE",
           "votes": "386571542521.61932373046875000",
@@ -3534,7 +3528,7 @@
         {
           "name": "amsterdam",
           "scheduleType": "active",
-          "schedulePosition": 11,
+          "schedulePosition": 13,
           "rank": 13,
           "blockSigningKey": "EOS7FuLHve4xezeRyVMyGedMTg3uD6exwUA9dr8vQrCQtQrrzm1uK",
           "votes": "382553210260.36199951171875000",
@@ -3606,7 +3600,7 @@
         {
           "name": "eosriobrazil",
           "scheduleType": "active",
-          "schedulePosition": 7,
+          "schedulePosition": 9,
           "rank": 14,
           "blockSigningKey": "EOS6zAUZCNZkufYLTQv96jsiAgt3aTEaDUak2DRxcuYWWaAJVGnYf",
           "votes": "372494672491.00042724609375000",
@@ -3678,15 +3672,15 @@
         {
           "name": "bp.yknot",
           "scheduleType": "active",
-          "schedulePosition": 13,
+          "schedulePosition": 15,
           "rank": 15,
           "blockSigningKey": "EOS7vjN5aHuRjg5q8kfWLsFGcZu2s8tnAAPq84pLPQiAz5uav9aHL",
           "votes": "297011908258.10632324218750000",
           "votesCompact": "297.0B",
           "url": "https://y-knot.io",
           "isActive": true,
-          "lifetimeMissedBlocks": 11533,
-          "missedBlocksPerRotation": 113,
+          "lifetimeMissedBlocks": 11646,
+          "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -3758,8 +3752,8 @@
           "votesCompact": "260.2B",
           "url": "https://ledgerwise.io",
           "isActive": true,
-          "lifetimeMissedBlocks": 1612,
-          "missedBlocksPerRotation": 1,
+          "lifetimeMissedBlocks": 1614,
+          "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -3823,7 +3817,7 @@
         {
           "name": "cryptolions1",
           "scheduleType": "active",
-          "schedulePosition": 3,
+          "schedulePosition": 4,
           "rank": 17,
           "blockSigningKey": "EOS5hKeDPnk62zCLionSNwMebA95EpfZsJmSu1YA8V2HnakUhc6rM",
           "votes": "258590652779.64385986328125000",
@@ -3896,7 +3890,7 @@
         {
           "name": "eosiodetroit",
           "scheduleType": "active",
-          "schedulePosition": 4,
+          "schedulePosition": 5,
           "rank": 18,
           "blockSigningKey": "EOS85K67qSueCLQCcv7kgoXZR44rgDqYiZUJzyV4HULWhPMa3UU7L",
           "votes": "248311921138.44485473632812500",
@@ -3968,7 +3962,7 @@
         {
           "name": "bp.adex",
           "scheduleType": "active",
-          "schedulePosition": 18,
+          "schedulePosition": 19,
           "rank": 19,
           "blockSigningKey": "EOS52tCjiD2vgwwrBe3vgsTZLE3WAcFufHWtCM4dMdswy6k6uErDb",
           "votes": "236168709350.53628540039062500",
@@ -4041,7 +4035,7 @@
         {
           "name": "orbitalblock",
           "scheduleType": "active",
-          "schedulePosition": 6,
+          "schedulePosition": 8,
           "rank": 20,
           "blockSigningKey": "EOS7V1a9uQqUHfy9e7FaoF6yd7KX7kUQc9qHoHpA3YDQJGMUvKzST",
           "votes": "199554101179.63916015625000000",
@@ -4111,7 +4105,7 @@
         {
           "name": "bp.any",
           "scheduleType": "active",
-          "schedulePosition": 17,
+          "schedulePosition": 18,
           "rank": 21,
           "blockSigningKey": "EOS55hj3pBb59y5R92K2LfWxVdNhAmPobDjHRfGNS7CtkrVVhFLXx",
           "votes": "139957983847.35968017578125000",
@@ -4171,10 +4165,10 @@
         },
         {
           "name": "smartelos",
-          "scheduleType": "active",
-          "schedulePosition": 21,
+          "scheduleType": "standby",
+          "schedulePosition": null,
           "rank": 22,
-          "blockSigningKey": "EOS6rYgFtqJWgcyneomQiQwpim9cK9sTDr5PmYJR28zrwtWY26ZCv",
+          "blockSigningKey": "",
           "votes": "98974826274.13777160644531250",
           "votesCompact": "99.0B",
           "url": "https://smartelos.com",
@@ -4241,10 +4235,10 @@
         },
         {
           "name": "telosamigoss",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 6,
           "rank": 23,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS6yhWk15Hfkykzx7qBmsrfcomhr82QMgKAZ44GCPUdgh3frcXfe",
           "votes": "29415651560.31069564819335938",
           "votesCompact": "29.4B",
           "url": "https://www.tlos.news",
@@ -4549,42 +4543,53 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.eosusa.io",
+            "version": "v1.2.2-lateblockfix",
+            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://telos.eosusa.io",
+              "http://telos.eosusa.io",
               "https://eosusa.io/bp/telos"
             ],
             "attempts": [
               {
-                "endpoint": "https://eosusa.io/bp/telos",
-                "ok": false,
-                "error": "404 Not Found"
+                "endpoint": "https://telos.eosusa.io",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2-lateblockfix",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "telos.p2p.eosusa.io:9876",
+            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "telos.p2p.eosusa.io:9876"
+            ],
+            "attempts": [
+              {
+                "endpoint": "telos.p2p.eosusa.io:9876",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "warnings": []
         }
       ],
       "sourceNotes": [
