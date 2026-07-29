@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-29T04:33:29.032Z",
+  "generatedAt": "2026-07-29T07:32:25.939Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-07-29T04:33:29.032Z",
-      "durationMs": 18207,
+      "generatedAt": "2026-07-29T07:32:24.033Z",
+      "durationMs": 19124,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 436809018,
-        "lastIrreversibleBlockNum": 436809016,
+        "headBlockNum": 436830487,
+        "lastIrreversibleBlockNum": 436830485,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-29T04:33:11.000",
-        "headBlockProducer": "bp.adex",
+        "headBlockTime": "2026-07-29T07:32:05.500",
+        "headBlockProducer": "tempbpfillbb",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,11 +25,11 @@
         "scheduled": 21,
         "standby": 9,
         "producerRowsActive": 30,
-        "ready": 16,
-        "review": 5,
+        "ready": 15,
+        "review": 6,
         "blocked": 0,
-        "readyRows": 22,
-        "reviewRows": 8,
+        "readyRows": 21,
+        "reviewRows": 9,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -39,8 +39,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 2,
         "bpApiBlocked": 0,
-        "publicP2pOk": 16,
-        "publicP2pReview": 5,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -56,8 +56,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "16/21 reachable",
-          "detail": "5 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -1081,7 +1081,7 @@
           "api": {
             "status": "ok",
             "label": "Spring",
-            "endpoint": "https://telos-testnet.eosphere.io",
+            "endpoint": "http://telos-testnet.eosphere.io",
             "version": "v1.2.2",
             "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
             "bpJsonSource": "chains.json",
@@ -1095,6 +1095,11 @@
             "attempts": [
               {
                 "endpoint": "https://telos-testnet.eosphere.io",
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "http://telos-testnet.eosphere.io",
                 "ok": true,
                 "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
                 "version": "v1.2.2",
@@ -1103,8 +1108,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "peer1-telos-testnet.eosphere.io:9876",
             "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
             "bpJsonSource": "chains.json",
@@ -1116,16 +1121,17 @@
             "attempts": [
               {
                 "endpoint": "peer1-telos-testnet.eosphere.io:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection timed out"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "orbitalblock",
@@ -2408,15 +2414,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-07-29T04:33:28.789Z",
-      "durationMs": 17875,
+      "generatedAt": "2026-07-29T07:32:25.939Z",
+      "durationMs": 20996,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 480565255,
-        "lastIrreversibleBlockNum": 480565253,
+        "headBlockNum": 480586723,
+        "lastIrreversibleBlockNum": 480586721,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-07-29T04:33:11.500",
-        "headBlockProducer": "eosphereiobp",
+        "headBlockTime": "2026-07-29T07:32:05.500",
+        "headBlockProducer": "cryptolions1",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2428,8 +2434,8 @@
         "ready": 14,
         "review": 7,
         "blocked": 0,
-        "readyRows": 19,
-        "reviewRows": 8,
+        "readyRows": 18,
+        "reviewRows": 9,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -4543,53 +4549,42 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://telos.eosusa.io",
-            "version": "v1.2.2-lateblockfix",
-            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
             "endpoints": [
-              "https://telos.eosusa.io",
-              "http://telos.eosusa.io",
               "https://eosusa.io/bp/telos"
             ],
             "attempts": [
               {
-                "endpoint": "https://telos.eosusa.io",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2-lateblockfix",
-                "chainMatches": true
+                "endpoint": "https://eosusa.io/bp/telos",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
-            "endpoint": "telos.p2p.eosusa.io:9876",
-            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
-            "endpoints": [
-              "telos.p2p.eosusa.io:9876"
-            ],
-            "attempts": [
-              {
-                "endpoint": "telos.p2p.eosusa.io:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
-              }
-            ]
+            "status": "review",
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
+            "endpoints": [],
+            "attempts": []
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "BP metadata unavailable"
+          ]
         }
       ],
       "sourceNotes": [
