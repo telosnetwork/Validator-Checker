@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T22:42:55.094Z",
+  "generatedAt": "2026-08-03T23:51:07.933Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-03T22:42:55.094Z",
-      "durationMs": 21053,
+      "generatedAt": "2026-08-03T23:51:07.933Z",
+      "durationMs": 21495,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 437802027,
-        "lastIrreversibleBlockNum": 437802025,
+        "headBlockNum": 437810210,
+        "lastIrreversibleBlockNum": 437810208,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-03T22:42:34.500",
-        "headBlockProducer": "ledgerwisete",
+        "headBlockTime": "2026-08-03T23:50:47.000",
+        "headBlockProducer": "amsterdam",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -849,7 +849,7 @@
           "url": "https://eosrio.io",
           "isActive": true,
           "lifetimeMissedBlocks": 11464,
-          "missedBlocksPerRotation": 15,
+          "missedBlocksPerRotation": 17,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2491,15 +2491,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-03T22:42:53.333Z",
-      "durationMs": 19214,
+      "generatedAt": "2026-08-03T23:51:05.176Z",
+      "durationMs": 18706,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 481558841,
-        "lastIrreversibleBlockNum": 481558839,
+        "headBlockNum": 481567024,
+        "lastIrreversibleBlockNum": 481567022,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-03T22:42:35.000",
-        "headBlockProducer": "orbitalblock",
+        "headBlockTime": "2026-08-03T23:50:46.500",
+        "headBlockProducer": "persiantelos",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2508,22 +2508,22 @@
         "scheduled": 21,
         "standby": 7,
         "producerRowsActive": 28,
-        "ready": 13,
-        "review": 8,
+        "ready": 14,
+        "review": 7,
         "blocked": 0,
-        "readyRows": 17,
-        "reviewRows": 11,
+        "readyRows": 18,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 17,
-        "springCompatible": 17,
-        "bpApiSpring": 17,
+        "activeSpringCompatible": 18,
+        "springCompatible": 18,
+        "bpApiSpring": 18,
         "bpApiReview": 0,
-        "bpApiUnknown": 4,
+        "bpApiUnknown": 3,
         "bpApiBlocked": 0,
-        "publicP2pOk": 14,
-        "publicP2pReview": 7,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2532,15 +2532,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "17/21 Spring",
-          "detail": "0 review, 4 unknown, 0 blocked"
+          "value": "18/21 Spring",
+          "detail": "0 review, 3 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "14/21 reachable",
-          "detail": "7 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -2757,10 +2757,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.caleos.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://caleos.io/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -2773,24 +2773,16 @@
             "attempts": [
               {
                 "endpoint": "https://telos.caleos.io",
-                "ok": false,
-                "error": "502 Bad Gateway"
-              },
-              {
-                "endpoint": "http://telos.caleos.io",
-                "ok": false,
-                "error": "502 Bad Gateway"
-              },
-              {
-                "endpoint": "https://caleos.io",
-                "ok": false,
-                "error": "405 Method Not Allowed"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "telos.caleos.io:9877",
             "bpJsonUrl": "https://caleos.io/bp.json",
             "bpJsonSource": "chains.json",
@@ -2802,18 +2794,16 @@
             "attempts": [
               {
                 "endpoint": "telos.caleos.io:9877",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connect ECONNREFUSED 208.69.79.78:9877"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "infinitybloc",
