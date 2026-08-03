@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T23:13:53.968Z",
+  "generatedAt": "2026-08-03T00:16:07.541Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-02T23:13:53.968Z",
-      "durationMs": 19975,
+      "generatedAt": "2026-08-03T00:16:07.541Z",
+      "durationMs": 19551,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 437633867,
-        "lastIrreversibleBlockNum": 437633865,
+        "headBlockNum": 437641334,
+        "lastIrreversibleBlockNum": 437641332,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-02T23:13:34.500",
-        "headBlockProducer": "ledgerwisete",
+        "headBlockTime": "2026-08-03T00:15:48.000",
+        "headBlockProducer": "eosphereiobp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,22 +25,22 @@
         "scheduled": 21,
         "standby": 9,
         "producerRowsActive": 30,
-        "ready": 17,
-        "review": 4,
+        "ready": 16,
+        "review": 5,
         "blocked": 0,
-        "readyRows": 21,
-        "reviewRows": 9,
+        "readyRows": 20,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 19,
-        "springCompatible": 19,
-        "bpApiSpring": 19,
+        "activeSpringCompatible": 18,
+        "springCompatible": 18,
+        "bpApiSpring": 18,
         "bpApiReview": 0,
-        "bpApiUnknown": 2,
+        "bpApiUnknown": 3,
         "bpApiBlocked": 0,
-        "publicP2pOk": 17,
-        "publicP2pReview": 4,
+        "publicP2pOk": 16,
+        "publicP2pReview": 5,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -49,15 +49,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "19/21 Spring",
-          "detail": "0 review, 2 unknown, 0 blocked"
+          "value": "18/21 Spring",
+          "detail": "0 review, 3 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "17/21 reachable",
-          "detail": "4 review, 0 unknown"
+          "value": "16/21 reachable",
+          "detail": "5 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -635,53 +635,42 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet2api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/testnet.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
             "endpoints": [
-              "https://testnet2api.telosarabia.net",
-              "http://testnet2api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://testnet2api.telosarabia.net",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "403 Forbidden"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
-            "endpoint": "testnet2p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
-            "endpoints": [
-              "testnet2p2p.telosarabia.net:9876"
-            ],
-            "attempts": [
-              {
-                "endpoint": "testnet2p2p.telosarabia.net:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
-              }
-            ]
+            "status": "review",
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/testnet.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
+            "endpoints": [],
+            "attempts": []
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "BP metadata unavailable"
+          ]
         },
         {
           "name": "telosgreenbp",
@@ -2418,15 +2407,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-02T23:13:52.866Z",
-      "durationMs": 18836,
+      "generatedAt": "2026-08-03T00:16:05.901Z",
+      "durationMs": 17878,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 481390495,
-        "lastIrreversibleBlockNum": 481390493,
+        "headBlockNum": 481397962,
+        "lastIrreversibleBlockNum": 481397960,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-02T23:13:34.500",
-        "headBlockProducer": "eosriobrazil",
+        "headBlockTime": "2026-08-03T00:15:48.000",
+        "headBlockProducer": "eosphereiobp",
         "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2443,11 +2432,11 @@
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 18,
-        "springCompatible": 18,
-        "bpApiSpring": 18,
+        "activeSpringCompatible": 17,
+        "springCompatible": 17,
+        "bpApiSpring": 17,
         "bpApiReview": 0,
-        "bpApiUnknown": 3,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 0,
         "publicP2pOk": 15,
         "publicP2pReview": 6,
@@ -2459,8 +2448,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "18/21 Spring",
-          "detail": "0 review, 3 unknown, 0 blocked"
+          "value": "17/21 Spring",
+          "detail": "0 review, 4 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
@@ -3189,53 +3178,41 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/mainnet.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
             "endpoints": [
-              "https://api.telosarabia.net",
-              "http://api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.telosarabia.net",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "403 Forbidden"
               }
             ]
           },
           "p2p": {
             "status": "review",
-            "label": "P2P handshake failed",
-            "endpoint": "p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
-            "endpoints": [
-              "p2p.telosarabia.net:9876"
-            ],
-            "attempts": [
-              {
-                "endpoint": "p2p.telosarabia.net:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connect ECONNREFUSED 136.243.248.194:9876"
-              }
-            ]
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/mainnet.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
+            "endpoints": [],
+            "attempts": []
           },
           "status": "review",
           "blockers": [],
           "warnings": [
-            "P2P handshake failed"
+            "No matching public API",
+            "BP metadata unavailable"
           ]
         },
         {
