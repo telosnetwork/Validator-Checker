@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T04:31:34.337Z",
+  "generatedAt": "2026-08-13T06:03:45.377Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-13T04:31:34.337Z",
-      "durationMs": 17744,
+      "generatedAt": "2026-08-13T06:03:45.029Z",
+      "durationMs": 17366,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 439398473,
-        "lastIrreversibleBlockNum": 439398471,
+        "headBlockNum": 439409535,
+        "lastIrreversibleBlockNum": 439409533,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-13T04:31:17.000",
-        "headBlockProducer": "telosarabia1",
+        "headBlockTime": "2026-08-13T06:03:28.000",
+        "headBlockProducer": "teloscentral",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,8 +28,8 @@
         "ready": 15,
         "review": 6,
         "blocked": 0,
-        "readyRows": 23,
-        "reviewRows": 10,
+        "readyRows": 22,
+        "reviewRows": 11,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -2211,10 +2211,10 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://api-telos-testnet.orbitalblock.com",
-            "version": "v1.2.2",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://www.orbitalblock.com/testnet-bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -2227,16 +2227,24 @@
             "attempts": [
               {
                 "endpoint": "https://api-telos-testnet.orbitalblock.com",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "http://api-telos-testnet.orbitalblock.com",
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "https://www.orbitalblock.com",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
             "bpJsonUrl": "https://www.orbitalblock.com/testnet-bp.json",
             "bpJsonSource": "chains.json",
@@ -2248,16 +2256,18 @@
             "attempts": [
               {
                 "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connect ECONNREFUSED 148.113.159.135:9876"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "tempbpfill11",
@@ -2624,16 +2634,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-13T04:31:34.253Z",
-      "durationMs": 17567,
+      "generatedAt": "2026-08-13T06:03:45.377Z",
+      "durationMs": 17679,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 483155389,
-        "lastIrreversibleBlockNum": 483155387,
+        "headBlockNum": 483166450,
+        "lastIrreversibleBlockNum": 483166448,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-13T04:31:17.000",
-        "headBlockProducer": "persiantelos",
-        "serverVersion": "v1.2.2",
+        "headBlockTime": "2026-08-13T06:03:28.000",
+        "headBlockProducer": "telosgermany",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2686,7 +2696,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -4113,7 +4123,7 @@
           "url": "https://cryptolions.io",
           "isActive": true,
           "lifetimeMissedBlocks": 10669,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": true,
             "active": true,
