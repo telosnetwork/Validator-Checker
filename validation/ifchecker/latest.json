@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T15:16:33.408Z",
+  "generatedAt": "2026-08-13T16:14:36.740Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-13T15:16:33.408Z",
-      "durationMs": 17794,
+      "generatedAt": "2026-08-13T16:14:36.740Z",
+      "durationMs": 25803,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 439475871,
-        "lastIrreversibleBlockNum": 439475869,
+        "headBlockNum": 439482822,
+        "lastIrreversibleBlockNum": 439482820,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-13T15:16:16.000",
-        "headBlockProducer": "cryptolions1",
+        "headBlockTime": "2026-08-13T16:14:11.500",
+        "headBlockProducer": "telosunlimit",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,11 +25,11 @@
         "scheduled": 21,
         "standby": 12,
         "producerRowsActive": 33,
-        "ready": 17,
-        "review": 4,
+        "ready": 16,
+        "review": 5,
         "blocked": 0,
-        "readyRows": 23,
-        "reviewRows": 10,
+        "readyRows": 22,
+        "reviewRows": 11,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -39,8 +39,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 4,
         "bpApiBlocked": 0,
-        "publicP2pOk": 17,
-        "publicP2pReview": 4,
+        "publicP2pOk": 16,
+        "publicP2pReview": 5,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -56,8 +56,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "17/21 reachable",
-          "detail": "4 review, 0 unknown"
+          "value": "16/21 reachable",
+          "detail": "5 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -896,8 +896,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "p2p-test.telos.eosrio.io:28092",
             "bpJsonUrl": "https://eosrio.io/telos-test.json",
             "bpJsonSource": "chains.json",
@@ -909,16 +909,17 @@
             "attempts": [
               {
                 "endpoint": "p2p-test.telos.eosrio.io:28092",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection timed out"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "telosunlimit",
@@ -1176,7 +1177,7 @@
               {
                 "endpoint": "https://telos.blocksindia.com",
                 "ok": false,
-                "error": "Unexpected token '<', \"<html>\n<he\"... is not valid JSON"
+                "error": "This operation was aborted"
               }
             ]
           },
@@ -2633,15 +2634,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-13T15:16:33.081Z",
-      "durationMs": 17380,
+      "generatedAt": "2026-08-13T16:14:35.586Z",
+      "durationMs": 24631,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 483232784,
-        "lastIrreversibleBlockNum": 483232782,
+        "headBlockNum": 483239735,
+        "lastIrreversibleBlockNum": 483239733,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-13T15:16:16.000",
-        "headBlockProducer": "bp.adex",
+        "headBlockTime": "2026-08-13T16:14:11.500",
+        "headBlockProducer": "votetelosusa",
         "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
