@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T23:53:28.526Z",
+  "generatedAt": "2026-08-15T01:26:58.288Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-14T23:53:28.526Z",
-      "durationMs": 52017,
+      "generatedAt": "2026-08-15T01:26:58.288Z",
+      "durationMs": 52998,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 439710618,
-        "lastIrreversibleBlockNum": 439710616,
+        "headBlockNum": 439721832,
+        "lastIrreversibleBlockNum": 439721830,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-14T23:52:36.500",
-        "headBlockProducer": "caleosblocks",
+        "headBlockTime": "2026-08-15T01:26:05.500",
+        "headBlockProducer": "eosphereiobp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -333,7 +333,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 26451,
-          "missedBlocksPerRotation": 14,
+          "missedBlocksPerRotation": 18,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2639,16 +2639,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-14T23:53:28.525Z",
-      "durationMs": 51980,
+      "generatedAt": "2026-08-15T01:26:57.787Z",
+      "durationMs": 52472,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 483467499,
-        "lastIrreversibleBlockNum": 483467497,
+        "headBlockNum": 483478717,
+        "lastIrreversibleBlockNum": 483478715,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-14T23:52:36.500",
-        "headBlockProducer": "telosusa3333",
-        "serverVersion": "v1.2.2",
+        "headBlockTime": "2026-08-15T01:26:05.500",
+        "headBlockProducer": "eosphereiobp",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2701,7 +2701,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3787,7 +3787,7 @@
           "api": {
             "status": "ok",
             "label": "Spring",
-            "endpoint": "https://api.bigironbp.io",
+            "endpoint": "http://api.bigironbp.io",
             "version": "v1.2.2",
             "bpJsonUrl": "https://bigironbp.io/telos.json",
             "bpJsonSource": "chains.json",
@@ -3801,6 +3801,11 @@
             "attempts": [
               {
                 "endpoint": "https://api.bigironbp.io",
+                "ok": false,
+                "error": "This operation was aborted"
+              },
+              {
+                "endpoint": "http://api.bigironbp.io",
                 "ok": true,
                 "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
                 "version": "v1.2.2",
