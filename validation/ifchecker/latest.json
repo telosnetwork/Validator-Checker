@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:13:08.700Z",
+  "generatedAt": "2026-08-20T16:53:33.912Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-20T16:13:08.700Z",
-      "durationMs": 18611,
+      "generatedAt": "2026-08-20T16:53:33.912Z",
+      "durationMs": 18250,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 440691480,
-        "lastIrreversibleBlockNum": 440691478,
+        "headBlockNum": 440696331,
+        "lastIrreversibleBlockNum": 440696329,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-20T16:12:50.500",
-        "headBlockProducer": "persiantelos",
+        "headBlockTime": "2026-08-20T16:53:16.000",
+        "headBlockProducer": "tempbpfill55",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,11 +25,11 @@
         "scheduled": 21,
         "standby": 13,
         "producerRowsActive": 34,
-        "ready": 14,
-        "review": 7,
+        "ready": 15,
+        "review": 6,
         "blocked": 0,
-        "readyRows": 23,
-        "reviewRows": 11,
+        "readyRows": 24,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -39,8 +39,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 3,
         "bpApiBlocked": 0,
-        "publicP2pOk": 14,
-        "publicP2pReview": 7,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -56,8 +56,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "14/21 reachable",
-          "detail": "7 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -901,8 +901,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p-test.telos.eosrio.io:28092",
             "bpJsonUrl": "https://eosrio.io/telos-test.json",
             "bpJsonSource": "chains.json",
@@ -914,17 +914,16 @@
             "attempts": [
               {
                 "endpoint": "p2p-test.telos.eosrio.io:28092",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "telosunlimit",
@@ -2714,16 +2713,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-20T16:13:08.233Z",
-      "durationMs": 18056,
+      "generatedAt": "2026-08-20T16:53:33.670Z",
+      "durationMs": 17974,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 484448434,
-        "lastIrreversibleBlockNum": 484448432,
+        "headBlockNum": 484453280,
+        "lastIrreversibleBlockNum": 484453278,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-20T16:12:48.000",
-        "headBlockProducer": "telosarabia1",
-        "serverVersion": "v1.2.2",
+        "headBlockTime": "2026-08-20T16:53:11.000",
+        "headBlockProducer": "bigironbptex",
+        "serverVersion": "v1.0.3",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2776,7 +2775,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.0.3",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
