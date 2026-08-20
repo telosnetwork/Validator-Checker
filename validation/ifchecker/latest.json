@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:53:33.912Z",
+  "generatedAt": "2026-08-20T17:33:06.610Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-20T16:53:33.912Z",
-      "durationMs": 18250,
+      "generatedAt": "2026-08-20T17:33:06.610Z",
+      "durationMs": 18503,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 440696331,
-        "lastIrreversibleBlockNum": 440696329,
+        "headBlockNum": 440701074,
+        "lastIrreversibleBlockNum": 440701072,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-20T16:53:16.000",
-        "headBlockProducer": "tempbpfill55",
+        "headBlockTime": "2026-08-20T17:32:48.000",
+        "headBlockProducer": "bp.any",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2069,7 +2069,7 @@
           "url": "https://y-knot.io",
           "isActive": true,
           "lifetimeMissedBlocks": 31816,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2713,16 +2713,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-20T16:53:33.670Z",
-      "durationMs": 17974,
+      "generatedAt": "2026-08-20T17:33:06.535Z",
+      "durationMs": 18399,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 484453280,
-        "lastIrreversibleBlockNum": 484453278,
+        "headBlockNum": 484458030,
+        "lastIrreversibleBlockNum": 484458028,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-20T16:53:11.000",
-        "headBlockProducer": "bigironbptex",
-        "serverVersion": "v1.0.3",
+        "headBlockTime": "2026-08-20T17:32:46.500",
+        "headBlockProducer": "bp.adex",
+        "serverVersion": "v1.2.2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2775,7 +2775,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.0.3",
+          "value": "v1.2.2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3399,7 +3399,7 @@
           "url": "https://telosgreen.com",
           "isActive": true,
           "lifetimeMissedBlocks": 25060,
-          "missedBlocksPerRotation": 2,
+          "missedBlocksPerRotation": 3,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -3491,7 +3491,7 @@
           "api": {
             "status": "ok",
             "label": "Spring",
-            "endpoint": "https://api.telosarabia.net",
+            "endpoint": "http://api.telosarabia.net",
             "version": "v1.2.2",
             "bpJsonUrl": "https://eosarabia.net/telos.json",
             "bpJsonSource": "chains.json",
@@ -3505,6 +3505,11 @@
             "attempts": [
               {
                 "endpoint": "https://api.telosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "http://api.telosarabia.net",
                 "ok": true,
                 "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
                 "version": "v1.2.2",
