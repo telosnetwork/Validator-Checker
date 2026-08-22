@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T21:20:38.835Z",
+  "generatedAt": "2026-08-22T21:31:46.166Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-22T21:20:38.835Z",
-      "durationMs": 21645,
+      "generatedAt": "2026-08-22T21:31:46.166Z",
+      "durationMs": 18525,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 441073116,
-        "lastIrreversibleBlockNum": 441073114,
+        "headBlockNum": 441074457,
+        "lastIrreversibleBlockNum": 441074455,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-22T21:20:17.500",
-        "headBlockProducer": "teloscentral",
+        "headBlockTime": "2026-08-22T21:31:28.000",
+        "headBlockProducer": "infinitybloc",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -28,8 +28,8 @@
         "ready": 17,
         "review": 4,
         "blocked": 0,
-        "readyRows": 21,
-        "reviewRows": 9,
+        "readyRows": 20,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -1740,7 +1740,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://anypot.io/chains.json: response was not valid JSON | https://anypot.io/testnet.json: response was not valid JSON | https://anypot.io/bp.json: response was not valid JSON | https://anypot.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://anypot.io/chains.json: fetch failed | https://anypot.io/testnet.json: fetch failed | https://anypot.io/bp.json: fetch failed | https://anypot.io/telos.json: fetch failed",
             "endpoints": [
               "https://anypot.io"
             ],
@@ -1748,7 +1748,7 @@
               {
                 "endpoint": "https://anypot.io",
                 "ok": false,
-                "error": "405 Method Not Allowed"
+                "error": "fetch failed"
               }
             ]
           },
@@ -1759,7 +1759,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://anypot.io/chains.json: response was not valid JSON | https://anypot.io/testnet.json: response was not valid JSON | https://anypot.io/bp.json: response was not valid JSON | https://anypot.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://anypot.io/chains.json: fetch failed | https://anypot.io/testnet.json: fetch failed | https://anypot.io/bp.json: fetch failed | https://anypot.io/telos.json: fetch failed",
             "endpoints": [],
             "attempts": []
           },
@@ -1938,53 +1938,42 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet2api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/testnet.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
             "endpoints": [
-              "https://testnet2api.telosarabia.net",
-              "http://testnet2api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://testnet2api.telosarabia.net",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "403 Forbidden"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
-            "endpoint": "testnet2p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telostest.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
-            "endpoints": [
-              "testnet2p2p.telosarabia.net:9876"
-            ],
-            "attempts": [
-              {
-                "endpoint": "testnet2p2p.telosarabia.net:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
-              }
-            ]
+            "status": "review",
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/testnet.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
+            "endpoints": [],
+            "attempts": []
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "BP metadata unavailable"
+          ]
         },
         {
           "name": "bp.yknot",
@@ -2431,16 +2420,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-22T21:20:38.818Z",
-      "durationMs": 21595,
+      "generatedAt": "2026-08-22T21:31:45.570Z",
+      "durationMs": 17901,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 484830850,
-        "lastIrreversibleBlockNum": 484830848,
+        "headBlockNum": 484832188,
+        "lastIrreversibleBlockNum": 484832186,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-22T21:20:15.500",
-        "headBlockProducer": "teloscentral",
-        "serverVersion": "v1.2.2",
+        "headBlockTime": "2026-08-22T21:31:25.000",
+        "headBlockProducer": "eosphereiobp",
+        "serverVersion": "v1.0.3",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2456,11 +2445,11 @@
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 18,
-        "springCompatible": 18,
-        "bpApiSpring": 18,
+        "activeSpringCompatible": 17,
+        "springCompatible": 17,
+        "bpApiSpring": 17,
         "bpApiReview": 0,
-        "bpApiUnknown": 3,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 0,
         "publicP2pOk": 15,
         "publicP2pReview": 6,
@@ -2472,8 +2461,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "18/21 Spring",
-          "detail": "0 review, 3 unknown, 0 blocked"
+          "value": "17/21 Spring",
+          "detail": "0 review, 4 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
@@ -2493,7 +2482,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.0.3",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3117,7 +3106,7 @@
           "url": "https://telosgreen.com",
           "isActive": true,
           "lifetimeMissedBlocks": 25072,
-          "missedBlocksPerRotation": 1,
+          "missedBlocksPerRotation": 2,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -3207,58 +3196,41 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/mainnet.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
             "endpoints": [
-              "https://api.telosarabia.net",
-              "http://api.telosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.telosarabia.net",
+                "endpoint": "https://eosarabia.net",
                 "ok": false,
-                "error": "fetch failed"
-              },
-              {
-                "endpoint": "http://api.telosarabia.net",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "error": "403 Forbidden"
               }
             ]
           },
           "p2p": {
             "status": "review",
-            "label": "P2P handshake failed",
-            "endpoint": "p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
-            "bpJsonStatus": "ok",
-            "bpJsonError": "",
-            "endpoints": [
-              "p2p.telosarabia.net:9876"
-            ],
-            "attempts": [
-              {
-                "endpoint": "p2p.telosarabia.net:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connect ECONNREFUSED 136.243.248.194:9876"
-              }
-            ]
+            "label": "BP metadata unavailable",
+            "endpoint": "",
+            "bpJsonUrl": "",
+            "bpJsonSource": "",
+            "bpJsonStatus": "error",
+            "bpJsonError": "https://eosarabia.net/chains.json: 403 Forbidden | https://eosarabia.net/bp.json: 403 Forbidden | https://eosarabia.net/mainnet.json: 403 Forbidden | https://eosarabia.net/telos.json: 403 Forbidden",
+            "endpoints": [],
+            "attempts": []
           },
           "status": "review",
           "blockers": [],
           "warnings": [
-            "P2P handshake failed"
+            "No matching public API",
+            "BP metadata unavailable"
           ]
         },
         {
@@ -4249,7 +4221,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://anypot.io/chains.json: response was not valid JSON | https://anypot.io/bp.json: response was not valid JSON | https://anypot.io/mainnet.json: response was not valid JSON | https://anypot.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://anypot.io/chains.json: fetch failed | https://anypot.io/bp.json: fetch failed | https://anypot.io/mainnet.json: fetch failed | https://anypot.io/telos.json: fetch failed",
             "endpoints": [
               "https://anypot.io"
             ],
@@ -4257,7 +4229,7 @@
               {
                 "endpoint": "https://anypot.io",
                 "ok": false,
-                "error": "405 Method Not Allowed"
+                "error": "fetch failed"
               }
             ]
           },
@@ -4268,7 +4240,7 @@
             "bpJsonUrl": "",
             "bpJsonSource": "",
             "bpJsonStatus": "error",
-            "bpJsonError": "https://anypot.io/chains.json: response was not valid JSON | https://anypot.io/bp.json: response was not valid JSON | https://anypot.io/mainnet.json: response was not valid JSON | https://anypot.io/telos.json: response was not valid JSON",
+            "bpJsonError": "https://anypot.io/chains.json: fetch failed | https://anypot.io/bp.json: fetch failed | https://anypot.io/mainnet.json: fetch failed | https://anypot.io/telos.json: fetch failed",
             "endpoints": [],
             "attempts": []
           },
