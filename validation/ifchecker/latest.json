@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T16:53:50.540Z",
+  "generatedAt": "2026-08-22T17:24:07.318Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-22T16:53:50.540Z",
-      "durationMs": 18540,
+      "generatedAt": "2026-08-22T17:24:07.318Z",
+      "durationMs": 18197,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 441041115,
-        "lastIrreversibleBlockNum": 441041113,
+        "headBlockNum": 441044750,
+        "lastIrreversibleBlockNum": 441044748,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-22T16:53:32.000",
-        "headBlockProducer": "teloscentral",
+        "headBlockTime": "2026-08-22T17:23:49.500",
+        "headBlockProducer": "tempbpfillcc",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -2431,15 +2431,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-22T16:53:50.161Z",
-      "durationMs": 18056,
+      "generatedAt": "2026-08-22T17:24:07.136Z",
+      "durationMs": 17924,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 484798834,
-        "lastIrreversibleBlockNum": 484798832,
+        "headBlockNum": 484802474,
+        "lastIrreversibleBlockNum": 484802472,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-22T16:53:27.500",
-        "headBlockProducer": "telosgermany",
+        "headBlockTime": "2026-08-22T17:23:47.500",
+        "headBlockProducer": "bigironbptex",
         "serverVersion": "v1.0.3",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2448,11 +2448,11 @@
         "scheduled": 21,
         "standby": 7,
         "producerRowsActive": 28,
-        "ready": 13,
-        "review": 8,
+        "ready": 14,
+        "review": 7,
         "blocked": 0,
-        "readyRows": 17,
-        "reviewRows": 11,
+        "readyRows": 18,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -2462,8 +2462,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 3,
         "bpApiBlocked": 0,
-        "publicP2pOk": 14,
-        "publicP2pReview": 7,
+        "publicP2pOk": 15,
+        "publicP2pReview": 6,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2479,8 +2479,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "14/21 reachable",
-          "detail": "7 review, 0 unknown"
+          "value": "15/21 reachable",
+          "detail": "6 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -2793,8 +2793,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "peer-telos-mainnet.infinitybloc.io:9876",
             "bpJsonUrl": "https://infinitybloc.io/bp.json",
             "bpJsonSource": "chains.json",
@@ -2806,17 +2806,16 @@
             "attempts": [
               {
                 "endpoint": "peer-telos-mainnet.infinitybloc.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "timed out waiting for P2P handshake"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "telosmadrid1",
