@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T08:01:46.159Z",
+  "generatedAt": "2026-08-26T08:57:16.105Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-26T08:01:45.585Z",
-      "durationMs": 18688,
+      "generatedAt": "2026-08-26T08:57:16.105Z",
+      "durationMs": 17419,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 441668057,
-        "lastIrreversibleBlockNum": 441668055,
+        "headBlockNum": 441674720,
+        "lastIrreversibleBlockNum": 441674718,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-26T08:01:27.000",
-        "headBlockProducer": "tempbpfill55",
+        "headBlockTime": "2026-08-26T08:56:59.000",
+        "headBlockProducer": "teloscentral",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -815,7 +815,7 @@
               {
                 "endpoint": "http://mainnet.persiantelos.com",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "fetch failed"
               },
               {
                 "endpoint": "https://persiantelos.com",
@@ -1226,7 +1226,7 @@
           "url": "https://www.orbitalblock.com",
           "isActive": true,
           "lifetimeMissedBlocks": 1334,
-          "missedBlocksPerRotation": 20,
+          "missedBlocksPerRotation": 21,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2503,16 +2503,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-26T08:01:46.159Z",
-      "durationMs": 19229,
+      "generatedAt": "2026-08-26T08:57:07.764Z",
+      "durationMs": 8991,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 485426114,
-        "lastIrreversibleBlockNum": 485426112,
+        "headBlockNum": 485432784,
+        "lastIrreversibleBlockNum": 485432782,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-26T08:01:22.500",
-        "headBlockProducer": "ledgerwisete",
-        "serverVersion": "v1.0.3",
+        "headBlockTime": "2026-08-26T08:56:57.500",
+        "headBlockProducer": "telosgermany",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2528,11 +2528,11 @@
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 18,
-        "springCompatible": 18,
-        "bpApiSpring": 18,
+        "activeSpringCompatible": 16,
+        "springCompatible": 16,
+        "bpApiSpring": 16,
         "bpApiReview": 0,
-        "bpApiUnknown": 3,
+        "bpApiUnknown": 5,
         "bpApiBlocked": 0,
         "publicP2pOk": 14,
         "publicP2pReview": 7,
@@ -2544,8 +2544,8 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "18/21 Spring",
-          "detail": "0 review, 3 unknown, 0 blocked"
+          "value": "16/21 Spring",
+          "detail": "0 review, 5 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
@@ -2565,7 +2565,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.0.3",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3279,57 +3279,61 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "http://api.telosarabia.net",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://eosarabia.net/bp.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://api.telosarabia.net",
-              "http://api.telosarabia.net",
+              "https://api.eosarabia.net",
+              "http://api.eosarabia.net",
               "https://eosarabia.net"
             ],
             "attempts": [
               {
-                "endpoint": "https://api.telosarabia.net",
+                "endpoint": "https://api.eosarabia.net",
                 "ok": false,
                 "error": "fetch failed"
               },
               {
-                "endpoint": "http://api.telosarabia.net",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "http://api.eosarabia.net",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "https://eosarabia.net",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
           "p2p": {
             "status": "review",
             "label": "P2P handshake failed",
-            "endpoint": "p2p.telosarabia.net:9876",
-            "bpJsonUrl": "https://eosarabia.net/telos.json",
-            "bpJsonSource": "chains.json",
+            "endpoint": "mainnet.eosarabia.net:3571",
+            "bpJsonUrl": "https://eosarabia.net/bp.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "p2p.telosarabia.net:9876"
+              "mainnet.eosarabia.net:3571"
             ],
             "attempts": [
               {
-                "endpoint": "p2p.telosarabia.net:9876",
+                "endpoint": "mainnet.eosarabia.net:3571",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connect ECONNREFUSED 136.243.248.194:9876"
+                "error": "connect ECONNREFUSED 142.132.135.86:3571"
               }
             ]
           },
           "status": "review",
           "blockers": [],
           "warnings": [
+            "No matching public API",
             "P2P handshake failed"
           ]
         },
@@ -3379,7 +3383,7 @@
               {
                 "endpoint": "http://mainnet.persiantelos.com",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "fetch failed"
               },
               {
                 "endpoint": "https://persiantelos.com",
@@ -3404,7 +3408,7 @@
                 "endpoint": "mainnet.persiantelos.com:8880",
                 "ok": false,
                 "chainMatches": false,
-                "error": "invalid P2P message size"
+                "error": ""
               }
             ]
           },
@@ -3881,53 +3885,62 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://bp-telos.y-knot.io",
-            "version": "v1.2.2",
-            "bpJsonUrl": "https://y-knot.io/telos.json",
-            "bpJsonSource": "chains.json",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
+            "bpJsonUrl": "https://y-knot.io/bp.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "https://bp-telos.y-knot.io",
-              "http://bp-telos.y-knot.io",
+              "https://api.telos.africa",
+              "http://api.telos.africa",
               "https://y-knot.io"
             ],
             "attempts": [
               {
-                "endpoint": "https://bp-telos.y-knot.io",
-                "ok": true,
-                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2",
-                "chainMatches": true
+                "endpoint": "https://api.telos.africa",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "http://api.telos.africa",
+                "ok": false,
+                "error": "fetch failed"
+              },
+              {
+                "endpoint": "https://y-knot.io",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
           "p2p": {
             "status": "review",
-            "label": "P2P endpoint missing port",
-            "endpoint": "p2p-telos.y-knot.io",
-            "bpJsonUrl": "https://y-knot.io/telos.json",
-            "bpJsonSource": "chains.json",
+            "label": "P2P handshake failed",
+            "endpoint": "p2p.telos.africa:9877",
+            "bpJsonUrl": "https://y-knot.io/bp.json",
+            "bpJsonSource": "fallback",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "p2p-telos.y-knot.io"
+              "p2p.telos.africa:9877"
             ],
             "attempts": [
               {
-                "endpoint": "p2p-telos.y-knot.io",
+                "endpoint": "p2p.telos.africa:9877",
                 "ok": false,
                 "chainMatches": false,
-                "error": "missing host or port"
+                "error": "getaddrinfo ENOTFOUND p2p.telos.africa"
               }
             ]
           },
           "status": "review",
           "blockers": [],
           "warnings": [
-            "P2P endpoint missing port"
+            "No matching public API",
+            "P2P handshake failed"
           ]
         },
         {
@@ -4259,7 +4272,7 @@
               {
                 "endpoint": "https://www.orbitalblock.com",
                 "ok": false,
-                "error": "404 Not Found"
+                "error": "fetch failed"
               }
             ]
           },
