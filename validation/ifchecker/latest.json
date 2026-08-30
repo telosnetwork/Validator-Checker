@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T07:30:34.761Z",
+  "generatedAt": "2026-08-30T13:15:02.610Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-08-30T07:30:34.687Z",
-      "durationMs": 18644,
+      "generatedAt": "2026-08-30T13:15:01.524Z",
+      "durationMs": 17596,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 442351925,
-        "lastIrreversibleBlockNum": 442351923,
+        "headBlockNum": 442393246,
+        "lastIrreversibleBlockNum": 442393244,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-30T07:30:16.500",
-        "headBlockProducer": "telosindiabp",
+        "headBlockTime": "2026-08-30T13:14:44.000",
+        "headBlockProducer": "telosgreenbp",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -1503,7 +1503,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 26554,
-          "missedBlocksPerRotation": 2,
+          "missedBlocksPerRotation": 11,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -1647,7 +1647,7 @@
           "url": "https://y-knot.io",
           "isActive": true,
           "lifetimeMissedBlocks": 31831,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 5,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2151,16 +2151,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-08-30T07:30:34.761Z",
-      "durationMs": 18688,
+      "generatedAt": "2026-08-30T13:15:02.609Z",
+      "durationMs": 18645,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 486112584,
-        "lastIrreversibleBlockNum": 486112582,
+        "headBlockNum": 486153918,
+        "lastIrreversibleBlockNum": 486153916,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-08-30T07:30:13.000",
+        "headBlockTime": "2026-08-30T13:14:41.000",
         "headBlockProducer": "telosgreenbp",
-        "serverVersion": "v1.2.2",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2213,7 +2213,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -2221,7 +2221,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 7825"
+          "detail": "Schedule version 7826"
         },
         {
           "key": "features",
@@ -2764,8 +2764,8 @@
           "votesCompact": "695.2B",
           "url": "https://telosgreen.com",
           "isActive": true,
-          "lifetimeMissedBlocks": 25100,
-          "missedBlocksPerRotation": 3,
+          "lifetimeMissedBlocks": 25103,
+          "missedBlocksPerRotation": 0,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2911,10 +2911,10 @@
         },
         {
           "name": "persiantelos",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 15,
           "rank": 8,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS7rGBxBAGkbAKd7BWuKNQ1LXVHuEHZcVKsRj2fYtCjqZtNYW1VU",
           "votes": "528443363263.68511962890625000",
           "votesCompact": "528.4B",
           "url": "https://persiantelos.com",
@@ -2993,10 +2993,10 @@
         },
         {
           "name": "teloscentral",
-          "scheduleType": "active",
-          "schedulePosition": 14,
+          "scheduleType": "standby",
+          "schedulePosition": null,
           "rank": 9,
-          "blockSigningKey": "EOS78ZkoSt2tKz9xmeNL2u99vnNvDspNGWPXriRFkobagHCA2RsgW",
+          "blockSigningKey": "",
           "votes": "475796886588.54809570312500000",
           "votesCompact": "475.8B",
           "url": "https://teloscentral.com",
@@ -3436,7 +3436,7 @@
         {
           "name": "bp.yknot",
           "scheduleType": "active",
-          "schedulePosition": 15,
+          "schedulePosition": 14,
           "rank": 15,
           "blockSigningKey": "EOS7vjN5aHuRjg5q8kfWLsFGcZu2s8tnAAPq84pLPQiAz5uav9aHL",
           "votes": "288878191470.34997558593750000",
@@ -3588,8 +3588,8 @@
           "votesCompact": "257.4B",
           "url": "https://cryptolions.io",
           "isActive": true,
-          "lifetimeMissedBlocks": 10702,
-          "missedBlocksPerRotation": 0,
+          "lifetimeMissedBlocks": 10703,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -4069,10 +4069,10 @@
         },
         {
           "name": "telosusa2222",
-          "scheduleType": "active",
-          "schedulePosition": 11,
+          "scheduleType": "standby",
+          "schedulePosition": null,
           "rank": 24,
-          "blockSigningKey": "EOS5D2Xfg39dfiXYs84FvvEccLD23d1PPmkv8SoU3EgYCjhRtWbzb",
+          "blockSigningKey": "",
           "votes": "22542138732.07343292236328125",
           "votesCompact": "22.5B",
           "url": "https://eosusa.io/bp/telos/",
@@ -4141,10 +4141,10 @@
         },
         {
           "name": "telosusa1111",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 11,
           "rank": 25,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS5D2Xfg39dfiXYs84FvvEccLD23d1PPmkv8SoU3EgYCjhRtWbzb",
           "votes": "22541823891.07343292236328125",
           "votesCompact": "22.5B",
           "url": "https://eosusa.io/bp/telos/",
