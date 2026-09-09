@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T16:27:23.356Z",
+  "generatedAt": "2026-09-09T19:24:41.558Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-09-09T16:27:22.618Z",
-      "durationMs": 18582,
+      "generatedAt": "2026-09-09T19:24:40.987Z",
+      "durationMs": 18630,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 444143022,
-        "lastIrreversibleBlockNum": 444143020,
+        "headBlockNum": 444164200,
+        "lastIrreversibleBlockNum": 444164198,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-09-09T16:27:04.500",
-        "headBlockProducer": "eosphereiobp",
+        "headBlockTime": "2026-09-09T19:24:22.500",
+        "headBlockProducer": "orbitalblock",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -25,22 +25,22 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 14,
-        "review": 7,
+        "ready": 13,
+        "review": 8,
         "blocked": 0,
-        "readyRows": 18,
-        "reviewRows": 9,
+        "readyRows": 17,
+        "reviewRows": 10,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 17,
-        "springCompatible": 17,
-        "bpApiSpring": 17,
+        "activeSpringCompatible": 16,
+        "springCompatible": 16,
+        "bpApiSpring": 16,
         "bpApiReview": 0,
-        "bpApiUnknown": 4,
+        "bpApiUnknown": 5,
         "bpApiBlocked": 0,
-        "publicP2pOk": 14,
-        "publicP2pReview": 7,
+        "publicP2pOk": 13,
+        "publicP2pReview": 8,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -49,15 +49,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "17/21 Spring",
-          "detail": "0 review, 4 unknown, 0 blocked"
+          "value": "16/21 Spring",
+          "detail": "0 review, 5 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "14/21 reachable",
-          "detail": "7 review, 0 unknown"
+          "value": "13/21 reachable",
+          "detail": "8 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -863,7 +863,7 @@
           "url": "https://eosrio.io",
           "isActive": true,
           "lifetimeMissedBlocks": 11619,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 84,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -877,10 +877,10 @@
             ]
           },
           "api": {
-            "status": "ok",
-            "label": "Spring",
-            "endpoint": "https://testnet.telos.eosrio.io",
-            "version": "v1.2.3-alpha1",
+            "status": "unknown",
+            "label": "No matching public API",
+            "endpoint": "",
+            "version": "",
             "bpJsonUrl": "https://eosrio.io/telos-test.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -893,16 +893,24 @@
             "attempts": [
               {
                 "endpoint": "https://testnet.telos.eosrio.io",
-                "ok": true,
-                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
-                "version": "v1.2.3-alpha1",
-                "chainMatches": true
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "http://testnet.telos.eosrio.io",
+                "ok": false,
+                "error": "502 Bad Gateway"
+              },
+              {
+                "endpoint": "https://eosrio.io",
+                "ok": false,
+                "error": "404 Not Found"
               }
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "p2p-test.telos.eosrio.io:28092",
             "bpJsonUrl": "https://eosrio.io/telos-test.json",
             "bpJsonSource": "chains.json",
@@ -914,16 +922,18 @@
             "attempts": [
               {
                 "endpoint": "p2p-test.telos.eosrio.io:28092",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "connection timed out"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "No matching public API",
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "eosiodetroit",
@@ -1724,8 +1734,8 @@
             "tables": []
           },
           "api": {
-            "status": "review",
-            "label": "Published endpoint is not Testnet",
+            "status": "unknown",
+            "label": "No matching public API",
             "endpoint": "",
             "version": "",
             "bpJsonUrl": "https://datacloudly.pages.dev/bp.json",
@@ -1739,10 +1749,8 @@
             "attempts": [
               {
                 "endpoint": "http://38.49.212.246:8888",
-                "ok": true,
-                "chainId": "8a34ec7df1b8cd06ff4a8abbaa7cc50300823350cadc59ab296cb00d104d2b8f",
-                "version": "v1.2.2",
-                "chainMatches": false
+                "ok": false,
+                "error": "fetch failed"
               },
               {
                 "endpoint": "https://datacloudly.pages.dev",
@@ -1767,7 +1775,7 @@
                 "endpoint": "38.49.212.246:9876",
                 "ok": false,
                 "chainMatches": false,
-                "error": "peer sent go_away"
+                "error": "connect ECONNREFUSED 38.49.212.246:9876"
               }
             ]
           },
@@ -1775,7 +1783,7 @@
           "blockers": [],
           "warnings": [
             "No finalizer key row found",
-            "Published endpoint is not Testnet",
+            "No matching public API",
             "P2P handshake failed"
           ]
         },
@@ -1862,7 +1870,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 26696,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 2,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2222,16 +2230,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-09-09T16:27:23.356Z",
-      "durationMs": 19289,
+      "generatedAt": "2026-09-09T19:24:41.558Z",
+      "durationMs": 19165,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 487904108,
-        "lastIrreversibleBlockNum": 487904106,
+        "headBlockNum": 487925357,
+        "lastIrreversibleBlockNum": 487925355,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-09-09T16:27:02.500",
-        "headBlockProducer": "bp.adex",
-        "serverVersion": "v1.2.2",
+        "headBlockTime": "2026-09-09T19:24:19.500",
+        "headBlockProducer": "telosunlimit",
+        "serverVersion": "v1.2.2-lateblockfix",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2284,7 +2292,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.2.2",
+          "value": "v1.2.2-lateblockfix",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3515,7 +3523,7 @@
           "url": "https://eosrio.io",
           "isActive": true,
           "lifetimeMissedBlocks": 5133,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 24,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -3950,7 +3958,7 @@
           "url": "https://www.orbitalblock.com",
           "isActive": true,
           "lifetimeMissedBlocks": 41,
-          "missedBlocksPerRotation": 0,
+          "missedBlocksPerRotation": 1,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -4517,8 +4525,8 @@
             "tables": []
           },
           "api": {
-            "status": "review",
-            "label": "Published endpoint is not Mainnet",
+            "status": "unknown",
+            "label": "No matching public API",
             "endpoint": "",
             "version": "",
             "bpJsonUrl": "https://datacloudly.pages.dev/bp.json",
@@ -4532,10 +4540,8 @@
             "attempts": [
               {
                 "endpoint": "http://38.49.212.246:8888",
-                "ok": true,
-                "chainId": "8a34ec7df1b8cd06ff4a8abbaa7cc50300823350cadc59ab296cb00d104d2b8f",
-                "version": "v1.2.2",
-                "chainMatches": false
+                "ok": false,
+                "error": "fetch failed"
               },
               {
                 "endpoint": "https://datacloudly.pages.dev",
@@ -4560,7 +4566,7 @@
                 "endpoint": "38.49.212.246:9876",
                 "ok": false,
                 "chainMatches": false,
-                "error": "peer sent go_away"
+                "error": "connect ECONNREFUSED 38.49.212.246:9876"
               }
             ]
           },
@@ -4568,7 +4574,7 @@
           "blockers": [],
           "warnings": [
             "No finalizer key row found",
-            "Published endpoint is not Mainnet",
+            "No matching public API",
             "P2P handshake failed"
           ]
         }
