@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T17:17:51.988Z",
+  "generatedAt": "2026-09-11T19:58:18.734Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-09-11T17:17:51.000Z",
-      "durationMs": 19637,
+      "generatedAt": "2026-09-11T19:58:18.733Z",
+      "durationMs": 18797,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 444494403,
-        "lastIrreversibleBlockNum": 444494401,
+        "headBlockNum": 444513598,
+        "lastIrreversibleBlockNum": 444513596,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-09-11T17:17:32.500",
-        "headBlockProducer": "orbitalblock",
+        "headBlockTime": "2026-09-11T19:58:00.000",
+        "headBlockProducer": "bp.any",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -416,7 +416,7 @@
           "url": "https://eosusa.io/bp/telos/test/",
           "isActive": true,
           "lifetimeMissedBlocks": 30227,
-          "missedBlocksPerRotation": 12,
+          "missedBlocksPerRotation": 60,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -431,7 +431,7 @@
           "api": {
             "status": "ok",
             "label": "Spring",
-            "endpoint": "http://test.telos.eosusa.io",
+            "endpoint": "https://test.telos.eosusa.io",
             "version": "v1.2.2-lateblockfix",
             "bpJsonUrl": "https://eosusa.io/bp/telos/test/bp.json",
             "bpJsonSource": "chains.json",
@@ -445,11 +445,6 @@
             "attempts": [
               {
                 "endpoint": "https://test.telos.eosusa.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://test.telos.eosusa.io",
                 "ok": true,
                 "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
                 "version": "v1.2.2-lateblockfix",
@@ -2241,15 +2236,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-09-11T17:17:51.988Z",
-      "durationMs": 20067,
+      "generatedAt": "2026-09-11T19:58:18.075Z",
+      "durationMs": 18052,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 488255390,
-        "lastIrreversibleBlockNum": 488255388,
+        "headBlockNum": 488274534,
+        "lastIrreversibleBlockNum": 488274532,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-09-11T17:17:32.000",
-        "headBlockProducer": "eosriobrazil",
+        "headBlockTime": "2026-09-11T19:57:58.000",
+        "headBlockProducer": "bp.yknot",
         "serverVersion": "v1.2.3-alpha2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2261,8 +2256,8 @@
         "ready": 13,
         "review": 8,
         "blocked": 0,
-        "readyRows": 16,
-        "reviewRows": 13,
+        "readyRows": 17,
+        "reviewRows": 12,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -2792,7 +2787,7 @@
           "url": "https://eosusa.io/bp/telos/",
           "isActive": true,
           "lifetimeMissedBlocks": 19563,
-          "missedBlocksPerRotation": 24,
+          "missedBlocksPerRotation": 36,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -3834,7 +3829,7 @@
           "url": "https://detroitledger.tech",
           "isActive": true,
           "lifetimeMissedBlocks": 8667,
-          "missedBlocksPerRotation": 84,
+          "missedBlocksPerRotation": 180,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -4359,8 +4354,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "telos.p2p.eosusa.io:9876",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
             "bpJsonSource": "chains.json",
@@ -4372,17 +4367,16 @@
             "attempts": [
               {
                 "endpoint": "telos.p2p.eosusa.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "telosusa3333",
@@ -4467,7 +4461,7 @@
           "url": "https://eosusa.io/bp/telos/",
           "isActive": true,
           "lifetimeMissedBlocks": 76,
-          "missedBlocksPerRotation": 24,
+          "missedBlocksPerRotation": 36,
           "finalizer": {
             "registered": true,
             "active": true,
