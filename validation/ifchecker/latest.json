@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T20:01:01.279Z",
+  "generatedAt": "2026-09-16T22:53:31.101Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,15 +8,15 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-09-16T20:01:00.941Z",
-      "durationMs": 18069,
+      "generatedAt": "2026-09-16T22:53:30.499Z",
+      "durationMs": 17535,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 445376774,
-        "lastIrreversibleBlockNum": 445376772,
+        "headBlockNum": 445397471,
+        "lastIrreversibleBlockNum": 445397469,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-09-16T20:00:43.000",
-        "headBlockProducer": "amsterdam",
+        "headBlockTime": "2026-09-16T22:53:13.000",
+        "headBlockProducer": "bp.any",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
@@ -1793,7 +1793,7 @@
           "url": "https://caleos.io",
           "isActive": true,
           "lifetimeMissedBlocks": 26737,
-          "missedBlocksPerRotation": 2,
+          "missedBlocksPerRotation": 5,
           "finalizer": {
             "registered": true,
             "active": true,
@@ -2156,15 +2156,15 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-09-16T20:01:01.279Z",
-      "durationMs": 18381,
+      "generatedAt": "2026-09-16T22:53:31.101Z",
+      "durationMs": 18105,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 489137516,
-        "lastIrreversibleBlockNum": 489137514,
+        "headBlockNum": 489158217,
+        "lastIrreversibleBlockNum": 489158215,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-09-16T20:00:41.000",
-        "headBlockProducer": "telosgermany",
+        "headBlockTime": "2026-09-16T22:53:11.500",
+        "headBlockProducer": "persiantelos",
         "serverVersion": "v1.2.3-alpha2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
@@ -2173,11 +2173,11 @@
         "scheduled": 21,
         "standby": 9,
         "producerRowsActive": 30,
-        "ready": 12,
-        "review": 9,
+        "ready": 11,
+        "review": 10,
         "blocked": 0,
-        "readyRows": 16,
-        "reviewRows": 14,
+        "readyRows": 15,
+        "reviewRows": 15,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
@@ -2187,8 +2187,8 @@
         "bpApiReview": 0,
         "bpApiUnknown": 5,
         "bpApiBlocked": 0,
-        "publicP2pOk": 12,
-        "publicP2pReview": 9,
+        "publicP2pOk": 11,
+        "publicP2pReview": 10,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2204,8 +2204,8 @@
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "12/21 reachable",
-          "detail": "9 review, 0 unknown"
+          "value": "11/21 reachable",
+          "detail": "10 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -2519,8 +2519,8 @@
             ]
           },
           "p2p": {
-            "status": "ok",
-            "label": "Handshake OK",
+            "status": "review",
+            "label": "P2P handshake failed",
             "endpoint": "peer-telos-mainnet.infinitybloc.io:9876",
             "bpJsonUrl": "https://infinitybloc.io/bp.json",
             "bpJsonSource": "chains.json",
@@ -2532,16 +2532,17 @@
             "attempts": [
               {
                 "endpoint": "peer-telos-mainnet.infinitybloc.io:9876",
-                "ok": true,
-                "chainMatches": true,
-                "chainMismatch": false,
-                "error": ""
+                "ok": false,
+                "chainMatches": false,
+                "error": "timed out waiting for P2P handshake"
               }
             ]
           },
-          "status": "ok",
+          "status": "review",
           "blockers": [],
-          "warnings": []
+          "warnings": [
+            "P2P handshake failed"
+          ]
         },
         {
           "name": "telosmadrid1",
