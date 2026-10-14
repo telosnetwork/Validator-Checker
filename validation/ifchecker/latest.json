@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T00:32:46.315Z",
+  "generatedAt": "2026-10-14T05:19:18.820Z",
   "networks": {
     "testnet": {
       "network": {
@@ -8,14 +8,14 @@
         "rpc": "https://testnet.telos.caleos.io",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
       },
-      "generatedAt": "2026-10-14T00:32:37.953Z",
-      "durationMs": 85422,
+      "generatedAt": "2026-10-14T05:19:18.820Z",
+      "durationMs": 18869,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 450069483,
-        "lastIrreversibleBlockNum": 450069481,
+        "headBlockNum": 450104018,
+        "lastIrreversibleBlockNum": 450104016,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-10-14T00:31:12.500",
+        "headBlockTime": "2026-10-14T05:19:00.000",
         "headBlockProducer": "persiantelos",
         "serverVersion": "v1.2.2",
         "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f"
@@ -25,22 +25,22 @@
         "scheduled": 21,
         "standby": 6,
         "producerRowsActive": 27,
-        "ready": 8,
-        "review": 13,
+        "ready": 14,
+        "review": 7,
         "blocked": 0,
-        "readyRows": 10,
-        "reviewRows": 17,
+        "readyRows": 16,
+        "reviewRows": 11,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 10,
-        "springCompatible": 10,
-        "bpApiSpring": 10,
+        "activeSpringCompatible": 17,
+        "springCompatible": 17,
+        "bpApiSpring": 17,
         "bpApiReview": 0,
-        "bpApiUnknown": 11,
+        "bpApiUnknown": 4,
         "bpApiBlocked": 0,
-        "publicP2pOk": 10,
-        "publicP2pReview": 11,
+        "publicP2pOk": 14,
+        "publicP2pReview": 7,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -49,15 +49,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "10/21 Spring",
-          "detail": "0 review, 11 unknown, 0 blocked"
+          "value": "17/21 Spring",
+          "detail": "0 review, 4 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "10/21 reachable",
-          "detail": "11 review, 0 unknown"
+          "value": "14/21 reachable",
+          "detail": "7 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -78,7 +78,7 @@
           "label": "Active schedule",
           "status": "ok",
           "value": "21 producers",
-          "detail": "Schedule version 55915"
+          "detail": "Schedule version 55916"
         },
         {
           "key": "features",
@@ -408,7 +408,7 @@
         {
           "name": "cryptolions1",
           "scheduleType": "active",
-          "schedulePosition": 17,
+          "schedulePosition": 18,
           "rank": 3,
           "blockSigningKey": "EOS7bLioNJeJWTcpXdcK7rLSv54AuQ3wyYHcwi647hBNkZs933NHa",
           "votes": "351187630044.00665283203125000",
@@ -634,7 +634,7 @@
         {
           "name": "amsterdam",
           "scheduleType": "active",
-          "schedulePosition": 15,
+          "schedulePosition": 16,
           "rank": 6,
           "blockSigningKey": "EOS5czbkWLVZR4nb1YwrJfNWdyC8hdeTXgX2fP73bbxmz3RrniMHV",
           "votes": "345490811991.52941894531250000",
@@ -705,10 +705,10 @@
         },
         {
           "name": "telosarabia1",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 15,
           "rank": 7,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS7joDqL9aJbRWJZJgZxkSobxWwMJke3Ku2a9ssxaBv2Rxcf2cPp",
           "votes": "342692260305.88842773437500000",
           "votesCompact": "342.7B",
           "url": "https://eosarabia.net",
@@ -777,10 +777,10 @@
         },
         {
           "name": "telosgreenbp",
-          "scheduleType": "active",
-          "schedulePosition": 5,
+          "scheduleType": "standby",
+          "schedulePosition": null,
           "rank": 8,
-          "blockSigningKey": "EOS7ZpSQ5i8XNiVbAg9gjWjD3jNKMMtDhQRWQzdQyMg9owQLCTSLA",
+          "blockSigningKey": "",
           "votes": "326556647917.78692626953125000",
           "votesCompact": "326.6B",
           "url": "https://telosgreen.com",
@@ -850,7 +850,7 @@
         {
           "name": "persiantelos",
           "scheduleType": "active",
-          "schedulePosition": 16,
+          "schedulePosition": 17,
           "rank": 9,
           "blockSigningKey": "EOS7rGBxBAGkbAKd7BWuKNQ1LXVHuEHZcVKsRj2fYtCjqZtNYW1VU",
           "votes": "321934597005.49395751953125000",
@@ -898,7 +898,7 @@
               {
                 "endpoint": "https://persiantelos.com",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "404 Not Found"
               }
             ]
           },
@@ -955,10 +955,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet.telos.eosrio.io",
+            "version": "v1.2.3-alpha1",
             "bpJsonUrl": "https://eosrio.io/telos-test.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -971,18 +971,10 @@
             "attempts": [
               {
                 "endpoint": "https://testnet.telos.eosrio.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://testnet.telos.eosrio.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://eosrio.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.3-alpha1",
+                "chainMatches": true
               }
             ]
           },
@@ -1007,11 +999,9 @@
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "telosunlimit",
@@ -1161,7 +1151,7 @@
         {
           "name": "eosphereiobp",
           "scheduleType": "active",
-          "schedulePosition": 19,
+          "schedulePosition": 20,
           "rank": 13,
           "blockSigningKey": "EOS7aJLknepv59ZBsEbLLyEDE2nKcjxMZqAtajVjT8gyDt96Db9kb",
           "votes": "263802348908.20925903320312500",
@@ -1182,10 +1172,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos-testnet.eosphere.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -1198,24 +1188,16 @@
             "attempts": [
               {
                 "endpoint": "https://telos-testnet.eosphere.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telos-testnet.eosphere.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://www.eosphere.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "peer1-telos-testnet.eosphere.io:9876",
             "bpJsonUrl": "https://www.eosphere.io/telostestnet/bp.json",
             "bpJsonSource": "chains.json",
@@ -1227,23 +1209,21 @@
             "attempts": [
               {
                 "endpoint": "peer1-telos-testnet.eosphere.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "infinitybloc",
           "scheduleType": "active",
-          "schedulePosition": 20,
+          "schedulePosition": 21,
           "rank": 14,
           "blockSigningKey": "EOS8Koi4FyvjJqECMrTAk2i6e1KcLMd35nQEV83ZJXWnGSfnTWXeA",
           "votes": "259878216394.36486816406250000",
@@ -1336,10 +1316,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://bp-telos-testnet.y-knot.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://y-knot.io/telostest.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -1352,18 +1332,10 @@
             "attempts": [
               {
                 "endpoint": "https://bp-telos-testnet.y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://bp-telos-testnet.y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1390,14 +1362,13 @@
           "status": "review",
           "blockers": [],
           "warnings": [
-            "No matching public API",
             "P2P endpoint missing port"
           ]
         },
         {
           "name": "telosindiabp",
           "scheduleType": "active",
-          "schedulePosition": 4,
+          "schedulePosition": 5,
           "rank": 16,
           "blockSigningKey": "EOS7JxMFPmNEULcRtZLSoD8Sst86p137JiWd7xVaoo5JVs8LGkvbD",
           "votes": "250727946862.70339965820312500",
@@ -1418,10 +1389,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet.api.telos.blocksindia.com",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://telos.blocksindia.com/testnet.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -1433,13 +1404,10 @@
             "attempts": [
               {
                 "endpoint": "https://testnet.api.telos.blocksindia.com",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://telos.blocksindia.com",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1459,14 +1427,13 @@
                 "endpoint": "testnet.p2p.telos.blocksindia.com:9879",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection timed out"
+                "error": "connect ECONNREFUSED 204.168.191.16:9879"
               }
             ]
           },
           "status": "review",
           "blockers": [],
           "warnings": [
-            "No matching public API",
             "P2P handshake failed"
           ]
         },
@@ -1496,7 +1463,7 @@
           "api": {
             "status": "ok",
             "label": "Spring",
-            "endpoint": "http://api-telos-testnet.orbitalblock.com",
+            "endpoint": "https://api-telos-testnet.orbitalblock.com",
             "version": "v1.2.2",
             "bpJsonUrl": "https://www.orbitalblock.com/testnet-bp.json",
             "bpJsonSource": "chains.json",
@@ -1510,11 +1477,6 @@
             "attempts": [
               {
                 "endpoint": "https://api-telos-testnet.orbitalblock.com",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://api-telos-testnet.orbitalblock.com",
                 "ok": true,
                 "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
                 "version": "v1.2.2",
@@ -1523,8 +1485,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
             "bpJsonUrl": "https://www.orbitalblock.com/testnet-bp.json",
             "bpJsonSource": "chains.json",
@@ -1536,17 +1498,16 @@
             "attempts": [
               {
                 "endpoint": "p2p-telos-testnet.orbitalblock.com:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "bigironbptex",
@@ -1572,10 +1533,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://testnet.bigironbp.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://bigironbp.io/telos-testnet.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -1588,24 +1549,16 @@
             "attempts": [
               {
                 "endpoint": "https://testnet.bigironbp.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://testnet.bigironbp.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://bigironbp.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "testnet-p2p.bigironbp.io:9876",
             "bpJsonUrl": "https://bigironbp.io/telos-testnet.json",
             "bpJsonSource": "chains.json",
@@ -1617,23 +1570,21 @@
             "attempts": [
               {
                 "endpoint": "testnet-p2p.bigironbp.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "ledgerwisete",
           "scheduleType": "active",
-          "schedulePosition": 3,
+          "schedulePosition": 4,
           "rank": 19,
           "blockSigningKey": "EOS5BwhM81kTHp1v3QFAa9bWTrcMQjb78QiVXH9X59TYxc59Sazwg",
           "votes": "238590376387.92141723632812500",
@@ -1654,10 +1605,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telostestnet.ledgerwise.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://ledgerwise.io/telos/testnet/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -1670,18 +1621,10 @@
             "attempts": [
               {
                 "endpoint": "https://telostestnet.ledgerwise.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telostestnet.ledgerwise.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://ledgerwise.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1706,11 +1649,9 @@
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API"
-          ]
+          "warnings": []
         },
         {
           "name": "tempbpfill44",
@@ -1785,7 +1726,7 @@
         {
           "name": "bp.any",
           "scheduleType": "active",
-          "schedulePosition": 18,
+          "schedulePosition": 19,
           "rank": 21,
           "blockSigningKey": "EOS62saF5TC5r3z3tWJnkGD2ytCeVGbpSNRU9Q7rq868C1F6kxgqu",
           "votes": "238168105400.92141723632812500",
@@ -1821,7 +1762,7 @@
               {
                 "endpoint": "https://anypot.io",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "fetch failed"
               }
             ]
           },
@@ -1867,10 +1808,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos-testnet.a-dex.xyz",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://telos.a-dex.io/telos-testnet.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -1883,18 +1824,10 @@
             "attempts": [
               {
                 "endpoint": "https://telos-testnet.a-dex.xyz",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telos-testnet.a-dex.xyz",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://telos.a-dex.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -1914,23 +1847,22 @@
                 "endpoint": "p2p-telos-testnet.a-dex.xyz:9876",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection timed out"
+                "error": "connection closed before P2P handshake"
               }
             ]
           },
           "status": "review",
           "blockers": [],
           "warnings": [
-            "No matching public API",
             "P2P handshake failed"
           ]
         },
         {
           "name": "smartelos",
-          "scheduleType": "active",
-          "schedulePosition": 21,
+          "scheduleType": "standby",
+          "schedulePosition": null,
           "rank": 23,
-          "blockSigningKey": "EOS8f5xrYv7xBrsZBK4NtTAbnuubMBzgeATdKGQvnoNXe82MvTVXF",
+          "blockSigningKey": "",
           "votes": "12034420069.00000000000000000",
           "votesCompact": "12.0B",
           "url": "https://smartelos.com",
@@ -1988,10 +1920,10 @@
         },
         {
           "name": "tempbpfill11",
-          "scheduleType": "standby",
-          "schedulePosition": null,
+          "scheduleType": "active",
+          "schedulePosition": 3,
           "rank": 24,
-          "blockSigningKey": "",
+          "blockSigningKey": "EOS755DVH3t7msx7qtHk3qWN7Gq6YNzCHwichf86z4aDYarVwNGpr",
           "votes": "160763.75161743164062500",
           "votesCompact": "160764",
           "url": "http://38.49.217.195:8889",
@@ -2057,7 +1989,7 @@
           "warnings": []
         },
         {
-          "name": "bpalcorexcha",
+          "name": "bp.alcor",
           "scheduleType": "standby",
           "schedulePosition": null,
           "rank": 25,
@@ -2080,10 +2012,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telostest-api.alcor.exchange",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://bp.alcor.exchange/telos-testnet.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -2096,24 +2028,16 @@
             "attempts": [
               {
                 "endpoint": "https://telostest-api.alcor.exchange",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telostest-api.alcor.exchange",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://bp.alcor.exchange",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "telostest-p2p.alcor.exchange:9878",
             "bpJsonUrl": "https://bp.alcor.exchange/telos-testnet.json",
             "bpJsonSource": "chains.json",
@@ -2125,18 +2049,16 @@
             "attempts": [
               {
                 "endpoint": "telostest-p2p.alcor.exchange:9878",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "datacloudly1",
@@ -2238,8 +2160,8 @@
             "label": "No matching public API",
             "endpoint": "",
             "version": "",
-            "bpJsonUrl": "https://www.tlos.news/bp.json",
-            "bpJsonSource": "fallback",
+            "bpJsonUrl": "https://www.tlos.news/test-bp.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -2255,22 +2177,21 @@
           },
           "p2p": {
             "status": "review",
-            "label": "P2P endpoint is not Testnet",
-            "endpoint": "p2p-mainnet.tlos.news:9876",
-            "bpJsonUrl": "https://www.tlos.news/bp.json",
-            "bpJsonSource": "fallback",
+            "label": "P2P handshake failed",
+            "endpoint": "p2p-testnet.tlos.news:9876",
+            "bpJsonUrl": "https://www.tlos.news/test-bp.json",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
-              "p2p-mainnet.tlos.news:9876"
+              "p2p-testnet.tlos.news:9876"
             ],
             "attempts": [
               {
-                "endpoint": "p2p-mainnet.tlos.news:9876",
+                "endpoint": "p2p-testnet.tlos.news:9876",
                 "ok": false,
                 "chainMatches": false,
-                "chainMismatch": true,
-                "error": "endpoint hostname looks like Mainnet"
+                "error": "getaddrinfo ENOTFOUND p2p-testnet.tlos.news"
               }
             ]
           },
@@ -2278,7 +2199,7 @@
           "blockers": [],
           "warnings": [
             "No matching public API",
-            "P2P endpoint is not Testnet"
+            "P2P handshake failed"
           ]
         }
       ],
@@ -2296,16 +2217,16 @@
         "rpc": "https://mainnet.telos.net",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
-      "generatedAt": "2026-10-14T00:32:46.315Z",
-      "durationMs": 93754,
+      "generatedAt": "2026-10-14T05:19:18.135Z",
+      "durationMs": 18163,
       "overallStatus": "review",
       "info": {
-        "headBlockNum": 493830633,
-        "lastIrreversibleBlockNum": 493830631,
+        "headBlockNum": 493865159,
+        "lastIrreversibleBlockNum": 493865157,
         "libLagBlocks": 2,
-        "headBlockTime": "2026-10-14T00:31:11.000",
-        "headBlockProducer": "persiantelos",
-        "serverVersion": "v1.1.3",
+        "headBlockTime": "2026-10-14T05:18:54.000",
+        "headBlockProducer": "telosmadrid1",
+        "serverVersion": "v1.2.3-alpha2",
         "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11"
       },
       "counts": {
@@ -2313,22 +2234,22 @@
         "scheduled": 21,
         "standby": 19,
         "producerRowsActive": 40,
-        "ready": 9,
-        "review": 12,
+        "ready": 11,
+        "review": 10,
         "blocked": 0,
-        "readyRows": 17,
-        "reviewRows": 23,
+        "readyRows": 23,
+        "reviewRows": 17,
         "blockedRows": 0,
         "finalizersRegistered": 21,
         "finalizersActive": 21,
-        "activeSpringCompatible": 12,
-        "springCompatible": 12,
-        "bpApiSpring": 12,
+        "activeSpringCompatible": 16,
+        "springCompatible": 16,
+        "bpApiSpring": 16,
         "bpApiReview": 0,
-        "bpApiUnknown": 9,
+        "bpApiUnknown": 5,
         "bpApiBlocked": 0,
-        "publicP2pOk": 9,
-        "publicP2pReview": 12,
+        "publicP2pOk": 11,
+        "publicP2pReview": 10,
         "publicP2pUnknown": 0,
         "publicP2pBlocked": 0
       },
@@ -2337,15 +2258,15 @@
           "key": "bp-apis",
           "label": "Spring-compatible active BPs",
           "status": "review",
-          "value": "12/21 Spring",
-          "detail": "0 review, 9 unknown, 0 blocked"
+          "value": "16/21 Spring",
+          "detail": "0 review, 5 unknown, 0 blocked"
         },
         {
           "key": "public-p2p",
           "label": "Public live P2P",
           "status": "review",
-          "value": "9/21 reachable",
-          "detail": "12 review, 0 unknown"
+          "value": "11/21 reachable",
+          "detail": "10 review, 0 unknown"
         },
         {
           "key": "operator-private",
@@ -2358,7 +2279,7 @@
           "key": "public-rpc",
           "label": "Public RPC Spring",
           "status": "ok",
-          "value": "v1.1.3",
+          "value": "v1.2.3-alpha2",
           "detail": "https://mainnet.telos.net reports Spring"
         },
         {
@@ -3106,7 +3027,7 @@
               {
                 "endpoint": "https://persiantelos.com",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "404 Not Found"
               }
             ]
           },
@@ -3531,10 +3452,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.eosrio.io",
+            "version": "v1.2.3-alpha2",
             "bpJsonUrl": "https://eosrio.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3547,24 +3468,16 @@
             "attempts": [
               {
                 "endpoint": "https://telos.eosrio.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telos.eosrio.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://eosrio.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.3-alpha2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "telos.eosrio.io:8092",
             "bpJsonUrl": "https://eosrio.io/telos.json",
             "bpJsonSource": "chains.json",
@@ -3576,18 +3489,16 @@
             "attempts": [
               {
                 "endpoint": "telos.eosrio.io:8092",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "bp.yknot",
@@ -3613,10 +3524,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://bp-telos.y-knot.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://y-knot.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3629,18 +3540,10 @@
             "attempts": [
               {
                 "endpoint": "https://bp-telos.y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://bp-telos.y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://y-knot.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -3667,7 +3570,6 @@
           "status": "review",
           "blockers": [],
           "warnings": [
-            "No matching public API",
             "P2P endpoint missing port"
           ]
         },
@@ -3719,8 +3621,8 @@
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "telosp2p.ledgerwise.io:29876",
             "bpJsonUrl": "https://ledgerwise.io/telos/bp.json",
             "bpJsonSource": "chains.json",
@@ -3732,17 +3634,16 @@
             "attempts": [
               {
                 "endpoint": "telosp2p.ledgerwise.io:29876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "cryptolions1",
@@ -3768,10 +3669,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.cryptolions.io",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://cryptolions.io/telos.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3784,18 +3685,10 @@
             "attempts": [
               {
                 "endpoint": "https://telos.cryptolions.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telos.cryptolions.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://cryptolions.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -3815,14 +3708,13 @@
                 "endpoint": "telos.cryptolions.io:9871",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection timed out"
+                "error": "connection closed before P2P handshake"
               }
             ]
           },
           "status": "review",
           "blockers": [],
           "warnings": [
-            "No matching public API",
             "P2P handshake failed"
           ]
         },
@@ -3850,10 +3742,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://hyperion.telos.detroitledger.tech",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://detroitledger.tech/chains/telos/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3866,24 +3758,16 @@
             "attempts": [
               {
                 "endpoint": "https://hyperion.telos.detroitledger.tech",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://hyperion.telos.detroitledger.tech",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://detroitledger.tech",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "p2p.telos.detroitledger.tech:1337",
             "bpJsonUrl": "https://detroitledger.tech/chains/telos/bp.json",
             "bpJsonSource": "chains.json",
@@ -3895,18 +3779,16 @@
             "attempts": [
               {
                 "endpoint": "p2p.telos.detroitledger.tech:1337",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "bp.adex",
@@ -3932,10 +3814,10 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.a-dex.xyz",
+            "version": "v1.2.2",
             "bpJsonUrl": "https://telos.a-dex.io/telos-mainnet.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -3948,18 +3830,10 @@
             "attempts": [
               {
                 "endpoint": "https://telos.a-dex.xyz",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telos.a-dex.xyz",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://telos.a-dex.io",
-                "ok": false,
-                "error": "This operation was aborted"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2",
+                "chainMatches": true
               }
             ]
           },
@@ -3986,7 +3860,6 @@
           "status": "review",
           "blockers": [],
           "warnings": [
-            "No matching public API",
             "P2P handshake failed"
           ]
         },
@@ -4029,7 +3902,7 @@
               {
                 "endpoint": "https://www.orbitalblock.com",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "404 Not Found"
               }
             ]
           },
@@ -4049,7 +3922,7 @@
                 "endpoint": "p2p-telos-mainnet.orbitalblock.com:9876",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection timed out"
+                "error": "connection closed before P2P handshake"
               }
             ]
           },
@@ -4160,7 +4033,7 @@
               {
                 "endpoint": "https://smartelos.com",
                 "ok": false,
-                "error": "This operation was aborted"
+                "error": "fetch failed"
               }
             ]
           },
@@ -4241,7 +4114,7 @@
                 "endpoint": "p2p-mainnet.tlos.news:9876",
                 "ok": false,
                 "chainMatches": false,
-                "error": "connection timed out"
+                "error": "getaddrinfo ENOTFOUND p2p-mainnet.tlos.news"
               }
             ]
           },
@@ -4276,42 +4149,53 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.eosusa.io",
+            "version": "v1.2.2-lateblockfix",
+            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://telos.eosusa.io",
+              "http://telos.eosusa.io",
               "https://eosusa.io/bp/telos"
             ],
             "attempts": [
               {
-                "endpoint": "https://eosusa.io/bp/telos",
-                "ok": false,
-                "error": "404 Not Found"
+                "endpoint": "https://telos.eosusa.io",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2-lateblockfix",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "telos.p2p.eosusa.io:9876",
+            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "telos.p2p.eosusa.io:9876"
+            ],
+            "attempts": [
+              {
+                "endpoint": "telos.p2p.eosusa.io:9876",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "warnings": []
         },
         {
           "name": "telosusa1111",
@@ -4337,12 +4221,12 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.eosusa.io",
+            "version": "v1.1.3",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
-            "bpJsonSource": "fallback",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -4353,27 +4237,19 @@
             "attempts": [
               {
                 "endpoint": "https://telos.eosusa.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "http://telos.eosusa.io",
-                "ok": false,
-                "error": "This operation was aborted"
-              },
-              {
-                "endpoint": "https://eosusa.io/bp/telos",
-                "ok": false,
-                "error": "404 Not Found"
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.1.3",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "P2P handshake failed",
+            "status": "ok",
+            "label": "Handshake OK",
             "endpoint": "telos.p2p.eosusa.io:9876",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
-            "bpJsonSource": "fallback",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -4382,18 +4258,16 @@
             "attempts": [
               {
                 "endpoint": "telos.p2p.eosusa.io:9876",
-                "ok": false,
-                "chainMatches": false,
-                "error": "connection timed out"
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
               }
             ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "P2P handshake failed"
-          ]
+          "warnings": []
         },
         {
           "name": "telosusa3333",
@@ -4419,42 +4293,53 @@
             ]
           },
           "api": {
-            "status": "unknown",
-            "label": "No matching public API",
-            "endpoint": "",
-            "version": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
+            "status": "ok",
+            "label": "Spring",
+            "endpoint": "https://telos.eosusa.io",
+            "version": "v1.2.2-lateblockfix",
+            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
             "endpoints": [
+              "https://telos.eosusa.io",
+              "http://telos.eosusa.io",
               "https://eosusa.io/bp/telos"
             ],
             "attempts": [
               {
-                "endpoint": "https://eosusa.io/bp/telos",
-                "ok": false,
-                "error": "404 Not Found"
+                "endpoint": "https://telos.eosusa.io",
+                "ok": true,
+                "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+                "version": "v1.2.2-lateblockfix",
+                "chainMatches": true
               }
             ]
           },
           "p2p": {
-            "status": "review",
-            "label": "BP metadata unavailable",
-            "endpoint": "",
-            "bpJsonUrl": "",
-            "bpJsonSource": "",
-            "bpJsonStatus": "error",
-            "bpJsonError": "https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/bp.json: fetch failed | https://eosusa.io/bp/telos/mainnet.json: 404 Not Found | https://eosusa.io/bp/telos/telos.json: 404 Not Found",
-            "endpoints": [],
-            "attempts": []
+            "status": "ok",
+            "label": "Handshake OK",
+            "endpoint": "telos.p2p.eosusa.io:9876",
+            "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
+            "bpJsonSource": "chains.json",
+            "bpJsonStatus": "ok",
+            "bpJsonError": "",
+            "endpoints": [
+              "telos.p2p.eosusa.io:9876"
+            ],
+            "attempts": [
+              {
+                "endpoint": "telos.p2p.eosusa.io:9876",
+                "ok": true,
+                "chainMatches": true,
+                "chainMismatch": false,
+                "error": ""
+              }
+            ]
           },
-          "status": "review",
+          "status": "ok",
           "blockers": [],
-          "warnings": [
-            "No matching public API",
-            "BP metadata unavailable"
-          ]
+          "warnings": []
         },
         {
           "name": "telosusa4444",
@@ -4485,7 +4370,7 @@
             "endpoint": "https://telos.eosusa.io",
             "version": "v1.2.2-lateblockfix",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
-            "bpJsonSource": "fallback",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -4508,7 +4393,7 @@
             "label": "Handshake OK",
             "endpoint": "telos.p2p.eosusa.io:9876",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
-            "bpJsonSource": "fallback",
+            "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
             "bpJsonError": "",
             "endpoints": [
@@ -4627,7 +4512,7 @@
             "status": "ok",
             "label": "Spring",
             "endpoint": "https://telos.eosusa.io",
-            "version": "v1.1.3",
+            "version": "v1.2.2-lateblockfix",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -4642,7 +4527,7 @@
                 "endpoint": "https://telos.eosusa.io",
                 "ok": true,
                 "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.1.3",
+                "version": "v1.2.2-lateblockfix",
                 "chainMatches": true
               }
             ]
@@ -4843,7 +4728,7 @@
             "status": "ok",
             "label": "Spring",
             "endpoint": "https://telos.eosusa.io",
-            "version": "v1.1.3",
+            "version": "v1.2.2-lateblockfix",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -4858,7 +4743,7 @@
                 "endpoint": "https://telos.eosusa.io",
                 "ok": true,
                 "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.1.3",
+                "version": "v1.2.2-lateblockfix",
                 "chainMatches": true
               }
             ]
@@ -4915,7 +4800,7 @@
             "status": "ok",
             "label": "Spring",
             "endpoint": "https://telos.eosusa.io",
-            "version": "v1.2.2-lateblockfix",
+            "version": "v1.1.3",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -4930,7 +4815,7 @@
                 "endpoint": "https://telos.eosusa.io",
                 "ok": true,
                 "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.2.2-lateblockfix",
+                "version": "v1.1.3",
                 "chainMatches": true
               }
             ]
@@ -5059,7 +4944,7 @@
             "status": "ok",
             "label": "Spring",
             "endpoint": "https://telos.eosusa.io",
-            "version": "v1.1.3",
+            "version": "v1.2.2-lateblockfix",
             "bpJsonUrl": "https://eosusa.io/bp/telos/bp.json",
             "bpJsonSource": "chains.json",
             "bpJsonStatus": "ok",
@@ -5074,7 +4959,7 @@
                 "endpoint": "https://telos.eosusa.io",
                 "ok": true,
                 "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
-                "version": "v1.1.3",
+                "version": "v1.2.2-lateblockfix",
                 "chainMatches": true
               }
             ]
